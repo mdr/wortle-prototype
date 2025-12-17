@@ -38,24 +38,37 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
       <div className="space-y-4">
         {/* Main Image */}
         <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-muted">
-          <Image
-            src={images[currentIndex].url || "/placeholder.svg"}
-            alt={images[currentIndex].caption}
-            fill
-            className="object-cover"
-          />
+          <TransformWrapper
+            key={currentIndex}
+            initialScale={1}
+            minScale={1}
+            maxScale={4}
+            centerOnInit
+            doubleClick={{ mode: "toggle", step: 2 }}
+          >
+            <TransformComponent
+              wrapperClass="!w-full !h-full"
+              contentClass="!w-full !h-full"
+            >
+              <img
+                src={images[currentIndex].url || "/placeholder.svg"}
+                alt={images[currentIndex].caption}
+                className="h-full w-full object-cover"
+              />
+            </TransformComponent>
+          </TransformWrapper>
 
           {/* Navigation Buttons */}
-          <div className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-between px-2">
-            <Button variant="secondary" size="icon" onClick={goToPrevious} className="size-10 rounded-full shadow-lg">
+          <div className="pointer-events-none absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-between px-2">
+            <Button variant="secondary" size="icon" onClick={goToPrevious} className="pointer-events-auto size-10 rounded-full shadow-lg">
               <ChevronLeft className="size-5" />
             </Button>
-            <Button variant="secondary" size="icon" onClick={goToNext} className="size-10 rounded-full shadow-lg">
+            <Button variant="secondary" size="icon" onClick={goToNext} className="pointer-events-auto size-10 rounded-full shadow-lg">
               <ChevronRight className="size-5" />
             </Button>
           </div>
 
-          {/* Zoom Button */}
+          {/* Fullscreen Button */}
           <Button
             variant="secondary"
             size="icon"
