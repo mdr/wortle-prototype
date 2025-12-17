@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogTitle, DialogClose } from "@/components/ui/dialog"
-import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react"
+import { TransformWrapper, TransformComponent, useControls } from "react-zoom-pan-pinch"
+import { ChevronLeft, ChevronRight, Maximize2, X, ZoomIn, ZoomOut, RotateCcw } from "lucide-react"
 
 interface ImageData {
   url: string
@@ -88,52 +88,161 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
 
         {/* Attribution */}
         {attribution && (
-          <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <span>Photo attribution: {attribution.photographer}</span>
+          <p className="flex flex-wrap items-center gap-x-1 text-xs text-muted-foreground">
+            <span>© 2025 by {attribution.photographer}, licensed under</span>
             <a
               href="https://creativecommons.org/licenses/by/4.0/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 hover:text-foreground"
-              title="Creative Commons Attribution 4.0"
+              className="inline-flex items-center hover:text-foreground"
             >
-              <svg className="size-4" viewBox="0 0 64 64" aria-label="Creative Commons">
-                <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" strokeWidth="4" />
-                <text x="32" y="44" textAnchor="middle" fontSize="36" fontWeight="bold" fill="currentColor">CC</text>
-              </svg>
-              <svg className="size-4" viewBox="0 0 64 64" aria-label="Attribution">
-                <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" strokeWidth="4" />
-                <circle cx="32" cy="22" r="8" fill="currentColor" />
-                <path d="M32 32 c-12 0 -18 8 -18 16 v4 h36 v-4 c0-8 -6-16 -18-16z" fill="currentColor" />
-              </svg>
-              <span>{attribution.license}</span>
+              {attribution.license}
+              <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" className="ml-1 inline-block h-4 w-4" />
+              <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" className="ml-0.5 inline-block h-4 w-4" />
             </a>
           </p>
         )}
       </div>
 
-      {/* Zoom Dialog */}
-      <Dialog open={isZoomed} onOpenChange={setIsZoomed}>
-        <DialogContent className="max-h-[95vh] max-w-[95vw] p-2 sm:p-4" showCloseButton={false} aria-describedby={undefined}>
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-sm text-muted-foreground">{images[currentIndex].caption}</DialogTitle>
-            <DialogClose asChild>
-              <Button variant="ghost" size="icon" className="size-8">
-                <X className="size-4" />
-                <span className="sr-only">Close</span>
-              </Button>
-            </DialogClose>
-          </div>
-          <div className="relative h-[80vh] overflow-hidden rounded-lg bg-muted">
-            <Image
-              src={images[currentIndex].url || "/placeholder.svg"}
-              alt={images[currentIndex].caption}
-              fill
-              className="object-contain"
-            />
-          </div>
-        </DialogContent>
-      </Dialog>
+      {/* Full-screen Zoom Viewer */}
+      {isZoomed && (
+        <FullScreenViewer
+          images={images}
+          currentIndex={currentIndex}
+          onClose={() => setIsZoomed(false)}
+          onNavigate={setCurrentIndex}
+        />
+      )}
     </>
+  )
+}
+
+function ZoomControls() {
+  const { zoomIn, zoomOut, resetTransform } = useControls()
+  return (
+    <div className="flex items-center gap-1 rounded-lg bg-black/50 p-1">
+      <Button
+        variant="ghost"
+        size="icon"
+        className="size-8 text-white hover:bg-white/20 hover:text-white"
+        onClick={() => zoomOut()}
+      >
+        <ZoomOut className="size-4" />
+        <span className="sr-only">Zoom out</span>
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="size-8 text-white hover:bg-white/20 hover:text-white"
+        onClick={() => resetTransform()}
+      >
+        <RotateCcw className="size-4" />
+        <span className="sr-only">Reset zoom</span>
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="size-8 text-white hover:bg-white/20 hover:text-white"
+        onClick={() => zoomIn()}
+      >
+        <ZoomIn className="size-4" />
+        <span className="sr-only">Zoom in</span>
+      </Button>
+    </div>
+  )
+}
+
+interface FullScreenViewerProps {
+  images: ImageData[]
+  currentIndex: number
+  onClose: () => void
+  onNavigate: (index: number) => void
+}
+
+function FullScreenViewer({ images, currentIndex, onClose, onNavigate }: FullScreenViewerProps) {
+  const goToPrevious = useCallback(() => {
+    onNavigate(currentIndex === 0 ? images.length - 1 : currentIndex - 1)
+  }, [currentIndex, images.length, onNavigate])
+
+  const goToNext = useCallback(() => {
+    onNavigate(currentIndex === images.length - 1 ? 0 : currentIndex + 1)
+  }, [currentIndex, images.length, onNavigate])
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose()
+      if (e.key === "ArrowLeft") goToPrevious()
+      if (e.key === "ArrowRight") goToNext()
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [onClose, goToPrevious, goToNext])
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black">
+      {/* Close button */}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute right-4 top-4 z-10 size-10 text-white hover:bg-white/20 hover:text-white"
+        onClick={onClose}
+      >
+        <X className="size-6" />
+        <span className="sr-only">Close</span>
+      </Button>
+
+      {/* Navigation arrows */}
+      {images.length > 1 && (
+        <>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute left-4 top-1/2 z-10 size-12 -translate-y-1/2 text-white hover:bg-white/20 hover:text-white"
+            onClick={goToPrevious}
+          >
+            <ChevronLeft className="size-8" />
+            <span className="sr-only">Previous image</span>
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute right-4 top-1/2 z-10 size-12 -translate-y-1/2 text-white hover:bg-white/20 hover:text-white"
+            onClick={goToNext}
+          >
+            <ChevronRight className="size-8" />
+            <span className="sr-only">Next image</span>
+          </Button>
+        </>
+      )}
+
+      {/* Zoomable image */}
+      <TransformWrapper
+        key={currentIndex}
+        initialScale={1}
+        minScale={0.5}
+        maxScale={5}
+        centerOnInit
+        doubleClick={{ mode: "toggle", step: 2 }}
+      >
+        <TransformComponent
+          wrapperClass="!w-full !h-full"
+          contentClass="!w-full !h-full flex items-center justify-center"
+        >
+          <img
+            src={images[currentIndex].url || "/placeholder.svg"}
+            alt={images[currentIndex].caption}
+            className="max-h-full max-w-full object-contain"
+          />
+        </TransformComponent>
+
+        {/* Bottom controls */}
+        <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2">
+          <p className="rounded bg-black/50 px-3 py-1 text-sm text-white">
+            {images[currentIndex].caption}
+          </p>
+          <ZoomControls />
+        </div>
+      </TransformWrapper>
+    </div>
   )
 }
