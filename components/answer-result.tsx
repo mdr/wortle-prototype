@@ -2,13 +2,13 @@
 
 import { Card } from "@/components/ui/card"
 import { Check, X } from "lucide-react"
-import { Plant } from "@/lib/plants"
+import { Species } from "@/lib/plants"
 import { renderTipWithGlossary } from "@/lib/render-tip"
 
 interface AnswerResultProps {
   isCorrect: boolean
-  userAnswer: Plant | null
-  correctAnswer: Plant
+  userAnswer: Species | undefined
+  correctAnswer: Species
 }
 
 export function AnswerResult({ isCorrect, userAnswer, correctAnswer }: AnswerResultProps) {
@@ -39,6 +39,7 @@ export function AnswerResult({ isCorrect, userAnswer, correctAnswer }: AnswerRes
             <div className="rounded-md bg-background p-3">
               <p className="font-medium text-foreground">{userAnswer.commonNames[0]}</p>
               <p className="text-sm italic text-muted-foreground">{userAnswer.scientificName}</p>
+              <p className="text-sm text-muted-foreground">{userAnswer.family}</p>
             </div>
           </div>
         )}
@@ -48,6 +49,7 @@ export function AnswerResult({ isCorrect, userAnswer, correctAnswer }: AnswerRes
           <div className="rounded-md bg-background p-3">
             <p className="font-medium text-foreground">{correctAnswer.commonNames[0]}</p>
             <p className="text-sm italic text-muted-foreground">{correctAnswer.scientificName}</p>
+            <p className="text-sm text-muted-foreground">{correctAnswer.family}</p>
           </div>
         </div>
 

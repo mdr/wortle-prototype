@@ -12,7 +12,7 @@ import { Share2, TrendingUp, Award, Flame, Clock, HelpCircle } from "lucide-reac
 import Link from "next/link"
 import confetti from "canvas-confetti"
 import { getPuzzle } from "@/lib/puzzles"
-import { getPlant, Plant } from "@/lib/plants"
+import { getSpecies, Species } from "@/lib/plants"
 import { formatDate } from "@/lib/format-date"
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
@@ -29,7 +29,7 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
   const puzzleId = parseInt(id, 10)
   const puzzleData = getPuzzle(puzzleId)
 
-  const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null)
+  const [selectedSpecies, setSelectedSpecies] = useState<Species | undefined>(undefined)
   const [isAnswered, setIsAnswered] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
   const answerPanelRef = useRef<HTMLDivElement>(null)
@@ -38,14 +38,14 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
     notFound()
   }
 
-  const correctPlant = getPlant(puzzleData.speciesId)
-  if (!correctPlant) {
+  const correctSpecies = getSpecies(puzzleData.speciesId)
+  if (!correctSpecies) {
     notFound()
   }
 
   const handleSubmit = () => {
-    if (selectedPlant) {
-      const correct = selectedPlant.id === puzzleData.speciesId
+    if (selectedSpecies) {
+      const correct = selectedSpecies.id === puzzleData.speciesId
       setIsCorrect(correct)
       setIsAnswered(true)
 
@@ -160,9 +160,9 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
                 </p>
 
                 <div className="space-y-4">
-                  <PlantSearch onSelect={setSelectedPlant} selectedPlant={selectedPlant} />
+                  <PlantSearch onSelect={setSelectedSpecies} selectedSpecies={selectedSpecies} />
 
-                  <Button onClick={handleSubmit} disabled={!selectedPlant} className="w-full" size="lg">
+                  <Button onClick={handleSubmit} disabled={!selectedSpecies} className="w-full" size="lg">
                     Submit Answer
                   </Button>
                 </div>
@@ -173,8 +173,8 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
                 <div ref={answerPanelRef}>
                   <AnswerResult
                     isCorrect={isCorrect}
-                    userAnswer={selectedPlant}
-                    correctAnswer={correctPlant}
+                    userAnswer={selectedSpecies}
+                    correctAnswer={correctSpecies}
                   />
                 </div>
 

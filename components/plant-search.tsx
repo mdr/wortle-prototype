@@ -2,29 +2,29 @@
 
 import { useState } from "react"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { getAllPlants, Plant } from "@/lib/plants"
+import { getAllSpecies, Species } from "@/lib/plants"
 
 interface PlantSearchProps {
-  onSelect: (plant: Plant | null) => void
-  selectedPlant: Plant | null
+  onSelect: (species: Species | undefined) => void
+  selectedSpecies: Species | undefined
 }
 
-export function PlantSearch({ onSelect, selectedPlant }: PlantSearchProps) {
+export function PlantSearch({ onSelect, selectedSpecies }: PlantSearchProps) {
   const [query, setQuery] = useState("")
   const [open, setOpen] = useState(false)
 
-  const allPlants = getAllPlants()
+  const allSpecies = getAllSpecies()
 
-  const handleSelect = (plant: Plant) => {
-    onSelect(plant)
+  const handleSelect = (species: Species) => {
+    onSelect(species)
     setQuery("")
     setOpen(false)
   }
 
-  const filteredPlants = allPlants.filter(
-    (plant) =>
-      plant.commonNames.some((name) => name.toLowerCase().includes(query.toLowerCase())) ||
-      plant.scientificName.toLowerCase().includes(query.toLowerCase()),
+  const filteredSpecies = allSpecies.filter(
+    (s) =>
+      s.commonNames.some((name) => name.toLowerCase().includes(query.toLowerCase())) ||
+      s.scientificName.toLowerCase().includes(query.toLowerCase()),
   )
 
   return (
@@ -45,17 +45,17 @@ export function PlantSearch({ onSelect, selectedPlant }: PlantSearchProps) {
             <CommandList>
               <CommandEmpty>No plants found. Try a different name.</CommandEmpty>
               <CommandGroup heading="Suggestions">
-                {filteredPlants.map((plant) => (
+                {filteredSpecies.map((s) => (
                   <CommandItem
-                    key={plant.id}
-                    value={plant.commonNames[0]}
-                    onSelect={() => handleSelect(plant)}
+                    key={s.id}
+                    value={s.commonNames[0]}
+                    onSelect={() => handleSelect(s)}
                     className="group"
                   >
                     <div className="flex flex-1 flex-col">
-                      <span className="font-medium">{plant.commonNames[0]}</span>
+                      <span className="font-medium">{s.commonNames[0]}</span>
                       <span className="text-xs italic text-muted-foreground group-data-[selected=true]:text-primary-foreground/70">
-                        {plant.scientificName}
+                        {s.scientificName}
                       </span>
                     </div>
                   </CommandItem>
@@ -66,11 +66,11 @@ export function PlantSearch({ onSelect, selectedPlant }: PlantSearchProps) {
         </Command>
       </div>
 
-      {selectedPlant && (
+      {selectedSpecies && (
         <div className="rounded-lg border border-border bg-muted p-3">
           <div className="flex-1">
-            <p className="font-medium text-foreground">{selectedPlant.commonNames[0]}</p>
-            <p className="text-xs italic text-muted-foreground">{selectedPlant.scientificName}</p>
+            <p className="font-medium text-foreground">{selectedSpecies.commonNames[0]}</p>
+            <p className="text-xs italic text-muted-foreground">{selectedSpecies.scientificName}</p>
           </div>
         </div>
       )}

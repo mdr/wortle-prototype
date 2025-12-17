@@ -3,18 +3,20 @@ import { Brand } from "effect"
 export type SpeciesId = number & Brand.Brand<"SpeciesId">
 export const SpeciesId = Brand.nominal<SpeciesId>()
 
-export interface Plant {
+export interface Species {
   id: SpeciesId
   scientificName: string
+  family: string
   commonNames: string[]
   links: Array<{ name: string; url: string }>
   idTips: string[]
 }
 
-export const plants: Record<SpeciesId, Plant> = {
+export const species: Record<SpeciesId, Species> = {
   [SpeciesId(1)]: {
     id: SpeciesId(1),
     scientificName: "Succisa pratensis",
+    family: "Caprifoliaceae",
     commonNames: ["Devil's-bit Scabious", "Devil's-bit"],
     links: [
       { name: "Plant Atlas", url: "https://plantatlas2020.org/atlas/2cd4p9h.23w" },
@@ -31,6 +33,7 @@ export const plants: Record<SpeciesId, Plant> = {
   [SpeciesId(2)]: {
     id: SpeciesId(2),
     scientificName: "Tanacetum vulgare",
+    family: "Asteraceae",
     commonNames: ["Tansy"],
     links: [
       { name: "Plant Atlas", url: "https://plantatlas2020.org/atlas/2cd4p9h.9b1" },
@@ -47,6 +50,7 @@ export const plants: Record<SpeciesId, Plant> = {
   [SpeciesId(3)]: {
     id: SpeciesId(3),
     scientificName: "Knautia arvensis",
+    family: "Caprifoliaceae",
     commonNames: ["Field Scabious"],
     links: [],
     idTips: [],
@@ -54,6 +58,7 @@ export const plants: Record<SpeciesId, Plant> = {
   [SpeciesId(4)]: {
     id: SpeciesId(4),
     scientificName: "Scabiosa columbaria",
+    family: "Caprifoliaceae",
     commonNames: ["Small Scabious"],
     links: [],
     idTips: [],
@@ -61,6 +66,7 @@ export const plants: Record<SpeciesId, Plant> = {
   [SpeciesId(5)]: {
     id: SpeciesId(5),
     scientificName: "Hyacinthoides non-scripta",
+    family: "Asparagaceae",
     commonNames: ["Bluebell"],
     links: [],
     idTips: [],
@@ -68,6 +74,7 @@ export const plants: Record<SpeciesId, Plant> = {
   [SpeciesId(6)]: {
     id: SpeciesId(6),
     scientificName: "Campanula rotundifolia",
+    family: "Campanulaceae",
     commonNames: ["Harebell"],
     links: [],
     idTips: [],
@@ -75,6 +82,7 @@ export const plants: Record<SpeciesId, Plant> = {
   [SpeciesId(7)]: {
     id: SpeciesId(7),
     scientificName: "Cichorium intybus",
+    family: "Asteraceae",
     commonNames: ["Chicory"],
     links: [],
     idTips: [],
@@ -82,6 +90,7 @@ export const plants: Record<SpeciesId, Plant> = {
   [SpeciesId(8)]: {
     id: SpeciesId(8),
     scientificName: "Jasione montana",
+    family: "Campanulaceae",
     commonNames: ["Sheep's-bit"],
     links: [],
     idTips: [],
@@ -89,6 +98,7 @@ export const plants: Record<SpeciesId, Plant> = {
   [SpeciesId(9)]: {
     id: SpeciesId(9),
     scientificName: "Ranunculus acris",
+    family: "Ranunculaceae",
     commonNames: ["Meadow Buttercup"],
     links: [],
     idTips: [],
@@ -96,16 +106,17 @@ export const plants: Record<SpeciesId, Plant> = {
   [SpeciesId(10)]: {
     id: SpeciesId(10),
     scientificName: "Lotus corniculatus",
+    family: "Fabaceae",
     commonNames: ["Bird's-foot Trefoil"],
     links: [],
     idTips: [],
   },
 }
 
-export function getPlant(id: SpeciesId): Plant | undefined {
-  return plants[id]
+export function getSpecies(id: SpeciesId): Species | undefined {
+  return species[id]
 }
 
-export function getAllPlants(): Plant[] {
-  return Object.values(plants)
+export function getAllSpecies(): Species[] {
+  return Object.values(species)
 }
