@@ -4,7 +4,8 @@ import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { TransformWrapper, TransformComponent, useControls } from "react-zoom-pan-pinch"
-import { ChevronLeft, ChevronRight, Maximize2, X, ZoomIn, ZoomOut, RotateCcw } from "lucide-react"
+import { ChevronLeft, ChevronRight, Maximize2, X, ZoomIn, ZoomOut, RotateCcw, Copyright } from "lucide-react"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
 interface ImageData {
   url: string
@@ -77,6 +78,37 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
           >
             <Maximize2 className="size-4" />
           </Button>
+
+          {/* Attribution Button */}
+          {attribution && (
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="absolute bottom-2 right-2 size-10 rounded-full shadow-lg opacity-70 hover:opacity-100"
+                >
+                  <Copyright className="size-5" />
+                  <span className="sr-only">Photo attribution</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto text-xs" side="top" align="end">
+                <p className="flex flex-wrap items-center gap-x-1">
+                  <span>© 2025 by {attribution.photographer}, licensed under</span>
+                  <a
+                    href="https://creativecommons.org/licenses/by/4.0/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center hover:underline"
+                  >
+                    {attribution.license}
+                    <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" className="ml-1 inline-block h-4 w-4" />
+                    <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" className="ml-0.5 inline-block h-4 w-4" />
+                  </a>
+                </p>
+              </PopoverContent>
+            </Popover>
+          )}
         </div>
 
         {/* Caption */}
@@ -99,22 +131,6 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
           ))}
         </div>
 
-        {/* Attribution */}
-        {attribution && (
-          <p className="flex flex-wrap items-center gap-x-1 text-xs text-muted-foreground">
-            <span>© 2025 by {attribution.photographer}, licensed under</span>
-            <a
-              href="https://creativecommons.org/licenses/by/4.0/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center hover:text-foreground"
-            >
-              {attribution.license}
-              <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" className="ml-1 inline-block h-4 w-4" />
-              <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" className="ml-0.5 inline-block h-4 w-4" />
-            </a>
-          </p>
-        )}
       </div>
 
       {/* Full-screen Zoom Viewer */}
