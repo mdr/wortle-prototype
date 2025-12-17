@@ -53,7 +53,7 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
               <img
                 src={images[currentIndex].url || "/placeholder.svg"}
                 alt={images[currentIndex].caption}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
               />
             </TransformComponent>
           </TransformWrapper>
