@@ -201,7 +201,7 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
                         <Flame className="size-4 text-orange-500" />
                         <span className="text-xs text-muted-foreground">Streak</span>
                       </div>
-                      <p className="text-2xl font-bold text-foreground">{userStats.currentStreak} <span className="text-sm font-normal text-muted-foreground">in a row</span></p>
+                      <p className="text-2xl font-bold text-foreground">{isCorrect ? userStats.currentStreak : 0} <span className="text-sm font-normal text-muted-foreground">in a row</span></p>
                     </div>
                     <div className="rounded-lg bg-muted p-3">
                       <div className="mb-1 flex items-center gap-2">
