@@ -67,11 +67,12 @@ export function PlantSearch({ onSelect, selectedSpecies }: PlantSearchProps) {
       </div>
 
       {selectedSpecies && (
-        <div className="rounded-lg border border-border bg-muted p-3">
-          <div className="flex-1">
+        <div className="flex items-end justify-between rounded-lg border border-border bg-muted p-3">
+          <div>
             <p className="font-medium text-foreground">{selectedSpecies.commonNames[0]}</p>
             <p className="text-xs italic text-muted-foreground">{selectedSpecies.scientificName}</p>
           </div>
+          <p className="text-xs text-muted-foreground">{selectedSpecies.family}</p>
         </div>
       )}
     </div>

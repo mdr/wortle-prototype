@@ -36,9 +36,11 @@ export function AnswerResult({ isCorrect, userAnswer, correctAnswer }: AnswerRes
         {!isCorrect && userAnswer && (
           <div>
             <p className="mb-1 text-sm font-medium text-muted-foreground">Your answer:</p>
-            <div className="rounded-md bg-background p-3">
-              <p className="font-medium text-foreground">{userAnswer.commonNames[0]}</p>
-              <p className="text-sm italic text-muted-foreground">{userAnswer.scientificName}</p>
+            <div className="flex items-end justify-between rounded-md bg-background p-3">
+              <div>
+                <p className="font-medium text-foreground">{userAnswer.commonNames[0]}</p>
+                <p className="text-sm italic text-muted-foreground">{userAnswer.scientificName}</p>
+              </div>
               <p className="text-sm text-muted-foreground">{userAnswer.family}</p>
             </div>
           </div>
@@ -46,9 +48,11 @@ export function AnswerResult({ isCorrect, userAnswer, correctAnswer }: AnswerRes
 
         <div>
           <p className="mb-1 text-sm font-medium text-muted-foreground">Correct answer:</p>
-          <div className="rounded-md bg-background p-3">
-            <p className="font-medium text-foreground">{correctAnswer.commonNames[0]}</p>
-            <p className="text-sm italic text-muted-foreground">{correctAnswer.scientificName}</p>
+          <div className="flex items-end justify-between rounded-md bg-background p-3">
+            <div>
+              <p className="font-medium text-foreground">{correctAnswer.commonNames[0]}</p>
+              <p className="text-sm italic text-muted-foreground">{correctAnswer.scientificName}</p>
+            </div>
             <p className="text-sm text-muted-foreground">{correctAnswer.family}</p>
           </div>
         </div>
