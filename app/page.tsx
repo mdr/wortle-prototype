@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ImageGallery } from "@/components/image-gallery"
 import { PlantSearch } from "@/components/plant-search"
 import { AnswerResult } from "@/components/answer-result"
+import { UkLocationMap } from "@/components/uk-location-map"
 import { Share2, TrendingUp, Award, Flame, Clock, Flower2 } from "lucide-react"
 
 // Mock data for Devil's-bit Scabious
@@ -22,6 +23,7 @@ const puzzleData = {
     day: "numeric",
   }),
   location: "Northumberland, England",
+  coordinates: { lat: 55.2267806, lng: -2.5802806 },
   habitat: "Woodland",
   correctAnswer: {
     scientificName: "Succisa pratensis",
@@ -154,18 +156,25 @@ export default function Page() {
             {/* Observation Details */}
             <Card className="p-4">
               <h2 className="mb-1 font-serif text-2xl font-bold text-foreground">Observation Details</h2>
-              <div className="space-y-2 text-sm">
-                <div className="flex gap-2">
-                  <span className="font-medium text-muted-foreground">Location:</span>
-                  <span className="text-foreground">{puzzleData.location}</span>
-                </div>
-                <div className="flex gap-2">
-                  <span className="font-medium text-muted-foreground">Habitat:</span>
-                  <span className="text-foreground">{puzzleData.habitat}</span>
-                </div>
-                <div className="flex gap-2">
-                  <span className="font-medium text-muted-foreground">Date observed:</span>
-                  <span className="text-foreground">{puzzleData.observationDate}</span>
+              <div className="flex gap-4">
+                <UkLocationMap
+                  latitude={puzzleData.coordinates.lat}
+                  longitude={puzzleData.coordinates.lng}
+                  className="h-40 w-28 flex-shrink-0 rounded border border-border"
+                />
+                <div className="space-y-2 text-sm">
+                  <div className="flex gap-2">
+                    <span className="font-medium text-muted-foreground">Location:</span>
+                    <span className="text-foreground">{puzzleData.location}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="font-medium text-muted-foreground">Habitat:</span>
+                    <span className="text-foreground">{puzzleData.habitat}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="font-medium text-muted-foreground">Date observed:</span>
+                    <span className="text-foreground">{puzzleData.observationDate}</span>
+                  </div>
                 </div>
               </div>
             </Card>
