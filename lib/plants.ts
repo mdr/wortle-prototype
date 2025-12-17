@@ -3,12 +3,20 @@ import { Brand } from "effect"
 export type SpeciesId = number & Brand.Brand<"SpeciesId">
 export const SpeciesId = Brand.nominal<SpeciesId>()
 
+export type Url = string & Brand.Brand<"Url">
+export const Url = Brand.nominal<Url>()
+
+export interface SpeciesLink {
+  name: string
+  url: Url
+}
+
 export interface Species {
   id: SpeciesId
   scientificName: string
   family: string
   commonNames: string[]
-  links: Array<{ name: string; url: string }>
+  links: SpeciesLink[]
   idTips: string[]
 }
 
@@ -19,10 +27,10 @@ export const species: Record<SpeciesId, Species> = {
     family: "Caprifoliaceae",
     commonNames: ["Devil's-bit Scabious", "Devil's-bit"],
     links: [
-      { name: "Plant Atlas", url: "https://plantatlas2020.org/atlas/2cd4p9h.23w" },
-      { name: "Wikipedia", url: "https://en.wikipedia.org/wiki/Succisa_pratensis" },
-      { name: "NatureSpot", url: "https://www.naturespot.org/species/devils-bit-scabious" },
-      { name: "Flora of East Anglia", url: "http://webidguides.com/_templates/group_scabious.html#Devil's-bit%20Scabious" },
+      { name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.23w") },
+      { name: "Wikipedia", url: Url("https://en.wikipedia.org/wiki/Succisa_pratensis") },
+      { name: "NatureSpot", url: Url("https://www.naturespot.org/species/devils-bit-scabious") },
+      { name: "Flora of East Anglia", url: Url("http://webidguides.com/_templates/group_scabious.html#Devil's-bit%20Scabious") },
     ],
     idTips: [
       "Flower heads rounded with equal sized [[floret]]s",
@@ -36,10 +44,10 @@ export const species: Record<SpeciesId, Species> = {
     family: "Asteraceae",
     commonNames: ["Tansy"],
     links: [
-      { name: "Plant Atlas", url: "https://plantatlas2020.org/atlas/2cd4p9h.9b1" },
-      { name: "Wikipedia", url: "https://en.wikipedia.org/wiki/Tanacetum_vulgare" },
-      { name: "NatureSpot", url: "https://www.naturespot.org/species/tansy" },
-      { name: "Flora of East Anglia", url: "http://webidguides.com/_templates/group_yellowbutton.html#Common%20Tansy" },
+      { name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.9b1") },
+      { name: "Wikipedia", url: Url("https://en.wikipedia.org/wiki/Tanacetum_vulgare") },
+      { name: "NatureSpot", url: Url("https://www.naturespot.org/species/tansy") },
+      { name: "Flora of East Anglia", url: Url("http://webidguides.com/_templates/group_yellowbutton.html#Common%20Tansy") },
     ],
     idTips: [
       "The plant has bright yellow, button-like flower heads arranged in flat-topped clusters.",
@@ -111,12 +119,18 @@ export const species: Record<SpeciesId, Species> = {
     links: [],
     idTips: [],
   },
+  [SpeciesId(11)]: {
+    id: SpeciesId(11),
+    scientificName: "Primula farinosa",
+    family: "Primulaceae",
+    commonNames: ["Bird's-eye Primrose"],
+    links: [
+      { name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.94n") },
+    ],
+    idTips: [],
+  },
 }
 
-export function getSpecies(id: SpeciesId): Species | undefined {
-  return species[id]
-}
+export const getSpecies = (id: SpeciesId): Species | undefined => species[id]
 
-export function getAllSpecies(): Species[] {
-  return Object.values(species)
-}
+export const getAllSpecies = (): Species[] => Object.values(species)

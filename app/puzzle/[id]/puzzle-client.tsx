@@ -11,7 +11,7 @@ import { UkLocationMap } from "@/components/uk-location-map"
 import { Share2, TrendingUp, Award, Flame, Clock, HelpCircle } from "lucide-react"
 import Link from "next/link"
 import confetti from "canvas-confetti"
-import { getPuzzle } from "@/lib/puzzles"
+import { getPuzzle, PuzzleId } from "@/lib/puzzles"
 import { getSpecies, Species } from "@/lib/plants"
 import { formatDate } from "@/lib/format-date"
 
@@ -26,7 +26,7 @@ const userStats = {
 
 export default function PuzzleClient({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
-  const puzzleId = parseInt(id, 10)
+  const puzzleId = PuzzleId(parseInt(id, 10))
   const puzzleData = getPuzzle(puzzleId)
 
   const [selectedSpecies, setSelectedSpecies] = useState<Species | undefined>(undefined)
