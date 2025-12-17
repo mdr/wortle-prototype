@@ -1,6 +1,7 @@
 "use client"
 
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps"
+import { cn } from "@/lib/utils"
 
 // Using Natural Earth 50m resolution - more detailed for country-level view
 const WORLD_GEO = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json"
@@ -13,7 +14,13 @@ interface UkLocationMapProps {
 
 export function UkLocationMap({ latitude, longitude, className }: UkLocationMapProps) {
   return (
-    <div className={className} style={{ pointerEvents: "none" }}>
+    <div
+      className={cn(className, "[&_*]:outline-none [&_svg]:focus:outline-none")}
+      style={{ pointerEvents: "none" }}
+      tabIndex={-1}
+      aria-hidden="true"
+      inert={true}
+    >
       <ComposableMap
         projection="geoMercator"
         projectionConfig={{

@@ -149,11 +149,11 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
 function ZoomControls() {
   const { zoomIn, zoomOut, resetTransform } = useControls()
   return (
-    <div className="flex items-center gap-1 rounded-lg bg-black/50 p-1">
+    <div className="flex items-center gap-1 rounded-full bg-black/50 p-1">
       <Button
         variant="ghost"
         size="icon"
-        className="size-8 text-white hover:bg-white/20 hover:text-white"
+        className="size-8 rounded-full text-white hover:bg-black/70 hover:text-white"
         onClick={() => zoomOut()}
       >
         <ZoomOut className="size-4" />
@@ -162,7 +162,7 @@ function ZoomControls() {
       <Button
         variant="ghost"
         size="icon"
-        className="size-8 text-white hover:bg-white/20 hover:text-white"
+        className="size-8 rounded-full text-white hover:bg-black/70 hover:text-white"
         onClick={() => resetTransform()}
       >
         <RotateCcw className="size-4" />
@@ -171,7 +171,7 @@ function ZoomControls() {
       <Button
         variant="ghost"
         size="icon"
-        className="size-8 text-white hover:bg-white/20 hover:text-white"
+        className="size-8 rounded-full text-white hover:bg-black/70 hover:text-white"
         onClick={() => zoomIn()}
       >
         <ZoomIn className="size-4" />
@@ -213,7 +213,7 @@ function FullScreenViewer({ images, currentIndex, onClose, onNavigate }: FullScr
       <Button
         variant="ghost"
         size="icon"
-        className="absolute right-4 top-4 z-10 size-10 text-white hover:bg-white/20 hover:text-white"
+        className="absolute right-4 top-4 z-10 size-10 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
         onClick={onClose}
       >
         <X className="size-6" />
@@ -226,7 +226,7 @@ function FullScreenViewer({ images, currentIndex, onClose, onNavigate }: FullScr
           <Button
             variant="ghost"
             size="icon"
-            className="absolute left-4 top-1/2 z-10 size-12 -translate-y-1/2 text-white hover:bg-white/20 hover:text-white"
+            className="absolute left-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
             onClick={goToPrevious}
           >
             <ChevronLeft className="size-8" />
@@ -235,7 +235,7 @@ function FullScreenViewer({ images, currentIndex, onClose, onNavigate }: FullScr
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-4 top-1/2 z-10 size-12 -translate-y-1/2 text-white hover:bg-white/20 hover:text-white"
+            className="absolute right-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
             onClick={goToNext}
           >
             <ChevronRight className="size-8" />
