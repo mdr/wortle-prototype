@@ -4,12 +4,12 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { glossary } from "@/lib/glossary"
 
 interface GlossaryTermProps {
-  term: keyof typeof glossary
+  term: string
   children: React.ReactNode
 }
 
 export function GlossaryTerm({ term, children }: GlossaryTermProps) {
-  const definition = glossary[term]
+  const definition = glossary[term as keyof typeof glossary]
 
   if (!definition) {
     return <>{children}</>

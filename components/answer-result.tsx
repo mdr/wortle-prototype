@@ -2,19 +2,16 @@
 
 import { Card } from "@/components/ui/card"
 import { Check, X } from "lucide-react"
-import { GlossaryTerm } from "@/components/glossary-term"
+import { Plant } from "@/lib/plants"
+import { renderTipWithGlossary } from "@/lib/render-tip"
 
 interface AnswerResultProps {
   isCorrect: boolean
-  userAnswer: { name: string; scientific: string } | null
-  correctAnswer: {
-    scientificName: string
-    commonNames: string[]
-  }
-  links?: Array<{ name: string; url: string }>
+  userAnswer: Plant | null
+  correctAnswer: Plant
 }
 
-export function AnswerResult({ isCorrect, userAnswer, correctAnswer, links }: AnswerResultProps) {
+export function AnswerResult({ isCorrect, userAnswer, correctAnswer }: AnswerResultProps) {
   return (
     <Card className={`p-6 ${isCorrect ? "border-primary bg-primary/5" : "border-destructive bg-destructive/5"}`}>
       <div className="mb-4 flex items-center gap-3">
@@ -40,8 +37,8 @@ export function AnswerResult({ isCorrect, userAnswer, correctAnswer, links }: An
           <div>
             <p className="mb-1 text-sm font-medium text-muted-foreground">Your answer:</p>
             <div className="rounded-md bg-background p-3">
-              <p className="font-medium text-foreground">{userAnswer.name}</p>
-              <p className="text-sm italic text-muted-foreground">{userAnswer.scientific}</p>
+              <p className="font-medium text-foreground">{userAnswer.commonNames[0]}</p>
+              <p className="text-sm italic text-muted-foreground">{userAnswer.scientificName}</p>
             </div>
           </div>
         )}
@@ -54,33 +51,37 @@ export function AnswerResult({ isCorrect, userAnswer, correctAnswer, links }: An
           </div>
         </div>
 
-        <div className="rounded-lg bg-accent/10 p-4">
-          <h3 className="mb-2 font-serif text-lg font-semibold text-foreground">Identification Tips</h3>
-          <ul className="list-inside list-disc space-y-2 text-sm text-foreground">
-            <li>Flower heads rounded with equal sized <GlossaryTerm term="floret">florets</GlossaryTerm></li>
-            <li>All leaves <GlossaryTerm term="entire">entire</GlossaryTerm></li>
-            <li><GlossaryTerm term="corolla">Corolla</GlossaryTerm> 4-lobed</li>
-          </ul>
-        </div>
-
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-foreground">Learn more:</p>
-          <div className="flex flex-wrap gap-2">
-            {links?.map((link, index) => (
-              <span key={link.name} className="flex items-center gap-2">
-                {index > 0 && <span className="text-muted-foreground">•</span>}
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-primary underline-offset-4 hover:underline"
-                >
-                  {link.name}
-                </a>
-              </span>
-            ))}
+        {correctAnswer.idTips.length > 0 && (
+          <div className="rounded-lg bg-accent/10 p-4">
+            <h3 className="mb-2 font-serif text-lg font-semibold text-foreground">Identification Tips</h3>
+            <ul className="list-inside list-disc space-y-2 text-sm text-foreground">
+              {correctAnswer.idTips.map((tip, index) => (
+                <li key={index}>{renderTipWithGlossary(tip)}</li>
+              ))}
+            </ul>
           </div>
-        </div>
+        )}
+
+        {correctAnswer.links.length > 0 && (
+          <div className="space-y-2">
+            <p className="text-sm font-medium text-foreground">Learn more:</p>
+            <div className="flex flex-wrap gap-2">
+              {correctAnswer.links.map((link, index) => (
+                <span key={link.name} className="flex items-center gap-2">
+                  {index > 0 && <span className="text-muted-foreground">•</span>}
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-primary underline-offset-4 hover:underline"
+                  >
+                    {link.name}
+                  </a>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </Card>
   )

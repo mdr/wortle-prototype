@@ -12,6 +12,7 @@ import { Share2, TrendingUp, Award, Flame, Clock, HelpCircle } from "lucide-reac
 import Link from "next/link"
 import confetti from "canvas-confetti"
 import { getPuzzle } from "@/lib/puzzles"
+import { getPlant, Plant } from "@/lib/plants"
 import { formatDate } from "@/lib/format-date"
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
@@ -28,7 +29,7 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
   const puzzleId = parseInt(id, 10)
   const puzzleData = getPuzzle(puzzleId)
 
-  const [selectedPlant, setSelectedPlant] = useState<{ name: string; scientific: string } | null>(null)
+  const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null)
   const [isAnswered, setIsAnswered] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
   const answerPanelRef = useRef<HTMLDivElement>(null)
@@ -37,11 +38,14 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
     notFound()
   }
 
+  const correctPlant = getPlant(puzzleData.plantId)
+  if (!correctPlant) {
+    notFound()
+  }
+
   const handleSubmit = () => {
     if (selectedPlant) {
-      const correct =
-        selectedPlant.scientific === puzzleData.correctAnswer.scientificName ||
-        puzzleData.correctAnswer.commonNames.some((name) => name.toLowerCase() === selectedPlant.name.toLowerCase())
+      const correct = selectedPlant.id === puzzleData.plantId
       setIsCorrect(correct)
       setIsAnswered(true)
 
@@ -170,8 +174,7 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
                   <AnswerResult
                     isCorrect={isCorrect}
                     userAnswer={selectedPlant}
-                    correctAnswer={puzzleData.correctAnswer}
-                    links={puzzleData.links}
+                    correctAnswer={correctPlant}
                   />
                 </div>
 
