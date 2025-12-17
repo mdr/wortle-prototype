@@ -9,10 +9,11 @@ const PLANT_DATABASE = [
   { name: "Small Scabious", scientific: "Scabiosa columbaria" },
   { name: "Bluebell", scientific: "Hyacinthoides non-scripta" },
   { name: "Harebell", scientific: "Campanula rotundifolia" },
-  { name: "Common Knapweed", scientific: "Centaurea nigra" },
+  { name: "Chicory", scientific: "Cichorium intybus" },
   { name: "Sheep's-bit", scientific: "Jasione montana" },
   { name: "Meadow Buttercup", scientific: "Ranunculus acris" },
   { name: "Bird's-foot Trefoil", scientific: "Lotus corniculatus" },
+  { name: "Tansy", scientific: "Tanacetum vulgare" },
 ]
 
 interface PlantSearchProps {

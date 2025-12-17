@@ -26,8 +26,9 @@ export default function AboutPage() {
             <h2 className="text-xl font-semibold">What is Wortle?</h2>
             <p className="text-muted-foreground">
               Wortle is a daily wild plant identification quiz for plants in Britain and Ireland.
-              Each day, you&apos;re presented with photographs of a wild plant and challenged
-              to identify it by its common or scientific name.
+              Each day, you&apos;re presented with photographs of a plant growing in the wild and challenged
+              to identify it by its common or scientific name. If you're familiar with Wordle - this is similar, 
+              but for plant ID! Everyone gets the same puzzle every day.
             </p>
           </Card>
 

@@ -28,7 +28,7 @@ export function AnswerResult({ isCorrect, userAnswer, correctAnswer, links }: An
           </div>
         )}
         <div>
-          <h2 className="font-serif text-2xl font-bold text-foreground">{isCorrect ? "Correct!" : "Not quite!"}</h2>
+          <h2 className="font-serif text-2xl font-bold text-foreground">{isCorrect ? "Correct!" : "Not this time"}</h2>
           <p className="text-sm text-muted-foreground">
             {isCorrect ? "Well done on identifying the plant" : "Better luck next time"}
           </p>
