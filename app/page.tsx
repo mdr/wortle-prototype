@@ -7,7 +7,8 @@ import { ImageGallery } from "@/components/image-gallery"
 import { PlantSearch } from "@/components/plant-search"
 import { AnswerResult } from "@/components/answer-result"
 import { UkLocationMap } from "@/components/uk-location-map"
-import { Share2, TrendingUp, Award, Flame, Clock, Flower2 } from "lucide-react"
+import { Share2, TrendingUp, Award, Flame, Clock, Flower2, HelpCircle } from "lucide-react"
+import Link from "next/link"
 
 // Mock data for Devil's-bit Scabious
 const puzzleData = {
@@ -123,20 +124,31 @@ export default function Page() {
     <main className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border bg-card">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                <Flower2 className="size-6" />
-              </div>
+              <img
+                src={(process.env.NEXT_PUBLIC_BASE_PATH ?? "") + "/logo.png"}
+                alt=""
+                className="size-20"
+              />
               <div>
                 <h1 className="font-serif text-2xl font-bold text-foreground">Wortle</h1>
                 <p className="text-sm text-muted-foreground">Daily Wild Plant Quiz</p>
               </div>
             </div>
-            <div className="text-right">
-              <p className="text-sm font-medium text-foreground">{puzzleData.date}</p>
-              <p className="text-xs text-muted-foreground">Puzzle #{puzzleData.id}</p>
+            <div className="flex items-center gap-4">
+              <div className="text-right">
+                <p className="text-sm font-medium text-foreground">{puzzleData.date}</p>
+                <p className="text-xs text-muted-foreground">Puzzle #{puzzleData.id}</p>
+              </div>
+              <Link
+                href="/about"
+                className="flex size-10 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                <HelpCircle className="size-5" />
+                <span className="sr-only">About Wortle</span>
+              </Link>
             </div>
           </div>
         </div>
