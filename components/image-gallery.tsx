@@ -3,8 +3,8 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { ChevronLeft, ChevronRight, Maximize2 } from "lucide-react"
+import { Dialog, DialogContent, DialogTitle, DialogClose } from "@/components/ui/dialog"
+import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react"
 
 interface ImageData {
   url: string
@@ -83,8 +83,17 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
       {/* Zoom Dialog */}
       <Dialog open={isZoomed} onOpenChange={setIsZoomed}>
-        <DialogContent className="max-h-[95vh] max-w-[95vw] p-2 sm:p-4">
-          <div className="relative h-[85vh] overflow-hidden rounded-lg bg-muted">
+        <DialogContent className="max-h-[95vh] max-w-[95vw] p-2 sm:p-4" showCloseButton={false} aria-describedby={undefined}>
+          <div className="flex items-center justify-between">
+            <DialogTitle className="text-sm text-muted-foreground">{images[currentIndex].caption}</DialogTitle>
+            <DialogClose asChild>
+              <Button variant="ghost" size="icon" className="size-8">
+                <X className="size-4" />
+                <span className="sr-only">Close</span>
+              </Button>
+            </DialogClose>
+          </div>
+          <div className="relative h-[80vh] overflow-hidden rounded-lg bg-muted">
             <Image
               src={images[currentIndex].url || "/placeholder.svg"}
               alt={images[currentIndex].caption}
@@ -92,7 +101,6 @@ export function ImageGallery({ images }: ImageGalleryProps) {
               className="object-contain"
             />
           </div>
-          <p className="text-center text-sm text-muted-foreground">{images[currentIndex].caption}</p>
         </DialogContent>
       </Dialog>
     </>

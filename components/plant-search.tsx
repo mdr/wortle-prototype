@@ -65,10 +65,10 @@ export function PlantSearch({ onSelect, selectedPlant }: PlantSearchProps) {
           <CommandList>
             <CommandGroup heading="Suggestions">
               {filteredResults.map((plant, index) => (
-                <CommandItem key={index} onSelect={() => handleSelect(plant)}>
+                <CommandItem key={index} onSelect={() => handleSelect(plant)} className="group">
                   <div className="flex flex-1 flex-col">
                     <span className="font-medium">{plant.name}</span>
-                    <span className="text-xs italic text-muted-foreground">{plant.scientific}</span>
+                    <span className="text-xs italic text-muted-foreground group-data-[selected=true]:text-primary-foreground/70">{plant.scientific}</span>
                   </div>
                 </CommandItem>
               ))}

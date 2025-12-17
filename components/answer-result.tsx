@@ -55,35 +55,29 @@ export function AnswerResult({ isCorrect, userAnswer, correctAnswer, links }: An
 
         <div className="rounded-lg bg-accent/10 p-4">
           <h3 className="mb-2 font-serif text-lg font-semibold text-foreground">Identification Tips</h3>
-          <ul className="space-y-2 text-sm text-foreground">
-            <li>• Flower heads rounded with equal sized florets</li>
-            <li>• All leaves entire</li>
-            <li>• Corolla 4-lobed</li>
+          <ul className="list-inside list-disc space-y-2 text-sm text-foreground">
+            <li>Flower heads rounded with equal sized florets</li>
+            <li>All leaves entire</li>
+            <li>Corolla 4-lobed</li>
           </ul>
         </div>
 
         <div className="space-y-2">
           <p className="text-sm font-medium text-foreground">Learn more:</p>
           <div className="flex flex-wrap gap-2">
-            {links &&
-              links.map((link, index) => (
-                <>
-                  {index > 0 && (
-                    <span key={`sep-${index}`} className="text-muted-foreground">
-                      •
-                    </span>
-                  )}
-                  <a
-                    key={link.name}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-primary underline-offset-4 hover:underline"
-                  >
-                    {link.name}
-                  </a>
-                </>
-              ))}
+            {links?.map((link, index) => (
+              <span key={link.name} className="flex items-center gap-2">
+                {index > 0 && <span className="text-muted-foreground">•</span>}
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-primary underline-offset-4 hover:underline"
+                >
+                  {link.name}
+                </a>
+              </span>
+            ))}
           </div>
         </div>
       </div>
