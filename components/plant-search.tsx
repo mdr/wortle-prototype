@@ -1,8 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Input } from "@/components/ui/input"
-import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command"
+import { useState } from "react"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 
 const PLANT_DATABASE = [
   { name: "Devil's-bit Scabious", scientific: "Succisa pratensis" },
@@ -23,65 +22,54 @@ interface PlantSearchProps {
 
 export function PlantSearch({ onSelect, selectedPlant }: PlantSearchProps) {
   const [query, setQuery] = useState("")
-  const [filteredResults, setFilteredResults] = useState<typeof PLANT_DATABASE>([])
-  const [showResults, setShowResults] = useState(false)
-
-  useEffect(() => {
-    if (query.length > 0) {
-      const results = PLANT_DATABASE.filter(
-        (plant) =>
-          plant.name.toLowerCase().includes(query.toLowerCase()) ||
-          plant.scientific.toLowerCase().includes(query.toLowerCase()),
-      )
-      setFilteredResults(results)
-      setShowResults(true)
-    } else {
-      setFilteredResults([])
-      setShowResults(false)
-    }
-  }, [query])
+  const [open, setOpen] = useState(false)
 
   const handleSelect = (plant: (typeof PLANT_DATABASE)[0]) => {
     onSelect(plant)
     setQuery("")
-    setShowResults(false)
+    setOpen(false)
   }
 
   return (
     <div className="space-y-3">
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">Enter plant name</label>
-        <Input
-          type="text"
+      <label className="text-sm font-medium text-foreground">Enter plant name</label>
+      <Command className="rounded-lg border shadow-md" shouldFilter={false}>
+        <CommandInput
           placeholder="Type common or scientific name..."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="w-full"
+          onValueChange={(value) => {
+            setQuery(value)
+            setOpen(value.length > 0)
+          }}
+          onFocus={() => query.length > 0 && setOpen(true)}
         />
-      </div>
-
-      {showResults && filteredResults.length > 0 && (
-        <Command className="rounded-lg border shadow-md">
+        {open && (
           <CommandList>
+            <CommandEmpty>No plants found. Try a different name.</CommandEmpty>
             <CommandGroup heading="Suggestions">
-              {filteredResults.map((plant, index) => (
-                <CommandItem key={index} onSelect={() => handleSelect(plant)} className="group">
+              {PLANT_DATABASE.filter(
+                (plant) =>
+                  plant.name.toLowerCase().includes(query.toLowerCase()) ||
+                  plant.scientific.toLowerCase().includes(query.toLowerCase()),
+              ).map((plant) => (
+                <CommandItem
+                  key={plant.scientific}
+                  value={plant.name}
+                  onSelect={() => handleSelect(plant)}
+                  className="group"
+                >
                   <div className="flex flex-1 flex-col">
                     <span className="font-medium">{plant.name}</span>
-                    <span className="text-xs italic text-muted-foreground group-data-[selected=true]:text-primary-foreground/70">{plant.scientific}</span>
+                    <span className="text-xs italic text-muted-foreground group-data-[selected=true]:text-primary-foreground/70">
+                      {plant.scientific}
+                    </span>
                   </div>
                 </CommandItem>
               ))}
             </CommandGroup>
           </CommandList>
-        </Command>
-      )}
-
-      {showResults && filteredResults.length === 0 && (
-        <div className="rounded-lg border p-4 text-center text-sm text-muted-foreground">
-          No plants found. Try a different name.
-        </div>
-      )}
+        )}
+      </Command>
 
       {selectedPlant && (
         <div className="rounded-lg border border-border bg-muted p-3">

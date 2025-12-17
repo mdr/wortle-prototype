@@ -22,7 +22,7 @@ const puzzleData = {
     day: "numeric",
   }),
   location: "Northumberland, England",
-  habitat: "Woodland ride",
+  habitat: "Woodland",
   correctAnswer: {
     scientificName: "Succisa pratensis",
     commonNames: ["Devil's-bit Scabious", "Devil's-bit"],
