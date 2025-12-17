@@ -22,6 +22,8 @@ interface ImageGalleryProps {
   attribution?: Attribution
 }
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+
 export function ImageGallery({ images, attribution }: ImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
@@ -52,7 +54,7 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
               contentClass="!w-full !h-full"
             >
               <img
-                src={images[currentIndex].url || "/placeholder.svg"}
+                src={basePath + (images[currentIndex].url || "/placeholder.svg")}
                 alt={images[currentIndex].caption}
                 className="h-full w-full object-contain"
               />
@@ -258,7 +260,7 @@ function FullScreenViewer({ images, currentIndex, onClose, onNavigate }: FullScr
           contentClass="!w-full !h-full flex items-center justify-center"
         >
           <img
-            src={images[currentIndex].url || "/placeholder.svg"}
+            src={basePath + (images[currentIndex].url || "/placeholder.svg")}
             alt={images[currentIndex].caption}
             className="max-h-full max-w-full object-contain"
           />

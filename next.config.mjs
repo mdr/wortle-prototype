@@ -1,7 +1,12 @@
+const basePath = process.env.GITHUB_ACTIONS ? "/wortle-prototype" : ""
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",
-  basePath: process.env.GITHUB_ACTIONS ? "/wortle-prototype" : "",
+  basePath,
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   typescript: {
     ignoreBuildErrors: true,
   },
