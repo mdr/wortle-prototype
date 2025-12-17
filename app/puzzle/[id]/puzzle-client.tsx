@@ -38,14 +38,14 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
     notFound()
   }
 
-  const correctPlant = getPlant(puzzleData.plantId)
+  const correctPlant = getPlant(puzzleData.speciesId)
   if (!correctPlant) {
     notFound()
   }
 
   const handleSubmit = () => {
     if (selectedPlant) {
-      const correct = selectedPlant.id === puzzleData.plantId
+      const correct = selectedPlant.id === puzzleData.speciesId
       setIsCorrect(correct)
       setIsAnswered(true)
 

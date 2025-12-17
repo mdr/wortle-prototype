@@ -1,16 +1,19 @@
-export type PlantId = number
+import { Brand } from "effect"
+
+export type SpeciesId = number & Brand.Brand<"SpeciesId">
+export const SpeciesId = Brand.nominal<SpeciesId>()
 
 export interface Plant {
-  id: PlantId
+  id: SpeciesId
   scientificName: string
   commonNames: string[]
   links: Array<{ name: string; url: string }>
   idTips: string[]
 }
 
-export const plants: Record<PlantId, Plant> = {
-  1: {
-    id: 1,
+export const plants: Record<SpeciesId, Plant> = {
+  [SpeciesId(1)]: {
+    id: SpeciesId(1),
     scientificName: "Succisa pratensis",
     commonNames: ["Devil's-bit Scabious", "Devil's-bit"],
     links: [
@@ -22,11 +25,11 @@ export const plants: Record<PlantId, Plant> = {
     idTips: [
       "Flower heads rounded with equal sized [[floret]]s",
       "All leaves [[entire]]",
-      "[[corolla]] 4-lobed",
+      "[[Corolla]] 4-lobed",
     ],
   },
-  2: {
-    id: 2,
+  [SpeciesId(2)]: {
+    id: SpeciesId(2),
     scientificName: "Tanacetum vulgare",
     commonNames: ["Tansy"],
     links: [
@@ -41,57 +44,57 @@ export const plants: Record<PlantId, Plant> = {
       "The leaves are deeply divided into many narrow, toothed segments.",
     ],
   },
-  3: {
-    id: 3,
+  [SpeciesId(3)]: {
+    id: SpeciesId(3),
     scientificName: "Knautia arvensis",
     commonNames: ["Field Scabious"],
     links: [],
     idTips: [],
   },
-  4: {
-    id: 4,
+  [SpeciesId(4)]: {
+    id: SpeciesId(4),
     scientificName: "Scabiosa columbaria",
     commonNames: ["Small Scabious"],
     links: [],
     idTips: [],
   },
-  5: {
-    id: 5,
+  [SpeciesId(5)]: {
+    id: SpeciesId(5),
     scientificName: "Hyacinthoides non-scripta",
     commonNames: ["Bluebell"],
     links: [],
     idTips: [],
   },
-  6: {
-    id: 6,
+  [SpeciesId(6)]: {
+    id: SpeciesId(6),
     scientificName: "Campanula rotundifolia",
     commonNames: ["Harebell"],
     links: [],
     idTips: [],
   },
-  7: {
-    id: 7,
+  [SpeciesId(7)]: {
+    id: SpeciesId(7),
     scientificName: "Cichorium intybus",
     commonNames: ["Chicory"],
     links: [],
     idTips: [],
   },
-  8: {
-    id: 8,
+  [SpeciesId(8)]: {
+    id: SpeciesId(8),
     scientificName: "Jasione montana",
     commonNames: ["Sheep's-bit"],
     links: [],
     idTips: [],
   },
-  9: {
-    id: 9,
+  [SpeciesId(9)]: {
+    id: SpeciesId(9),
     scientificName: "Ranunculus acris",
     commonNames: ["Meadow Buttercup"],
     links: [],
     idTips: [],
   },
-  10: {
-    id: 10,
+  [SpeciesId(10)]: {
+    id: SpeciesId(10),
     scientificName: "Lotus corniculatus",
     commonNames: ["Bird's-foot Trefoil"],
     links: [],
@@ -99,7 +102,7 @@ export const plants: Record<PlantId, Plant> = {
   },
 }
 
-export function getPlant(id: PlantId): Plant | undefined {
+export function getPlant(id: SpeciesId): Plant | undefined {
   return plants[id]
 }
 

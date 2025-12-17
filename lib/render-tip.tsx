@@ -14,10 +14,11 @@ export function renderTipWithGlossary(tip: string): React.ReactNode {
     }
 
     const term = match[1]
-    // Check if term exists in glossary
-    if (term in glossary) {
+    const termLower = term.toLowerCase()
+    // Check if term exists in glossary (case-insensitive)
+    if (termLower in glossary) {
       parts.push(
-        <GlossaryTerm key={match.index} term={term}>
+        <GlossaryTerm key={match.index} term={termLower}>
           {term}
         </GlossaryTerm>
       )

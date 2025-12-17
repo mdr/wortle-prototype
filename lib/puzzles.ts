@@ -1,9 +1,9 @@
-import { PlantId } from "./plants"
+import { SpeciesId } from "./plants"
 
 export interface Puzzle {
   id: number
   date: string
-  plantId: PlantId
+  speciesId: SpeciesId
   observationDate: string
   location: string
   coordinates: { lat: number; lng: number }
@@ -19,7 +19,7 @@ export const puzzles: Record<number, Puzzle> = {
   67: {
     id: 67,
     date: "2026-06-10",
-    plantId: 2, // Tansy
+    speciesId: SpeciesId(2), // Tansy
     observationDate: "2023-08-03",
     location: "North Yorkshire, England",
     coordinates: { lat: 53.9788528, lng: -1.3101916 },
@@ -37,7 +37,7 @@ export const puzzles: Record<number, Puzzle> = {
   68: {
     id: 68,
     date: "2026-06-11",
-    plantId: 1, // Devil's-bit Scabious
+    speciesId: SpeciesId(1), // Devil's-bit Scabious
     observationDate: "2025-08-13",
     location: "Northumberland, England",
     coordinates: { lat: 55.2267806, lng: -2.5802806 },
