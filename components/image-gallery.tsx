@@ -11,11 +11,17 @@ interface ImageData {
   caption: string
 }
 
-interface ImageGalleryProps {
-  images: ImageData[]
+interface Attribution {
+  photographer: string
+  license: string
 }
 
-export function ImageGallery({ images }: ImageGalleryProps) {
+interface ImageGalleryProps {
+  images: ImageData[]
+  attribution?: Attribution
+}
+
+export function ImageGallery({ images, attribution }: ImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
 
@@ -79,6 +85,31 @@ export function ImageGallery({ images }: ImageGalleryProps) {
             </button>
           ))}
         </div>
+
+        {/* Attribution */}
+        {attribution && (
+          <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <span>Photo attribution: {attribution.photographer}</span>
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 hover:text-foreground"
+              title="Creative Commons Attribution 4.0"
+            >
+              <svg className="size-4" viewBox="0 0 64 64" aria-label="Creative Commons">
+                <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" strokeWidth="4" />
+                <text x="32" y="44" textAnchor="middle" fontSize="36" fontWeight="bold" fill="currentColor">CC</text>
+              </svg>
+              <svg className="size-4" viewBox="0 0 64 64" aria-label="Attribution">
+                <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" strokeWidth="4" />
+                <circle cx="32" cy="22" r="8" fill="currentColor" />
+                <path d="M32 32 c-12 0 -18 8 -18 16 v4 h36 v-4 c0-8 -6-16 -18-16z" fill="currentColor" />
+              </svg>
+              <span>{attribution.license}</span>
+            </a>
+          </p>
+        )}
       </div>
 
       {/* Zoom Dialog */}

@@ -63,6 +63,10 @@ const puzzleData = {
       caption: "Leaves",
     },
   ],
+  photoAttribution: {
+    photographer: "Matt Russell",
+    license: "CC-BY 4.0",
+  },
 }
 
 const userStats = {
@@ -141,7 +145,7 @@ export default function Page() {
           {/* Left column: Image Gallery */}
           <div className="space-y-4">
             <Card className="overflow-hidden p-4">
-              <ImageGallery images={puzzleData.images} />
+              <ImageGallery images={puzzleData.images} attribution={puzzleData.photoAttribution} />
             </Card>
           </div>
 
@@ -149,7 +153,7 @@ export default function Page() {
           <div className="space-y-4">
             {/* Observation Details */}
             <Card className="p-4">
-              <h3 className="mb-3 font-serif text-lg font-semibold text-foreground">Observation Details</h3>
+              <h2 className="mb-1 font-serif text-2xl font-bold text-foreground">Observation Details</h2>
               <div className="space-y-2 text-sm">
                 <div className="flex gap-2">
                   <span className="font-medium text-muted-foreground">Location:</span>
@@ -169,8 +173,8 @@ export default function Page() {
             {/* Answer Input or Result */}
             {!isAnswered ? (
               <Card className="p-6">
-                <h2 className="mb-4 font-serif text-2xl font-bold text-foreground">Can you identify this plant?</h2>
-                <p className="mb-6 text-balance text-sm text-muted-foreground">
+                <h2 className="font-serif text-2xl font-bold text-foreground">Can you identify this plant?</h2>
+                <p className="text-sm text-muted-foreground">
                   Study the photographs and enter the common or scientific name of the plant you think this is.
                 </p>
 

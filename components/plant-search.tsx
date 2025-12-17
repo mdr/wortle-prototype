@@ -32,8 +32,9 @@ export function PlantSearch({ onSelect, selectedPlant }: PlantSearchProps) {
 
   return (
     <div className="space-y-3">
-      <label className="text-sm font-medium text-foreground">Enter plant name</label>
-      <Command className="rounded-lg border shadow-md" shouldFilter={false}>
+      <div>
+        <label className="mb-2 block text-sm font-medium text-foreground">Enter plant name</label>
+        <Command className="rounded-lg border shadow-md" shouldFilter={false}>
         <CommandInput
           placeholder="Type common or scientific name..."
           value={query}
@@ -70,6 +71,7 @@ export function PlantSearch({ onSelect, selectedPlant }: PlantSearchProps) {
           </CommandList>
         )}
       </Command>
+      </div>
 
       {selectedPlant && (
         <div className="rounded-lg border border-border bg-muted p-3">
