@@ -126,6 +126,7 @@ export const species: Record<SpeciesId, Species> = {
     commonNames: ["Bird's-eye Primrose"],
     links: [
       { name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.94n") },
+      { name: "Wikipedia", url: Url("https://en.wikipedia.org/wiki/Primula_farinosa") },
     ],
     idTips: [],
   },

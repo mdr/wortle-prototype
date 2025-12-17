@@ -55,6 +55,34 @@ export default function AboutPage() {
           </Card>
 
           <Card className="p-6">
+            <h2 className="text-xl font-semibold">How can I learn to identify plants?</h2>
+            <p className="mb-3 text-muted-foreground">
+              If you&apos;re new to plant identification, we recommend getting a good field guide. {" "}
+              <a
+                href="https://www.summerfieldbooks.com/product/british-and-irish-wild-flowers-and-plants-a-pocket-guide/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-foreground"
+              >
+                British and Irish Wild Flowers and Plants: A Pocket Guide
+              </a>{" "}
+              is an excellent starting point.
+            </p>
+            <p className="text-muted-foreground">
+              You should also check out the{" "}
+              <a
+                href="https://bsbi.org/learn/getting-started"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-foreground"
+              >
+                Botanical Society of Britain &amp; Ireland
+              </a>
+              , who have great resources for getting started with botany.
+            </p>
+          </Card>
+
+          <Card className="p-6">
             <h2 className="text-xl font-semibold">About the project</h2>
             <p className="mb-3 text-muted-foreground">
               Wortle was created to help people improve their ID skills and appreciate the wild plants

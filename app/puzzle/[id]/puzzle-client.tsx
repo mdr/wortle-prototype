@@ -162,9 +162,11 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
                 <div className="space-y-4">
                   <PlantSearch onSelect={setSelectedSpecies} selectedSpecies={selectedSpecies} />
 
-                  <Button onClick={handleSubmit} disabled={!selectedSpecies} className="w-full" size="lg">
-                    Submit Answer
-                  </Button>
+                  {selectedSpecies && (
+                    <Button onClick={handleSubmit} className="w-full" size="lg">
+                      I'll go with this
+                    </Button>
+                  )}
                 </div>
               </Card>
             ) : (

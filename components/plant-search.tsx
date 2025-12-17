@@ -27,46 +27,14 @@ export function PlantSearch({ onSelect, selectedSpecies }: PlantSearchProps) {
       s.scientificName.toLowerCase().includes(query.toLowerCase()),
   )
 
-  return (
-    <div className="space-y-3">
-      <div>
-        <label className="mb-2 block text-sm font-medium text-foreground">Enter plant name</label>
-        <Command className="rounded-lg border shadow-md" shouldFilter={false}>
-          <CommandInput
-            placeholder="Type common or scientific name..."
-            value={query}
-            onValueChange={(value) => {
-              setQuery(value)
-              setOpen(value.length > 0)
-            }}
-            onFocus={() => query.length > 0 && setOpen(true)}
-          />
-          {open && (
-            <CommandList>
-              <CommandEmpty>No plants found. Try a different name.</CommandEmpty>
-              <CommandGroup heading="Suggestions">
-                {filteredSpecies.map((s) => (
-                  <CommandItem
-                    key={s.id}
-                    value={s.commonNames[0]}
-                    onSelect={() => handleSelect(s)}
-                    className="group"
-                  >
-                    <div className="flex flex-1 flex-col">
-                      <span className="font-medium">{s.commonNames[0]}</span>
-                      <span className="text-xs italic text-muted-foreground group-data-[selected=true]:text-primary-foreground/70">
-                        {s.scientificName}
-                      </span>
-                    </div>
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          )}
-        </Command>
-      </div>
+  const handleClear = () => {
+    onSelect(undefined)
+    setQuery("")
+  }
 
-      {selectedSpecies && (
+  if (selectedSpecies) {
+    return (
+      <div className="space-y-2">
         <div className="flex items-end justify-between rounded-lg border border-border bg-muted p-3">
           <div>
             <p className="font-medium text-foreground">{selectedSpecies.commonNames[0]}</p>
@@ -74,7 +42,53 @@ export function PlantSearch({ onSelect, selectedSpecies }: PlantSearchProps) {
           </div>
           <p className="text-xs text-muted-foreground">{selectedSpecies.family}</p>
         </div>
-      )}
+        <button
+          type="button"
+          onClick={handleClear}
+          className="text-sm text-primary underline-offset-4 hover:underline"
+        >
+          Choose a different plant
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <label className="mb-2 block text-sm font-medium text-foreground">Enter plant name</label>
+      <Command className="rounded-lg border shadow-md" shouldFilter={false}>
+        <CommandInput
+          placeholder="Type common or scientific name..."
+          value={query}
+          onValueChange={(value) => {
+            setQuery(value)
+            setOpen(value.length > 0)
+          }}
+          onFocus={() => query.length > 0 && setOpen(true)}
+        />
+        {open && (
+          <CommandList>
+            <CommandEmpty>No plants found. Try a different name.</CommandEmpty>
+            <CommandGroup heading="Suggestions">
+              {filteredSpecies.map((s) => (
+                <CommandItem
+                  key={s.id}
+                  value={s.commonNames[0]}
+                  onSelect={() => handleSelect(s)}
+                  className="group"
+                >
+                  <div className="flex flex-1 flex-col">
+                    <span className="font-medium">{s.commonNames[0]}</span>
+                    <span className="text-xs italic text-muted-foreground group-data-[selected=true]:text-primary-foreground/70">
+                      {s.scientificName}
+                    </span>
+                  </div>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        )}
+      </Command>
     </div>
   )
 }
