@@ -248,7 +248,7 @@ export default function Page() {
                       <span className="text-sm font-bold text-foreground">{getTimeToNextWortle()}</span>
                     </div>
 
-                    <Button onClick={handleShare} variant="outline" className="w-full bg-transparent" size="sm">
+                    <Button onClick={() => {}} variant="outline" className="w-full bg-transparent" size="sm">
                       <Share2 className="mr-2 size-4" />
                       Share Result
                     </Button>

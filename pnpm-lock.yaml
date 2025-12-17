@@ -113,6 +113,9 @@ importers:
       embla-carousel-react:
         specifier: 8.5.1
         version: 8.5.1(react@19.2.0)
+      focus-trap-react:
+        specifier: ^11.0.4
+        version: 11.0.4(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       input-otp:
         specifier: 1.4.1
         version: 1.4.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -1400,6 +1403,17 @@ packages:
     resolution: {integrity: sha512-jt2DW/aNFNwke7AUd+Z+e6pz39KO5rzdbbFCg2sGafS4mk13MI7Z8O5z9cADNn5lhGODIgLwug6TZO2ctf7kcw==}
     engines: {node: '>=6.0.0'}
 
+  focus-trap-react@11.0.4:
+    resolution: {integrity: sha512-tC7jC/yqeAqhe4irNIzdyDf9XCtGSeECHiBSYJBO/vIN0asizbKZCt8TarB6/XqIceu42ajQ/U4lQJ9pZlWjrg==}
+    peerDependencies:
+      '@types/react': ^18.0.0 || ^19.0.0
+      '@types/react-dom': ^18.0.0 || ^19.0.0
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+
+  focus-trap@7.6.6:
+    resolution: {integrity: sha512-v/Z8bvMCajtx4mEXmOo7QEsIzlIOqRXTIwgUfsFOF9gEsespdbD0AkPIka1bSXZ8Y8oZ+2IVDQZePkTfEHZl7Q==}
+
   fraction.js@5.3.4:
     resolution: {integrity: sha512-1X1NTtiJphryn/uLQz3whtY6jK3fTqoE3ohKs0tT+Ujr1W59oopxmoEh7Lu5p6vBaPbgoM0bzveAW4Qi5RyWDQ==}
 
@@ -1707,6 +1721,9 @@ packages:
         optional: true
       babel-plugin-macros:
         optional: true
+
+  tabbable@6.3.0:
+    resolution: {integrity: sha512-EIHvdY5bPLuWForiR/AN2Bxngzpuwn1is4asboytXtpTgsArc+WmSJKVLlhdh71u7jFcryDqB2A8lQvj78MkyQ==}
 
   tailwind-merge@3.4.0:
     resolution: {integrity: sha512-uSaO4gnW+b3Y2aWoWfFpX62vn2sR3skfhbjsEnaBI81WD1wBLlHZe5sWf0AqjksNdYTbGBEd0UasQMT3SNV15g==}
@@ -2942,6 +2959,19 @@ snapshots:
 
   fast-equals@5.4.0: {}
 
+  focus-trap-react@11.0.4(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+    dependencies:
+      '@types/react': 19.2.7
+      '@types/react-dom': 19.2.3(@types/react@19.2.7)
+      focus-trap: 7.6.6
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
+      tabbable: 6.3.0
+
+  focus-trap@7.6.6:
+    dependencies:
+      tabbable: 6.3.0
+
   fraction.js@5.3.4: {}
 
   get-nonce@1.0.1: {}
@@ -3233,6 +3263,8 @@ snapshots:
     dependencies:
       client-only: 0.0.1
       react: 19.2.0
+
+  tabbable@6.3.0: {}
 
   tailwind-merge@3.4.0: {}
 

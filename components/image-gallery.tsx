@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
+import FocusTrap from "focus-trap-react"
 import { Button } from "@/components/ui/button"
 import { TransformWrapper, TransformComponent, useControls } from "react-zoom-pan-pinch"
 import { ChevronLeft, ChevronRight, Maximize2, X, ZoomIn, ZoomOut, RotateCcw, Copyright } from "lucide-react"
@@ -64,9 +65,11 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
           <div className="pointer-events-none absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-between px-2">
             <Button variant="secondary" size="icon" onClick={goToPrevious} className="pointer-events-auto size-10 rounded-full shadow-lg">
               <ChevronLeft className="size-5" />
+              <span className="sr-only">Previous image</span>
             </Button>
             <Button variant="secondary" size="icon" onClick={goToNext} className="pointer-events-auto size-10 rounded-full shadow-lg">
               <ChevronRight className="size-5" />
+              <span className="sr-only">Next image</span>
             </Button>
           </div>
 
@@ -78,6 +81,7 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
             className="absolute right-2 top-2 size-10 rounded-full shadow-lg"
           >
             <Maximize2 className="size-4" />
+            <span className="sr-only">View fullscreen</span>
           </Button>
 
           {/* Attribution Button */}
@@ -215,7 +219,8 @@ function FullScreenViewer({ images, currentIndex, onClose, onNavigate }: FullScr
   }, [onClose, goToPrevious, goToNext])
 
   return (
-    <div className="fixed inset-0 z-50 bg-black">
+    <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
+      <div className="fixed inset-0 z-50 bg-black" role="dialog" aria-modal="true" aria-label="Image viewer">
       {/* Close button */}
       <Button
         variant="ghost"
@@ -279,6 +284,7 @@ function FullScreenViewer({ images, currentIndex, onClose, onNavigate }: FullScr
           <ZoomControls />
         </div>
       </TransformWrapper>
-    </div>
+      </div>
+    </FocusTrap>
   )
 }
