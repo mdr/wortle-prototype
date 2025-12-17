@@ -165,9 +165,9 @@ export default function Page() {
 
           {/* Right column: Answer Input or Result */}
           <div className="space-y-4">
-            {/* Observation Details */}
+            {/* Where and When */}
             <Card className="p-4">
-              <h2 className="mb-1 font-serif text-2xl font-bold text-foreground">Observation Details</h2>
+              <h2 className="mb-1 font-serif text-2xl font-bold text-foreground">Where and When</h2>
               <div className="flex gap-4">
                 <UkLocationMap
                   latitude={puzzleData.coordinates.lat}
@@ -184,7 +184,7 @@ export default function Page() {
                     <span className="text-foreground">{puzzleData.habitat}</span>
                   </div>
                   <div className="flex gap-2">
-                    <span className="font-medium text-muted-foreground">Date observed:</span>
+                    <span className="font-medium text-muted-foreground">Date:</span>
                     <span className="text-foreground">{puzzleData.observationDate}</span>
                   </div>
                 </div>
