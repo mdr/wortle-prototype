@@ -58,7 +58,7 @@ const puzzleData = {
     },
     {
       url: "/images/pxl-20250813-133915947.jpg",
-      caption: "Closer up of flower head",
+      caption: "Close up of flower head",
     },
     {
       url: "/images/pxl-20250813-133808104.jpg",

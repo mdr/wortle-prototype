@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { TransformWrapper, TransformComponent, useControls } from "react-zoom-pan-pinch"
 import { ChevronLeft, ChevronRight, Maximize2, X, ZoomIn, ZoomOut, RotateCcw, Copyright } from "lucide-react"
@@ -119,17 +118,23 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
         {/* Thumbnails */}
         <div className="grid grid-cols-4 gap-2">
           {images.map((image, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`relative aspect-square overflow-hidden rounded-md border-2 transition-all ${
-                index === currentIndex
-                  ? "border-primary ring-2 ring-primary/20"
-                  : "border-transparent hover:border-muted-foreground/30"
-              }`}
-            >
-              <Image src={image.url || "/placeholder.svg"} alt={image.caption} fill className="object-cover" />
-            </button>
+            <div key={index} className="flex flex-col items-center">
+              <button
+                onClick={() => setCurrentIndex(index)}
+                className={`relative aspect-square w-full overflow-hidden rounded-md border transition-all ${
+                  index === currentIndex
+                    ? "border-muted-foreground/30"
+                    : "border-transparent opacity-60 hover:opacity-100 hover:border-muted-foreground/30"
+                }`}
+              >
+                <img src={basePath + (image.url || "/placeholder.svg")} alt={image.caption} className="absolute inset-0 h-full w-full object-cover" />
+              </button>
+              <div
+                className={`mt-1 h-0 w-0 border-x-[6px] border-b-[8px] border-x-transparent border-b-primary transition-opacity ${
+                  index === currentIndex ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            </div>
           ))}
         </div>
 
