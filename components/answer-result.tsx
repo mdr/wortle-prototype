@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/ui/card"
 import { Check, X } from "lucide-react"
+import { GlossaryTerm } from "@/components/glossary-term"
 
 interface AnswerResultProps {
   isCorrect: boolean
@@ -56,9 +57,9 @@ export function AnswerResult({ isCorrect, userAnswer, correctAnswer, links }: An
         <div className="rounded-lg bg-accent/10 p-4">
           <h3 className="mb-2 font-serif text-lg font-semibold text-foreground">Identification Tips</h3>
           <ul className="list-inside list-disc space-y-2 text-sm text-foreground">
-            <li>Flower heads rounded with equal sized florets</li>
-            <li>All leaves entire</li>
-            <li>Corolla 4-lobed</li>
+            <li>Flower heads rounded with equal sized <GlossaryTerm term="floret">florets</GlossaryTerm></li>
+            <li>All leaves <GlossaryTerm term="entire">entire</GlossaryTerm></li>
+            <li><GlossaryTerm term="corolla">Corolla</GlossaryTerm> 4-lobed</li>
           </ul>
         </div>
 

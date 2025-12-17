@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ImageGallery } from "@/components/image-gallery"
@@ -9,6 +9,7 @@ import { AnswerResult } from "@/components/answer-result"
 import { UkLocationMap } from "@/components/uk-location-map"
 import { Share2, TrendingUp, Award, Flame, Clock, Flower2, HelpCircle } from "lucide-react"
 import Link from "next/link"
+import confetti from "canvas-confetti"
 
 // Mock data for Devil's-bit Scabious
 const puzzleData = {
@@ -83,6 +84,7 @@ export default function Page() {
   const [selectedPlant, setSelectedPlant] = useState<{ name: string; scientific: string } | null>(null)
   const [isAnswered, setIsAnswered] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
+  const answerPanelRef = useRef<HTMLDivElement>(null)
 
   const handleSubmit = () => {
     if (selectedPlant) {
@@ -91,6 +93,21 @@ export default function Page() {
         puzzleData.correctAnswer.commonNames.some((name) => name.toLowerCase() === selectedPlant.name.toLowerCase())
       setIsCorrect(correct)
       setIsAnswered(true)
+
+      if (correct) {
+        // Wait for the answer panel to render, then fire confetti from its center
+        setTimeout(() => {
+          const panel = answerPanelRef.current
+          if (panel) {
+            const rect = panel.getBoundingClientRect()
+            const x = (rect.left + rect.width / 2) / window.innerWidth
+            const y = (rect.top + rect.height / 2) / window.innerHeight
+            confetti({ origin: { x, y } })
+          } else {
+            confetti()
+          }
+        }, 50)
+      }
     }
   }
 
@@ -210,12 +227,14 @@ export default function Page() {
             ) : (
               <>
                 {/* Answer Result */}
-                <AnswerResult
-                  isCorrect={isCorrect}
-                  userAnswer={selectedPlant}
-                  correctAnswer={puzzleData.correctAnswer}
-                  links={puzzleData.links}
-                />
+                <div ref={answerPanelRef}>
+                  <AnswerResult
+                    isCorrect={isCorrect}
+                    userAnswer={selectedPlant}
+                    correctAnswer={puzzleData.correctAnswer}
+                    links={puzzleData.links}
+                  />
+                </div>
 
                 {/* Stats Panel */}
                 <Card className="p-4">
