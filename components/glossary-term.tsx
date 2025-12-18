@@ -18,10 +18,7 @@ export function GlossaryTerm({ term, children }: GlossaryTermProps) {
   return (
     <HoverCard openDelay={200} closeDelay={100}>
       <HoverCardTrigger asChild>
-        <button
-          type="button"
-          className="cursor-help border-b border-dotted border-current text-inherit"
-        >
+        <button type="button" className="cursor-help border-b border-dotted border-current text-inherit">
           {children}
         </button>
       </HoverCardTrigger>

@@ -42,11 +42,7 @@ export function PlantSearch({ onSelect, selectedSpecies }: PlantSearchProps) {
           </div>
           <p className="text-xs text-muted-foreground">{selectedSpecies.family}</p>
         </div>
-        <button
-          type="button"
-          onClick={handleClear}
-          className="text-sm text-primary underline-offset-4 hover:underline"
-        >
+        <button type="button" onClick={handleClear} className="text-sm text-primary underline-offset-4 hover:underline">
           Choose a different plant
         </button>
       </div>
@@ -71,12 +67,7 @@ export function PlantSearch({ onSelect, selectedSpecies }: PlantSearchProps) {
             <CommandEmpty>No plants found. Try a different name.</CommandEmpty>
             <CommandGroup heading="Suggestions">
               {filteredSpecies.map((s) => (
-                <CommandItem
-                  key={s.id}
-                  value={s.commonNames[0]}
-                  onSelect={() => handleSelect(s)}
-                  className="group"
-                >
+                <CommandItem key={s.id} value={s.commonNames[0]} onSelect={() => handleSelect(s)} className="group">
                   <div className="flex flex-1 flex-col">
                     <span className="font-medium">{s.commonNames[0]}</span>
                     <span className="text-xs italic text-muted-foreground group-data-[selected=true]:text-primary-foreground/70">

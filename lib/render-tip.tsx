@@ -20,7 +20,7 @@ export function renderTipWithGlossary(tip: string): React.ReactNode {
       parts.push(
         <GlossaryTerm key={match.index} term={termLower}>
           {term}
-        </GlossaryTerm>
+        </GlossaryTerm>,
       )
     } else {
       // Term not in glossary, render as plain text

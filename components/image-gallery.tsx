@@ -49,10 +49,7 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
             centerOnInit
             doubleClick={{ mode: "toggle", step: 2 }}
           >
-            <TransformComponent
-              wrapperClass="!w-full !h-full"
-              contentClass="!w-full !h-full"
-            >
+            <TransformComponent wrapperClass="!w-full !h-full" contentClass="!w-full !h-full">
               <img
                 src={basePath + (images[currentIndex].url || "/placeholder.svg")}
                 alt={images[currentIndex].caption}
@@ -63,11 +60,21 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
 
           {/* Navigation Buttons */}
           <div className="pointer-events-none absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-between px-2">
-            <Button variant="secondary" size="icon" onClick={goToPrevious} className="pointer-events-auto size-10 rounded-full shadow-lg">
+            <Button
+              variant="secondary"
+              size="icon"
+              onClick={goToPrevious}
+              className="pointer-events-auto size-10 rounded-full shadow-lg"
+            >
               <ChevronLeft className="size-5" />
               <span className="sr-only">Previous image</span>
             </Button>
-            <Button variant="secondary" size="icon" onClick={goToNext} className="pointer-events-auto size-10 rounded-full shadow-lg">
+            <Button
+              variant="secondary"
+              size="icon"
+              onClick={goToNext}
+              className="pointer-events-auto size-10 rounded-full shadow-lg"
+            >
               <ChevronRight className="size-5" />
               <span className="sr-only">Next image</span>
             </Button>
@@ -107,8 +114,16 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
                     className="inline-flex items-center hover:underline"
                   >
                     {attribution.license}
-                    <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" className="ml-1 inline-block h-4 w-4" />
-                    <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" className="ml-0.5 inline-block h-4 w-4" />
+                    <img
+                      src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+                      alt=""
+                      className="ml-1 inline-block h-4 w-4"
+                    />
+                    <img
+                      src="https://mirrors.creativecommons.org/presskit/icons/by.svg"
+                      alt=""
+                      className="ml-0.5 inline-block h-4 w-4"
+                    />
                   </a>
                 </p>
               </PopoverContent>
@@ -131,7 +146,11 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
                     : "border-transparent opacity-60 hover:opacity-100 hover:border-muted-foreground/30"
                 }`}
               >
-                <img src={basePath + (image.url || "/placeholder.svg")} alt={image.caption} className="absolute inset-0 h-full w-full object-cover" />
+                <img
+                  src={basePath + (image.url || "/placeholder.svg")}
+                  alt={image.caption}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
               </button>
               <div
                 className={`mt-1 h-0 w-0 border-x-[6px] border-b-[8px] border-x-transparent border-b-primary transition-opacity ${
@@ -141,7 +160,6 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
             </div>
           ))}
         </div>
-
       </div>
 
       {/* Full-screen Zoom Viewer */}
@@ -221,69 +239,67 @@ function FullScreenViewer({ images, currentIndex, onClose, onNavigate }: FullScr
   return (
     <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
       <div className="fixed inset-0 z-50 bg-black" role="dialog" aria-modal="true" aria-label="Image viewer">
-      {/* Close button */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute right-4 top-4 z-10 size-10 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
-        onClick={onClose}
-      >
-        <X className="size-6" />
-        <span className="sr-only">Close</span>
-      </Button>
-
-      {/* Navigation arrows */}
-      {images.length > 1 && (
-        <>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute left-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
-            onClick={goToPrevious}
-          >
-            <ChevronLeft className="size-8" />
-            <span className="sr-only">Previous image</span>
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
-            onClick={goToNext}
-          >
-            <ChevronRight className="size-8" />
-            <span className="sr-only">Next image</span>
-          </Button>
-        </>
-      )}
-
-      {/* Zoomable image */}
-      <TransformWrapper
-        key={currentIndex}
-        initialScale={1}
-        minScale={0.5}
-        maxScale={5}
-        centerOnInit
-        doubleClick={{ mode: "toggle", step: 2 }}
-      >
-        <TransformComponent
-          wrapperClass="!w-full !h-full"
-          contentClass="!w-full !h-full flex items-center justify-center"
+        {/* Close button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute right-4 top-4 z-10 size-10 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
+          onClick={onClose}
         >
-          <img
-            src={basePath + (images[currentIndex].url || "/placeholder.svg")}
-            alt={images[currentIndex].caption}
-            className="max-h-full max-w-full object-contain"
-          />
-        </TransformComponent>
+          <X className="size-6" />
+          <span className="sr-only">Close</span>
+        </Button>
 
-        {/* Bottom controls */}
-        <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2">
-          <p className="rounded bg-black/50 px-3 py-1 text-sm text-white">
-            {images[currentIndex].caption}
-          </p>
-          <ZoomControls />
-        </div>
-      </TransformWrapper>
+        {/* Navigation arrows */}
+        {images.length > 1 && (
+          <>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute left-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
+              onClick={goToPrevious}
+            >
+              <ChevronLeft className="size-8" />
+              <span className="sr-only">Previous image</span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
+              onClick={goToNext}
+            >
+              <ChevronRight className="size-8" />
+              <span className="sr-only">Next image</span>
+            </Button>
+          </>
+        )}
+
+        {/* Zoomable image */}
+        <TransformWrapper
+          key={currentIndex}
+          initialScale={1}
+          minScale={0.5}
+          maxScale={5}
+          centerOnInit
+          doubleClick={{ mode: "toggle", step: 2 }}
+        >
+          <TransformComponent
+            wrapperClass="!w-full !h-full"
+            contentClass="!w-full !h-full flex items-center justify-center"
+          >
+            <img
+              src={basePath + (images[currentIndex].url || "/placeholder.svg")}
+              alt={images[currentIndex].caption}
+              className="max-h-full max-w-full object-contain"
+            />
+          </TransformComponent>
+
+          {/* Bottom controls */}
+          <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2">
+            <p className="rounded bg-black/50 px-3 py-1 text-sm text-white">{images[currentIndex].caption}</p>
+            <ZoomControls />
+          </div>
+        </TransformWrapper>
       </div>
     </FocusTrap>
   )

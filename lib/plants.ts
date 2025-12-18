@@ -30,13 +30,12 @@ export const species: Species[] = [
       { name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.23w") },
       { name: "Wikipedia", url: Url("https://en.wikipedia.org/wiki/Succisa_pratensis") },
       { name: "NatureSpot", url: Url("https://www.naturespot.org/species/devils-bit-scabious") },
-      { name: "Flora of East Anglia", url: Url("http://webidguides.com/_templates/group_scabious.html#Devil's-bit%20Scabious") },
+      {
+        name: "Flora of East Anglia",
+        url: Url("http://webidguides.com/_templates/group_scabious.html#Devil's-bit%20Scabious"),
+      },
     ],
-    idTips: [
-      "Flower heads rounded with equal sized [[floret]]s",
-      "All leaves [[entire]]",
-      "[[Corolla]] 4-lobed",
-    ],
+    idTips: ["Flower heads rounded with equal sized [[floret]]s", "All leaves [[entire]]", "[[Corolla]] 4-lobed"],
   },
   {
     id: SpeciesId(2),
@@ -47,7 +46,10 @@ export const species: Species[] = [
       { name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.9b1") },
       { name: "Wikipedia", url: Url("https://en.wikipedia.org/wiki/Tanacetum_vulgare") },
       { name: "NatureSpot", url: Url("https://www.naturespot.org/species/tansy") },
-      { name: "Flora of East Anglia", url: Url("http://webidguides.com/_templates/group_yellowbutton.html#Common%20Tansy") },
+      {
+        name: "Flora of East Anglia",
+        url: Url("http://webidguides.com/_templates/group_yellowbutton.html#Common%20Tansy"),
+      },
     ],
     idTips: [
       "The plant has bright yellow, button-like flower heads arranged in flat-topped clusters.",
@@ -138,7 +140,10 @@ export const species: Species[] = [
     links: [
       { name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.8nb") },
       { name: "Wikipedia", url: Url("https://en.wikipedia.org/wiki/Geranium_robertianum") },
-      { name: "Flora of East Anglia", url: Url("http://webidguides.com/_templates/group_erodium.html#Common%20Herb-Robert") },
+      {
+        name: "Flora of East Anglia",
+        url: Url("http://webidguides.com/_templates/group_erodium.html#Common%20Herb-Robert"),
+      },
       { name: "NatureSpot", url: Url("https://www.naturespot.org/species/herb-robert") },
     ],
     idTips: [],
@@ -153,7 +158,6 @@ export const species: Species[] = [
   },
 ]
 
-export const getSpecies = (id: SpeciesId): Species | undefined =>
-  species.find((s) => s.id === id)
+export const getSpecies = (id: SpeciesId): Species | undefined => species.find((s) => s.id === id)
 
 export const getAllSpecies = (): Species[] => species

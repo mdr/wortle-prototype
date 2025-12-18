@@ -93,11 +93,7 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
         <div className="container mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex flex-shrink-0 items-center gap-3">
-              <img
-                src={basePath + "/logo.png"}
-                alt=""
-                className="size-20"
-              />
+              <img src={basePath + "/logo.png"} alt="" className="size-20" />
               <div>
                 <h1 className="font-serif text-2xl font-bold text-foreground">Wortle</h1>
                 <p className="text-sm text-muted-foreground">Daily Wild Plant Quiz</p>
@@ -204,28 +200,39 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
                         <TrendingUp className="size-4 text-primary" />
                         <span className="text-xs text-muted-foreground">Total</span>
                       </div>
-                      <p className="text-2xl font-bold text-foreground">{userStats.totalIdentifications} <span className="text-sm font-normal text-muted-foreground">quizzes played</span></p>
+                      <p className="text-2xl font-bold text-foreground">
+                        {userStats.totalIdentifications}{" "}
+                        <span className="text-sm font-normal text-muted-foreground">quizzes played</span>
+                      </p>
                     </div>
                     <div className="rounded-lg bg-muted p-3">
                       <div className="mb-1 flex items-center gap-2">
                         <Award className="size-4 text-primary" />
                         <span className="text-xs text-muted-foreground">Accuracy</span>
                       </div>
-                      <p className="text-2xl font-bold text-foreground">{accuracy}% <span className="text-sm font-normal text-muted-foreground">correct</span></p>
+                      <p className="text-2xl font-bold text-foreground">
+                        {accuracy}% <span className="text-sm font-normal text-muted-foreground">correct</span>
+                      </p>
                     </div>
                     <div className="rounded-lg bg-muted p-3">
                       <div className="mb-1 flex items-center gap-2">
                         <Flame className="size-4 text-orange-500" />
                         <span className="text-xs text-muted-foreground">Streak</span>
                       </div>
-                      <p className="text-2xl font-bold text-foreground">{isCorrect ? userStats.currentStreak : 0} <span className="text-sm font-normal text-muted-foreground">in a row</span></p>
+                      <p className="text-2xl font-bold text-foreground">
+                        {isCorrect ? userStats.currentStreak : 0}{" "}
+                        <span className="text-sm font-normal text-muted-foreground">in a row</span>
+                      </p>
                     </div>
                     <div className="rounded-lg bg-muted p-3">
                       <div className="mb-1 flex items-center gap-2">
                         <Award className="size-4 text-amber-500" />
                         <span className="text-xs text-muted-foreground">Max Streak</span>
                       </div>
-                      <p className="text-2xl font-bold text-foreground">{userStats.maxStreak} <span className="text-sm font-normal text-muted-foreground">in a row</span></p>
+                      <p className="text-2xl font-bold text-foreground">
+                        {userStats.maxStreak}{" "}
+                        <span className="text-sm font-normal text-muted-foreground">in a row</span>
+                      </p>
                     </div>
                   </div>
 

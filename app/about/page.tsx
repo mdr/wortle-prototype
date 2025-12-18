@@ -8,10 +8,7 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-background">
       <div className="container mx-auto max-w-2xl px-4 py-8">
-        <Link
-          href="/"
-          className="mb-6 inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
-        >
+        <Link href="/" className="mb-6 inline-flex items-center text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="mr-1 size-4" />
           Back to quiz
         </Link>
@@ -25,10 +22,10 @@ export default function AboutPage() {
           <Card className="p-6">
             <h2 className="text-xl font-semibold">What is Wortle?</h2>
             <p className="text-muted-foreground">
-              Wortle is a daily wild plant identification quiz for plants in Britain and Ireland.
-              Each day, you&apos;re presented with photographs of a plant growing in the wild and challenged
-              to identify it by its common or scientific name. If you're familiar with Wordle - this is similar, 
-              but for plant ID! Everyone gets the same puzzle every day.
+              Wortle is a daily wild plant identification quiz for plants in Britain and Ireland. Each day, you&apos;re
+              presented with photographs of a plant growing in the wild and challenged to identify it by its common or
+              scientific name. If you're familiar with Wordle - this is similar, but for plant ID! Everyone gets the
+              same puzzle every day.
             </p>
           </Card>
 
@@ -57,7 +54,7 @@ export default function AboutPage() {
           <Card className="p-6">
             <h2 className="text-xl font-semibold">How can I learn to identify plants?</h2>
             <p className="mb-3 text-muted-foreground">
-              If you&apos;re new to plant identification, consider getting a good field guide. {" "}
+              If you&apos;re new to plant identification, consider getting a good field guide.{" "}
               <a
                 href="https://www.summerfieldbooks.com/product/british-and-irish-wild-flowers-and-plants-a-pocket-guide/"
                 target="_blank"
@@ -85,9 +82,8 @@ export default function AboutPage() {
           <Card className="p-6">
             <h2 className="text-xl font-semibold">About the project</h2>
             <p className="mb-3 text-muted-foreground">
-              Wortle was created to help people improve their ID skills and appreciate the wild plants
-              of the UK and Ireland. All photographs are sourced from real observations
-              and are credited to their photographers.
+              Wortle was created to help people improve their ID skills and appreciate the wild plants of the UK and
+              Ireland. All photographs are sourced from real observations and are credited to their photographers.
             </p>
             <p className="text-muted-foreground">
               This is a free community project, owned by everyone. The{" "}

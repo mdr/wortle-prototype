@@ -112,5 +112,4 @@ export const puzzles: Record<PuzzleId, Puzzle> = {
 
 export const getPuzzle = (id: PuzzleId): Puzzle | undefined => puzzles[id]
 
-export const getAllPuzzleIds = (): PuzzleId[] =>
-  Object.keys(puzzles).map(Number).map(PuzzleId)
+export const getAllPuzzleIds = (): PuzzleId[] => Object.keys(puzzles).map(Number).map(PuzzleId)
