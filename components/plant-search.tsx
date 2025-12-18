@@ -38,9 +38,9 @@ export function PlantSearch({ onSelect, selectedSpecies }: PlantSearchProps) {
         <div className="flex items-end justify-between rounded-lg border border-border bg-muted p-3">
           <div>
             <p className="font-medium text-foreground">{selectedSpecies.commonNames[0]}</p>
-            <p className="text-xs italic text-muted-foreground">{selectedSpecies.scientificName}</p>
+            <p className="text-xs italic text-foreground/70">{selectedSpecies.scientificName}</p>
           </div>
-          <p className="text-xs text-muted-foreground">{selectedSpecies.family}</p>
+          <p className="text-xs text-foreground/70">{selectedSpecies.family}</p>
         </div>
         <button type="button" onClick={handleClear} className="text-sm text-primary underline-offset-4 hover:underline">
           Choose a different plant
@@ -62,23 +62,21 @@ export function PlantSearch({ onSelect, selectedSpecies }: PlantSearchProps) {
           }}
           onFocus={() => query.length > 0 && setOpen(true)}
         />
-        {open && (
-          <CommandList>
-            <CommandEmpty>No plants found. Try a different name.</CommandEmpty>
-            <CommandGroup heading="Suggestions">
-              {filteredSpecies.map((s) => (
-                <CommandItem key={s.id} value={s.commonNames[0]} onSelect={() => handleSelect(s)} className="group">
-                  <div className="flex flex-1 flex-col">
-                    <span className="font-medium">{s.commonNames[0]}</span>
-                    <span className="text-xs italic text-muted-foreground group-data-[selected=true]:text-primary-foreground/70">
-                      {s.scientificName}
-                    </span>
-                  </div>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        )}
+        <CommandList className={open ? "" : "hidden"}>
+          <CommandEmpty>No plants found. Try a different name.</CommandEmpty>
+          <CommandGroup heading="Suggestions">
+            {filteredSpecies.map((s) => (
+              <CommandItem key={s.id} value={s.commonNames[0]} onSelect={() => handleSelect(s)} className="group">
+                <div className="flex flex-1 flex-col">
+                  <span className="font-medium">{s.commonNames[0]}</span>
+                  <span className="text-xs italic text-muted-foreground group-data-[selected=true]:text-primary-foreground/70">
+                    {s.scientificName}
+                  </span>
+                </div>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </CommandList>
       </Command>
     </div>
   )

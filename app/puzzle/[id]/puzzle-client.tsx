@@ -198,40 +198,39 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
                     <div className="rounded-lg bg-muted p-3">
                       <div className="mb-1 flex items-center gap-2">
                         <TrendingUp className="size-4 text-primary" />
-                        <span className="text-xs text-muted-foreground">Total</span>
+                        <span className="text-xs text-foreground/70">Total</span>
                       </div>
                       <p className="text-2xl font-bold text-foreground">
                         {userStats.totalIdentifications}{" "}
-                        <span className="text-sm font-normal text-muted-foreground">quizzes played</span>
+                        <span className="text-sm font-normal text-foreground/70">quizzes played</span>
                       </p>
                     </div>
                     <div className="rounded-lg bg-muted p-3">
                       <div className="mb-1 flex items-center gap-2">
                         <Award className="size-4 text-primary" />
-                        <span className="text-xs text-muted-foreground">Accuracy</span>
+                        <span className="text-xs text-foreground/70">Accuracy</span>
                       </div>
                       <p className="text-2xl font-bold text-foreground">
-                        {accuracy}% <span className="text-sm font-normal text-muted-foreground">correct</span>
+                        {accuracy}% <span className="text-sm font-normal text-foreground/70">correct</span>
                       </p>
                     </div>
                     <div className="rounded-lg bg-muted p-3">
                       <div className="mb-1 flex items-center gap-2">
                         <Flame className="size-4 text-orange-500" />
-                        <span className="text-xs text-muted-foreground">Streak</span>
+                        <span className="text-xs text-foreground/70">Streak</span>
                       </div>
                       <p className="text-2xl font-bold text-foreground">
                         {isCorrect ? userStats.currentStreak : 0}{" "}
-                        <span className="text-sm font-normal text-muted-foreground">in a row</span>
+                        <span className="text-sm font-normal text-foreground/70">in a row</span>
                       </p>
                     </div>
                     <div className="rounded-lg bg-muted p-3">
                       <div className="mb-1 flex items-center gap-2">
                         <Award className="size-4 text-amber-500" />
-                        <span className="text-xs text-muted-foreground">Max Streak</span>
+                        <span className="text-xs text-foreground/70">Max Streak</span>
                       </div>
                       <p className="text-2xl font-bold text-foreground">
-                        {userStats.maxStreak}{" "}
-                        <span className="text-sm font-normal text-muted-foreground">in a row</span>
+                        {userStats.maxStreak} <span className="text-sm font-normal text-foreground/70">in a row</span>
                       </p>
                     </div>
                   </div>

@@ -39,14 +39,14 @@ export function AnswerResult({ isCorrect, gaveUp, userAnswer, correctAnswer }: A
         )}
         <div>
           <h2 className="font-serif text-2xl font-bold text-foreground">{getHeading()}</h2>
-          <p className="text-sm text-muted-foreground">{getSubheading()}</p>
+          <p className="text-sm text-foreground/70">{getSubheading()}</p>
         </div>
       </div>
 
       <div className="space-y-4 border-t pt-4">
         {!isCorrect && userAnswer && (
           <div>
-            <p className="mb-1 text-sm font-medium text-muted-foreground">Your answer:</p>
+            <p className="mb-1 text-sm font-medium text-foreground/70">Your answer:</p>
             <div className="flex items-end justify-between rounded-md bg-background p-3">
               <div>
                 <p className="font-medium text-foreground">{userAnswer.commonNames[0]}</p>
@@ -58,7 +58,7 @@ export function AnswerResult({ isCorrect, gaveUp, userAnswer, correctAnswer }: A
         )}
 
         <div>
-          <p className="mb-1 text-sm font-medium text-muted-foreground">Correct answer:</p>
+          <p className="mb-1 text-sm font-medium text-foreground/70">Correct answer:</p>
           <div className="flex items-end justify-between rounded-md bg-background p-3">
             <div>
               <p className="font-medium text-foreground">{correctAnswer.commonNames[0]}</p>
