@@ -1,9 +1,8 @@
-import type { Linter } from "eslint"
 import nextPlugin from "@next/eslint-plugin-next"
 import tseslint from "typescript-eslint"
 import reactHooks from "eslint-plugin-react-hooks"
 
-const config: Linter.Config[] = [
+const config = [
   {
     ignores: [".next/", "out/", "node_modules/"],
   },

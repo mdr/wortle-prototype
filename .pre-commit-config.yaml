@@ -7,3 +7,9 @@ repos:
         language: system
         types: [text]
         stages: [pre-commit]
+      - id: tsc
+        name: tsc
+        entry: pnpm tsc --noEmit
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]
