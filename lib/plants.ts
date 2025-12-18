@@ -134,7 +134,7 @@ export const species: Species[] = [
     id: SpeciesId(12),
     scientificName: "Geranium robertianum",
     family: "Geraniaceae",
-    commonNames: ["Herb-Robert"],
+    commonNames: ["Herb-Robert", "Stinking Bob"],
     links: [
       { name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.8nb") },
       { name: "Wikipedia", url: Url("https://en.wikipedia.org/wiki/Geranium_robertianum") },
