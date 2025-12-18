@@ -107,7 +107,7 @@ export default function HomePage() {
                 in commercialising or putting in adverts etc. The code and photographs will be open source.
               </p>
               <p className="font-medium text-foreground">
-                The aim is to launch this in 2026.
+                The aim is to launch this in Spring 2026.
               </p>
             </div>
           </Card>

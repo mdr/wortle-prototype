@@ -32,6 +32,7 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
   const [selectedSpecies, setSelectedSpecies] = useState<Species | undefined>(undefined)
   const [isAnswered, setIsAnswered] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
+  const [gaveUp, setGaveUp] = useState(false)
   const answerPanelRef = useRef<HTMLDivElement>(null)
 
   if (!puzzleData) {
@@ -63,6 +64,11 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
         }, 50)
       }
     }
+  }
+
+  const handleGiveUp = () => {
+    setGaveUp(true)
+    setIsAnswered(true)
   }
 
   const accuracy = Math.round((userStats.correctIdentifications / userStats.totalIdentifications) * 100)
@@ -167,6 +173,14 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
                       I'll go with this
                     </Button>
                   )}
+
+                  <button
+                    type="button"
+                    onClick={handleGiveUp}
+                    className="w-full text-sm text-muted-foreground hover:text-foreground"
+                  >
+                    Give up and show answer
+                  </button>
                 </div>
               </Card>
             ) : (
@@ -175,6 +189,7 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
                 <div ref={answerPanelRef}>
                   <AnswerResult
                     isCorrect={isCorrect}
+                    gaveUp={gaveUp}
                     userAnswer={selectedSpecies}
                     correctAnswer={correctSpecies}
                   />

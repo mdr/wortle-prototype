@@ -7,11 +7,24 @@ import { renderTipWithGlossary } from "@/lib/render-tip"
 
 interface AnswerResultProps {
   isCorrect: boolean
+  gaveUp: boolean
   userAnswer: Species | undefined
   correctAnswer: Species
 }
 
-export function AnswerResult({ isCorrect, userAnswer, correctAnswer }: AnswerResultProps) {
+export function AnswerResult({ isCorrect, gaveUp, userAnswer, correctAnswer }: AnswerResultProps) {
+  const getHeading = () => {
+    if (isCorrect) return "Correct!"
+    if (gaveUp) return "Here's the answer"
+    return "Not this time"
+  }
+
+  const getSubheading = () => {
+    if (isCorrect) return "Well done on identifying the plant"
+    if (gaveUp) return "Better luck with the next one"
+    return "You'll get the next one"
+  }
+
   return (
     <Card className={`p-6 ${isCorrect ? "border-primary bg-primary/5" : "border-destructive bg-destructive/5"}`}>
       <div className="mb-4 flex items-center gap-3">
@@ -25,10 +38,8 @@ export function AnswerResult({ isCorrect, userAnswer, correctAnswer }: AnswerRes
           </div>
         )}
         <div>
-          <h2 className="font-serif text-2xl font-bold text-foreground">{isCorrect ? "Correct!" : "Not this time"}</h2>
-          <p className="text-sm text-muted-foreground">
-            {isCorrect ? "Well done on identifying the plant" : "You'll get the next one"}
-          </p>
+          <h2 className="font-serif text-2xl font-bold text-foreground">{getHeading()}</h2>
+          <p className="text-sm text-muted-foreground">{getSubheading()}</p>
         </div>
       </div>
 

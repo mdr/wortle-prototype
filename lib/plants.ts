@@ -20,8 +20,8 @@ export interface Species {
   idTips: string[]
 }
 
-export const species: Record<SpeciesId, Species> = {
-  [SpeciesId(1)]: {
+export const species: Species[] = [
+  {
     id: SpeciesId(1),
     scientificName: "Succisa pratensis",
     family: "Caprifoliaceae",
@@ -38,7 +38,7 @@ export const species: Record<SpeciesId, Species> = {
       "[[Corolla]] 4-lobed",
     ],
   },
-  [SpeciesId(2)]: {
+  {
     id: SpeciesId(2),
     scientificName: "Tanacetum vulgare",
     family: "Asteraceae",
@@ -55,7 +55,7 @@ export const species: Record<SpeciesId, Species> = {
       "The leaves are deeply divided into many narrow, toothed segments.",
     ],
   },
-  [SpeciesId(3)]: {
+  {
     id: SpeciesId(3),
     scientificName: "Knautia arvensis",
     family: "Caprifoliaceae",
@@ -63,7 +63,7 @@ export const species: Record<SpeciesId, Species> = {
     links: [],
     idTips: [],
   },
-  [SpeciesId(4)]: {
+  {
     id: SpeciesId(4),
     scientificName: "Scabiosa columbaria",
     family: "Caprifoliaceae",
@@ -71,7 +71,7 @@ export const species: Record<SpeciesId, Species> = {
     links: [],
     idTips: [],
   },
-  [SpeciesId(5)]: {
+  {
     id: SpeciesId(5),
     scientificName: "Hyacinthoides non-scripta",
     family: "Asparagaceae",
@@ -79,7 +79,7 @@ export const species: Record<SpeciesId, Species> = {
     links: [],
     idTips: [],
   },
-  [SpeciesId(6)]: {
+  {
     id: SpeciesId(6),
     scientificName: "Campanula rotundifolia",
     family: "Campanulaceae",
@@ -87,7 +87,7 @@ export const species: Record<SpeciesId, Species> = {
     links: [],
     idTips: [],
   },
-  [SpeciesId(7)]: {
+  {
     id: SpeciesId(7),
     scientificName: "Cichorium intybus",
     family: "Asteraceae",
@@ -95,7 +95,7 @@ export const species: Record<SpeciesId, Species> = {
     links: [],
     idTips: [],
   },
-  [SpeciesId(8)]: {
+  {
     id: SpeciesId(8),
     scientificName: "Jasione montana",
     family: "Campanulaceae",
@@ -103,7 +103,7 @@ export const species: Record<SpeciesId, Species> = {
     links: [],
     idTips: [],
   },
-  [SpeciesId(9)]: {
+  {
     id: SpeciesId(9),
     scientificName: "Ranunculus acris",
     family: "Ranunculaceae",
@@ -111,7 +111,7 @@ export const species: Record<SpeciesId, Species> = {
     links: [],
     idTips: [],
   },
-  [SpeciesId(10)]: {
+  {
     id: SpeciesId(10),
     scientificName: "Lotus corniculatus",
     family: "Fabaceae",
@@ -119,7 +119,7 @@ export const species: Record<SpeciesId, Species> = {
     links: [],
     idTips: [],
   },
-  [SpeciesId(11)]: {
+  {
     id: SpeciesId(11),
     scientificName: "Primula farinosa",
     family: "Primulaceae",
@@ -130,8 +130,30 @@ export const species: Record<SpeciesId, Species> = {
     ],
     idTips: [],
   },
-}
+  {
+    id: SpeciesId(12),
+    scientificName: "Geranium robertianum",
+    family: "Geraniaceae",
+    commonNames: ["Herb-Robert"],
+    links: [
+      { name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.8nb") },
+      { name: "Wikipedia", url: Url("https://en.wikipedia.org/wiki/Geranium_robertianum") },
+      { name: "Flora of East Anglia", url: Url("http://webidguides.com/_templates/group_erodium.html#Common%20Herb-Robert") },
+      { name: "NatureSpot", url: Url("https://www.naturespot.org/species/herb-robert") },
+    ],
+    idTips: [],
+  },
+  {
+    id: SpeciesId(13),
+    scientificName: "Geranium lucidum",
+    family: "Geraniaceae",
+    commonNames: ["Shining Crane's-bill"],
+    links: [],
+    idTips: [],
+  },
+]
 
-export const getSpecies = (id: SpeciesId): Species | undefined => species[id]
+export const getSpecies = (id: SpeciesId): Species | undefined =>
+  species.find((s) => s.id === id)
 
-export const getAllSpecies = (): Species[] => Object.values(species)
+export const getAllSpecies = (): Species[] => species

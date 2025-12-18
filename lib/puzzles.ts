@@ -36,6 +36,23 @@ export interface Puzzle {
 }
 
 export const puzzles: Record<PuzzleId, Puzzle> = {
+  [PuzzleId(41)]: {
+    id: PuzzleId(41),
+    date: Iso8601Date("2026-06-09"),
+    speciesId: SpeciesId(12), // Herb-Robert
+    observationDate: Iso8601Date("2023-07-20"),
+    location: "North Yorkshire, England",
+    coordinates: { lat: Degrees(53.9991278), lng: Degrees(-1.5054472) },
+    habitat: "Pavement plant",
+    images: [
+      { url: Url("/images/41/plant.jpg"), caption: "Whole plant" },
+      { url: Url("/images/41/flower-closeup.jpg"), caption: "Flower close-up" },
+    ],
+    photoAttribution: {
+      photographer: "Matt Russell",
+      license: "CC-BY 4.0",
+    },
+  },
   [PuzzleId(42)]: {
     id: PuzzleId(42),
     date: Iso8601Date("2026-06-10"),
