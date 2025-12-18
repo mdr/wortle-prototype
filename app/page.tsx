@@ -97,7 +97,7 @@ export default function HomePage() {
                 As mentioned above, the intention is for this to be a community project - certainly no interest in
                 commercialising or putting in adverts etc. The code and photographs will be open source.
               </p>
-              <p className="font-medium text-foreground">
+              <p>
                 The aim is to launch this in Spring 2026, to give time to collect enough puzzles and get the site ready.
               </p>
             </div>
