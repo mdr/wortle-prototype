@@ -57,7 +57,7 @@ export default function AboutPage() {
           <Card className="p-6">
             <h2 className="text-xl font-semibold">How can I learn to identify plants?</h2>
             <p className="mb-3 text-muted-foreground">
-              If you&apos;re new to plant identification, we recommend getting a good field guide. {" "}
+              If you&apos;re new to plant identification, consider getting a good field guide. {" "}
               <a
                 href="https://www.summerfieldbooks.com/product/british-and-irish-wild-flowers-and-plants-a-pocket-guide/"
                 target="_blank"

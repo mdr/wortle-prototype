@@ -47,13 +47,13 @@ export default function HomePage() {
             <h2 className="font-serif text-2xl font-bold text-foreground">Welcome to the Wortle prototype!</h2>
             <div className="space-y-4 text-muted-foreground">
               <p>
-                This is a project to create a daily plant ID quiz – a bit like the "Wordle" but for botany!
+                This is a project to create a daily plant ID quiz - a bit like the "Wordle" but for botany!
                 The idea is to be a fun community-driven thing to get people interested in wild plants and help
                 them practice their plant ID skills.
               </p>
               <p>
-                This site is currently just a proof of concept to demonstrate the idea – click the links below
-                to see examples of how it might work. I&apos;d love to hear your thoughts on the prototype – does
+                This site is currently just a proof of concept to demonstrate the idea - click the links below
+                to see examples of how it might work. I&apos;d love to hear your thoughts on the prototype - does
                 it make sense what to do, and could any aspects be improved? And ultimately, is it fun and might
                 it interest people?
               </p>
@@ -89,11 +89,11 @@ export default function HomePage() {
               </p>
               <p>
                 I&apos;ll also need help to collect enough sets of photos to be able to keep up with the pace of
-                showing a new puzzle each day!
+                showing a new puzzle each day.
               </p>
               <p>
                 If you&apos;d be interested in helping out this project, either to help with reviewing the botany,
-                or contributing puzzle photos, or helping with the technical aspects – please get in touch!
+                or contributing puzzle photos, or helping with the technical aspects - please get in touch.
                 I&apos;m Matt Russell, and you can reach me at{" "}
                 <a
                   href="mailto:mattrusselluk@gmail.com"
@@ -103,11 +103,11 @@ export default function HomePage() {
                 </a>.
               </p>
               <p>
-                As mentioned above, the intention is for this to be a community project – certainly no interest
+                As mentioned above, the intention is for this to be a community project - certainly no interest
                 in commercialising or putting in adverts etc. The code and photographs will be open source.
               </p>
               <p className="font-medium text-foreground">
-                The aim is to launch this in Spring 2026.
+                The aim is to launch this in Spring 2026, to give time to collect enough puzzles and get the site ready.
               </p>
             </div>
           </Card>
