@@ -12,7 +12,7 @@ export default function HomePage() {
   const puzzleIds = getAllPuzzleIds()
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background" data-testid="home-page">
       {/* Header */}
       <header className="border-b border-border bg-card">
         <div className="container mx-auto max-w-7xl px-4">
@@ -61,7 +61,7 @@ export default function HomePage() {
 
             <div className="flex flex-col gap-3">
               {puzzleIds.map((id) => (
-                <Link key={id} href={`/puzzle/${id}`}>
+                <Link key={id} href={`/puzzle/${id}`} data-testid="puzzle-link">
                   <Button variant="outline" className="w-full justify-start" size="lg">
                     Puzzle #{id}
                   </Button>
