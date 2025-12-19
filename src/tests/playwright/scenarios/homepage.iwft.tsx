@@ -1,5 +1,5 @@
 import { test } from "../fixtures"
 
 test("homepage renders", async ({ homePage }) => {
-  await homePage.verifyPuzzleCount(4)
+  await homePage.verifyPuzzleCount(5)
 })

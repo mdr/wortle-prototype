@@ -156,6 +156,22 @@ export const species: Species[] = [
     links: [],
     idTips: [],
   },
+  {
+    id: SpeciesId(14),
+    scientificName: "Bellis perennis",
+    family: "Asteraceae",
+    commonNames: ["Daisy"],
+    links: [
+      { name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.xbs") },
+      { name: "Wikipedia", url: Url("https://en.wikipedia.org/wiki/Bellis_perennis") },
+      { name: "NatureSpot", url: Url("https://www.naturespot.org/species/daisy") },
+      {
+        name: "Flora of East Anglia",
+        url: Url("http://webidguides.com/_templates/group_whitedaisies.html#Common%20Daisy"),
+      },
+    ],
+    idTips: [],
+  },
 ]
 
 export const getSpecies = (id: SpeciesId): Species | undefined => species.find((s) => s.id === id)

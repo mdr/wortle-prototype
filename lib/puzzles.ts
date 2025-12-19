@@ -36,6 +36,24 @@ export interface Puzzle {
 }
 
 export const puzzles: Record<PuzzleId, Puzzle> = {
+  [PuzzleId(40)]: {
+    id: PuzzleId(40),
+    date: Iso8601Date("2025-12-19"),
+    speciesId: SpeciesId(14), // Daisy
+    observationDate: Iso8601Date("2025-12-19"),
+    location: "North Yorkshire, England",
+    coordinates: { lat: Degrees(54.0023389), lng: Degrees(-1.5102306) },
+    habitat: "Road verge",
+    images: [
+      { url: Url("/images/40/whole-plant.jpg"), caption: "Whole plant" },
+      { url: Url("/images/40/flower-close-up.jpg"), caption: "Flower close-up" },
+      { url: Url("/images/40/leaves-close-up.jpg"), caption: "Leaves close-up" },
+    ],
+    photoAttribution: {
+      photographer: "Matt Russell",
+      license: "CC-BY 4.0",
+    },
+  },
   [PuzzleId(41)]: {
     id: PuzzleId(41),
     date: Iso8601Date("2026-06-09"),
