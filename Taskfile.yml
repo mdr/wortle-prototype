@@ -1,0 +1,50 @@
+version: "3"
+
+tasks:
+  install:
+    desc: Install dependencies
+    cmds:
+      - pnpm install
+
+  tsc:
+    desc: Type check
+    cmds:
+      - pnpm tsc --noEmit
+
+  lint:
+    desc: Run ESLint
+    cmds:
+      - pnpm lint
+
+  format:
+    desc: Format code with Prettier
+    cmds:
+      - pnpm format
+
+  format:check:
+    desc: Check code formatting
+    cmds:
+      - pnpm format:check
+
+  test:ct:install:
+    desc: Install Playwright browsers
+    cmds:
+      - pnpm exec playwright install --with-deps chromium
+
+  test:ct:
+    desc: Run component tests
+    cmds:
+      - pnpm test:ct
+
+  build:
+    desc: Build the project
+    cmds:
+      - pnpm build
+
+  check:
+    desc: Run all checks (tsc, lint, format, tests)
+    cmds:
+      - task: tsc
+      - task: lint
+      - task: format:check
+      - task: test:ct

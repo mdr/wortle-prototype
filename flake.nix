@@ -18,6 +18,7 @@
             pnpm
             git
             pre-commit
+            go-task
           ];
 
           shellHook = ''

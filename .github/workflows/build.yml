@@ -30,22 +30,22 @@ jobs:
         uses: nicknovitski/nix-develop@v1
 
       - name: Install dependencies
-        run: pnpm install
+        run: task install
 
       - name: Type check
-        run: pnpm tsc --noEmit
+        run: task tsc
 
       - name: Lint
-        run: pnpm lint
+        run: task lint
 
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium
+        run: task test:ct:install
 
       - name: Component tests
-        run: pnpm test:ct
+        run: task test:ct
 
       - name: Build
-        run: pnpm build
+        run: task build
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
