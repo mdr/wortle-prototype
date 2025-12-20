@@ -20,7 +20,7 @@ export default defineConfig({
     ctViteConfig: {
       resolve: {
         alias: {
-          "@": path.resolve(__dirname, "."),
+          "@": path.resolve(__dirname, "src"),
         },
       },
     },

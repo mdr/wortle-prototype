@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [TanStackRouterVite({ routesDirectory: "./src/routes" }), react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "."),
+      "@": path.resolve(__dirname, "src"),
     },
   },
   base: process.env.GITHUB_ACTIONS ? "/wortle-prototype/" : "/",
