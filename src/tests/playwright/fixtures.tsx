@@ -1,12 +1,12 @@
 import { test as ctBase, expect } from "@playwright/experimental-ct-react"
 import type { MountResult } from "@playwright/experimental-ct-react"
-import HomePage from "@/app/page"
+import { TestHomePage } from "./stories/HomePage"
 import { HomePageObject } from "./pageObjects/HomePageObject"
 
 type MountFunction = (component: React.ReactElement) => Promise<MountResult>
 
 const launchApp = async (mount: MountFunction): Promise<MountResult> => {
-  return await mount(<HomePage />)
+  return await mount(<TestHomePage />)
 }
 
 interface Fixtures {

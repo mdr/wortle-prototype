@@ -1,5 +1,8 @@
 import { defineConfig, devices } from "@playwright/experimental-ct-react"
 import path from "path"
+import { fileURLToPath } from "url"
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   testDir: "./src/tests/playwright/scenarios",

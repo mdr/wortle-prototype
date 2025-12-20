@@ -1,7 +1,5 @@
-"use client"
-
-import { useState, useRef, use } from "react"
-import { notFound } from "next/navigation"
+import { createFileRoute, Link, notFound } from "@tanstack/react-router"
+import { useState, useRef } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ImageGallery } from "@/components/image-gallery"
@@ -9,13 +7,28 @@ import { PlantSearch } from "@/components/plant-search"
 import { AnswerResult } from "@/components/answer-result"
 import { UkLocationMap } from "@/components/uk-location-map"
 import { Share2, TrendingUp, Award, Flame, Clock, HelpCircle } from "lucide-react"
-import Link from "next/link"
 import confetti from "canvas-confetti"
 import { getPuzzle, PuzzleId } from "@/lib/puzzles"
 import { getSpecies, Species } from "@/lib/plants"
 import { formatDate } from "@/lib/format-date"
+import { assetUrl } from "@/lib/utils"
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+export const Route = createFileRoute("/puzzle/$id")({
+  loader: ({ params }) => {
+    const puzzleId = PuzzleId(parseInt(params.id, 10))
+    const puzzleData = getPuzzle(puzzleId)
+    if (!puzzleData) {
+      throw notFound()
+    }
+    const correctSpecies = getSpecies(puzzleData.speciesId)
+    if (!correctSpecies) {
+      throw notFound()
+    }
+    return { puzzleData, correctSpecies }
+  },
+  component: PuzzlePage,
+  notFoundComponent: () => <div>Puzzle not found</div>,
+})
 
 const userStats = {
   totalIdentifications: 42,
@@ -24,25 +37,14 @@ const userStats = {
   maxStreak: 12,
 }
 
-export default function PuzzleClient({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params)
-  const puzzleId = PuzzleId(parseInt(id, 10))
-  const puzzleData = getPuzzle(puzzleId)
+function PuzzlePage() {
+  const { puzzleData, correctSpecies } = Route.useLoaderData()
 
   const [selectedSpecies, setSelectedSpecies] = useState<Species | undefined>(undefined)
   const [isAnswered, setIsAnswered] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
   const [gaveUp, setGaveUp] = useState(false)
   const answerPanelRef = useRef<HTMLDivElement>(null)
-
-  if (!puzzleData) {
-    notFound()
-  }
-
-  const correctSpecies = getSpecies(puzzleData.speciesId)
-  if (!correctSpecies) {
-    notFound()
-  }
 
   const handleSubmit = () => {
     if (selectedSpecies) {
@@ -93,8 +95,8 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
       <header className="min-w-[334px] border-b border-border bg-card">
         <div className="container mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex flex-shrink-0 items-center gap-3">
-              <img src={basePath + "/logo.png"} alt="" className="size-12 min-[440px]:size-20" />
+            <Link to="/" className="flex flex-shrink-0 items-center gap-3">
+              <img src={assetUrl("/logo.png")} alt="" className="size-12 min-[440px]:size-20" />
               <div>
                 <h1 className="font-serif text-xl font-bold text-foreground min-[440px]:text-2xl">Wortle</h1>
                 <p className="hidden text-sm text-muted-foreground min-[440px]:block">Daily Wild Plant Quiz</p>
@@ -106,7 +108,7 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
                 <p className="text-xs text-muted-foreground">Puzzle #{puzzleData.id}</p>
               </div>
               <Link
-                href="/about"
+                to="/about"
                 className="flex size-10 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
               >
                 <HelpCircle className="size-5" />

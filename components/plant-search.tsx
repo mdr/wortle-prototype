@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { getAllSpecies, Species } from "@/lib/plants"

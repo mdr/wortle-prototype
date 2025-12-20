@@ -6,6 +6,11 @@ tasks:
     cmds:
       - pnpm install
 
+  dev:
+    desc: Start development server
+    cmds:
+      - pnpm dev
+
   tsc:
     desc: Type check
     cmds:
@@ -52,4 +57,4 @@ tasks:
   ngrok:
     desc: Expose local dev server via ngrok
     cmds:
-      - ngrok http 3000
+      - ngrok http 5173

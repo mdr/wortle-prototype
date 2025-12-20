@@ -1,14 +1,15 @@
-"use client"
-
+import { createFileRoute, Link } from "@tanstack/react-router"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { HelpCircle } from "lucide-react"
-import Link from "next/link"
 import { getAllPuzzleIds } from "@/lib/puzzles"
+import { assetUrl } from "@/lib/utils"
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+export const Route = createFileRoute("/")({
+  component: HomePage,
+})
 
-export default function HomePage() {
+function HomePage() {
   const puzzleIds = getAllPuzzleIds()
 
   return (
@@ -18,7 +19,7 @@ export default function HomePage() {
         <div className="container mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between">
             <div className="flex flex-shrink-0 items-center gap-3">
-              <img src={basePath + "/logo.png"} alt="" className="size-12 min-[440px]:size-20" />
+              <img src={assetUrl("/logo.png")} alt="" className="size-12 min-[440px]:size-20" />
               <div>
                 <h1 className="font-serif text-xl font-bold text-foreground min-[440px]:text-2xl">Wortle</h1>
                 <p className="hidden text-sm text-muted-foreground min-[440px]:block">Daily Wild Plant Quiz</p>
@@ -26,7 +27,7 @@ export default function HomePage() {
             </div>
             <div className="flex flex-shrink-0 items-center gap-4">
               <Link
-                href="/about"
+                to="/about"
                 className="flex size-10 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
               >
                 <HelpCircle className="size-5" />
@@ -61,7 +62,7 @@ export default function HomePage() {
 
             <div className="flex flex-col gap-3">
               {puzzleIds.map((id) => (
-                <Link key={id} href={`/puzzle/${id}`} data-testid="puzzle-link">
+                <Link key={id} to="/puzzle/$id" params={{ id: String(id) }} data-testid="puzzle-link">
                   <Button variant="outline" className="w-full justify-start" size="lg">
                     Puzzle #{id}
                   </Button>

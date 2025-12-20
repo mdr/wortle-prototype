@@ -1,20 +1,23 @@
+import { createFileRoute, Link } from "@tanstack/react-router"
 import { Card } from "@/components/ui/card"
-import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
+import { assetUrl } from "@/lib/utils"
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+export const Route = createFileRoute("/about")({
+  component: AboutPage,
+})
 
-export default function AboutPage() {
+function AboutPage() {
   return (
     <main className="min-h-screen bg-background">
       <div className="container mx-auto max-w-2xl px-4 py-8">
-        <Link href="/" className="mb-6 inline-flex items-center text-sm text-muted-foreground hover:text-foreground">
+        <Link to="/" className="mb-6 inline-flex items-center text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="mr-1 size-4" />
           Back to quiz
         </Link>
 
         <div className="mb-8 flex items-center gap-3">
-          <img src={basePath + "/logo.png"} alt="" className="size-20" />
+          <img src={assetUrl("/logo.png")} alt="" className="size-20" />
           <h1 className="text-3xl font-bold">About Wortle</h1>
         </div>
 

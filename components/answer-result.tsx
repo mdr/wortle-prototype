@@ -1,5 +1,3 @@
-"use client"
-
 import { Card } from "@/components/ui/card"
 import { Check, X } from "lucide-react"
 import { Species } from "@/lib/plants"

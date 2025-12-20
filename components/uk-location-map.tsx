@@ -1,5 +1,3 @@
-"use client"
-
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps"
 import { cn } from "@/lib/utils"
 

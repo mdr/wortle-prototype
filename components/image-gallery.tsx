@@ -1,11 +1,10 @@
-"use client"
-
 import { useState, useEffect, useCallback } from "react"
 import FocusTrap from "focus-trap-react"
 import { Button } from "@/components/ui/button"
 import { TransformWrapper, TransformComponent, useControls } from "react-zoom-pan-pinch"
 import { ChevronLeft, ChevronRight, Maximize2, X, ZoomIn, ZoomOut, RotateCcw, Copyright } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { assetUrl } from "@/lib/utils"
 
 interface ImageData {
   url: string
@@ -21,8 +20,6 @@ interface ImageGalleryProps {
   images: ImageData[]
   attribution?: Attribution
 }
-
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
 export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -51,7 +48,7 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
           >
             <TransformComponent wrapperClass="!w-full !h-full" contentClass="!w-full !h-full">
               <img
-                src={basePath + (images[currentIndex].url || "/placeholder.svg")}
+                src={assetUrl(images[currentIndex].url || "/placeholder.svg")}
                 alt={images[currentIndex].caption}
                 className="h-full w-full object-contain"
               />
@@ -147,7 +144,7 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
                 }`}
               >
                 <img
-                  src={basePath + (image.url || "/placeholder.svg")}
+                  src={assetUrl(image.url || "/placeholder.svg")}
                   alt={image.caption}
                   className="absolute inset-0 h-full w-full object-cover"
                 />
@@ -288,7 +285,7 @@ const FullScreenViewer = ({ images, currentIndex, onClose, onNavigate }: FullScr
             contentClass="!w-full !h-full flex items-center justify-center"
           >
             <img
-              src={basePath + (images[currentIndex].url || "/placeholder.svg")}
+              src={assetUrl(images[currentIndex].url || "/placeholder.svg")}
               alt={images[currentIndex].caption}
               className="max-h-full max-w-full object-contain"
             />
