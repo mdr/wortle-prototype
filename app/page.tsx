@@ -14,14 +14,14 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-background" data-testid="home-page">
       {/* Header */}
-      <header className="border-b border-border bg-card">
+      <header className="min-w-[334px] border-b border-border bg-card">
         <div className="container mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between">
             <div className="flex flex-shrink-0 items-center gap-3">
-              <img src={basePath + "/logo.png"} alt="" className="size-12 sm:size-16 md:size-20" />
+              <img src={basePath + "/logo.png"} alt="" className="size-12 min-[440px]:size-20" />
               <div>
-                <h1 className="font-serif text-xl font-bold text-foreground sm:text-2xl">Wortle</h1>
-                <p className="hidden text-sm text-muted-foreground sm:block">Daily Wild Plant Quiz</p>
+                <h1 className="font-serif text-xl font-bold text-foreground min-[440px]:text-2xl">Wortle</h1>
+                <p className="hidden text-sm text-muted-foreground min-[440px]:block">Daily Wild Plant Quiz</p>
               </div>
             </div>
             <div className="flex flex-shrink-0 items-center gap-4">
