@@ -24,7 +24,7 @@ interface ImageGalleryProps {
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
-export function ImageGallery({ images, attribution }: ImageGalleryProps) {
+export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
 
@@ -175,7 +175,7 @@ export function ImageGallery({ images, attribution }: ImageGalleryProps) {
   )
 }
 
-function ZoomControls() {
+const ZoomControls = () => {
   const { zoomIn, zoomOut, resetTransform } = useControls()
   return (
     <div className="flex items-center gap-1 rounded-full bg-black/50 p-1">
@@ -217,7 +217,7 @@ interface FullScreenViewerProps {
   onNavigate: (index: number) => void
 }
 
-function FullScreenViewer({ images, currentIndex, onClose, onNavigate }: FullScreenViewerProps) {
+const FullScreenViewer = ({ images, currentIndex, onClose, onNavigate }: FullScreenViewerProps) => {
   const goToPrevious = useCallback(() => {
     onNavigate(currentIndex === 0 ? images.length - 1 : currentIndex - 1)
   }, [currentIndex, images.length, onNavigate])

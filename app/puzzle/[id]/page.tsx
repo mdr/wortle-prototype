@@ -1,7 +1,7 @@
 import { getAllPuzzleIds } from "@/lib/puzzles"
 import PuzzleClient from "./puzzle-client"
 
-export function generateStaticParams() {
+export const generateStaticParams = () => {
   return getAllPuzzleIds().map((id) => ({
     id: String(id),
   }))

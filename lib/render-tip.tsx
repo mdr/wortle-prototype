@@ -1,7 +1,7 @@
 import { GlossaryTerm } from "@/components/glossary-term"
 import { glossary } from "@/lib/glossary"
 
-export function renderTipWithGlossary(tip: string): React.ReactNode {
+export const renderTipWithGlossary = (tip: string): React.ReactNode => {
   const parts: React.ReactNode[] = []
   const regex = /\[\[([^\]]+)\]\]/g
   let lastIndex = 0

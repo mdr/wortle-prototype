@@ -8,7 +8,7 @@ interface GlossaryTermProps {
   children: React.ReactNode
 }
 
-export function GlossaryTerm({ term, children }: GlossaryTermProps) {
+export const GlossaryTerm = ({ term, children }: GlossaryTermProps) => {
   const definition = glossary[term as keyof typeof glossary]
 
   if (!definition) {

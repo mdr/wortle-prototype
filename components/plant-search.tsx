@@ -9,7 +9,7 @@ interface PlantSearchProps {
   selectedSpecies: Species | undefined
 }
 
-export function PlantSearch({ onSelect, selectedSpecies }: PlantSearchProps) {
+export const PlantSearch = ({ onSelect, selectedSpecies }: PlantSearchProps) => {
   const [query, setQuery] = useState("")
   const [open, setOpen] = useState(false)
 

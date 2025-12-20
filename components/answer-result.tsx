@@ -12,7 +12,7 @@ interface AnswerResultProps {
   correctAnswer: Species
 }
 
-export function AnswerResult({ isCorrect, gaveUp, userAnswer, correctAnswer }: AnswerResultProps) {
+export const AnswerResult = ({ isCorrect, gaveUp, userAnswer, correctAnswer }: AnswerResultProps) => {
   const getHeading = () => {
     if (isCorrect) return "Correct!"
     if (gaveUp) return "Here's the answer"

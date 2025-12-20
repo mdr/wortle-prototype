@@ -12,7 +12,7 @@ interface UkLocationMapProps {
   className?: string
 }
 
-export function UkLocationMap({ latitude, longitude, className }: UkLocationMapProps) {
+export const UkLocationMap = ({ latitude, longitude, className }: UkLocationMapProps) => {
   return (
     <div
       className={cn(className, "[&_*]:outline-none [&_svg]:focus:outline-none")}

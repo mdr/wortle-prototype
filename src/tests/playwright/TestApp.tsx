@@ -5,6 +5,6 @@ interface TestAppProps {
 }
 
 // Simple wrapper for testing - styles are imported via playwright/index.tsx
-export function TestApp({ children }: TestAppProps) {
+export const TestApp = ({ children }: TestAppProps) => {
   return <div className="font-sans antialiased">{children}</div>
 }
