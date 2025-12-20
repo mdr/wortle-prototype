@@ -93,10 +93,10 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
         <div className="container mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex flex-shrink-0 items-center gap-3">
-              <img src={basePath + "/logo.png"} alt="" className="size-20" />
+              <img src={basePath + "/logo.png"} alt="" className="size-12 sm:size-16 md:size-20" />
               <div>
-                <h1 className="font-serif text-2xl font-bold text-foreground">Wortle</h1>
-                <p className="text-sm text-muted-foreground">Daily Wild Plant Quiz</p>
+                <h1 className="font-serif text-xl font-bold text-foreground sm:text-2xl">Wortle</h1>
+                <p className="hidden text-sm text-muted-foreground sm:block">Daily Wild Plant Quiz</p>
               </div>
             </Link>
             <div className="flex flex-shrink-0 items-center gap-4">
