@@ -1,4 +1,4 @@
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/shadcn/HoverCard"
 import { glossary } from "@/lib/glossary"
 
 interface GlossaryTermProps {

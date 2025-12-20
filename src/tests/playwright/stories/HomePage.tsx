@@ -1,5 +1,5 @@
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { Card } from "@/components/shadcn/Card"
+import { Button } from "@/components/shadcn/Button"
 import { HelpCircle } from "lucide-react"
 import { getAllPuzzleIds } from "@/lib/puzzles"
 

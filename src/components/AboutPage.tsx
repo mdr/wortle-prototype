@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router"
-import { Card } from "@/components/ui/card"
+import { Card } from "@/components/shadcn/Card"
 import { ArrowLeft } from "lucide-react"
 import { assetUrl } from "@/lib/utils"
 

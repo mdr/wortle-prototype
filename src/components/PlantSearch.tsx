@@ -1,5 +1,12 @@
 import { useState } from "react"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/shadcn/Command"
 import { getAllSpecies, Species } from "@/lib/plants"
 
 interface PlantSearchProps {

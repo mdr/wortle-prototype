@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react"
 import FocusTrap from "focus-trap-react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/shadcn/Button"
 import { TransformWrapper, TransformComponent, useControls } from "react-zoom-pan-pinch"
 import { ChevronLeft, ChevronRight, Maximize2, X, ZoomIn, ZoomOut, RotateCcw, Copyright } from "lucide-react"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/Popover"
 import { assetUrl } from "@/lib/utils"
 
 interface ImageData {

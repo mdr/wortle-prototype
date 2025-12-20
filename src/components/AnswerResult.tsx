@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card"
+import { Card } from "@/components/shadcn/Card"
 import { Check, X } from "lucide-react"
 import { Species } from "@/lib/plants"
 import { renderTipWithGlossary } from "@/lib/render-tip"
