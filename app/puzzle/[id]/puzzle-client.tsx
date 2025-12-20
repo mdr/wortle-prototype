@@ -67,6 +67,7 @@ export default function PuzzleClient({ params }: { params: Promise<{ id: string 
   }
 
   const handleGiveUp = () => {
+    setSelectedSpecies(undefined)
     setGaveUp(true)
     setIsAnswered(true)
   }

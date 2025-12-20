@@ -38,7 +38,7 @@ export interface Puzzle {
 export const puzzles: Record<PuzzleId, Puzzle> = {
   [PuzzleId(40)]: {
     id: PuzzleId(40),
-    date: Iso8601Date("2025-12-19"),
+    date: Iso8601Date("2026-06-08"),
     speciesId: SpeciesId(14), // Daisy
     observationDate: Iso8601Date("2025-12-19"),
     location: "North Yorkshire, England",
