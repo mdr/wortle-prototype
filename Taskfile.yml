@@ -48,3 +48,8 @@ tasks:
       - task: lint
       - task: format:check
       - task: test:ct
+
+  ngrok:
+    desc: Expose local dev server via ngrok
+    cmds:
+      - ngrok http 3000
