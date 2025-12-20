@@ -1,4 +1,4 @@
-import { GlossaryTerm } from "@/components/glossary-term"
+import { GlossaryTerm } from "@/components/GlossaryTerm"
 import { glossary } from "@/lib/glossary"
 
 export const renderTipWithGlossary = (tip: string): React.ReactNode => {
