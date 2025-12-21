@@ -19,3 +19,9 @@ repos:
         language: system
         types: [ts, tsx]
         stages: [pre-commit]
+      - id: gitleaks
+        name: gitleaks
+        entry: gitleaks protect --staged -v
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]

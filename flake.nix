@@ -24,6 +24,7 @@
             go-task
             ngrok
             trivy
+            gitleaks
           ];
 
           shellHook = ''

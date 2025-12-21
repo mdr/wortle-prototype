@@ -79,3 +79,8 @@ tasks:
     desc: Run trivy security scan
     cmds:
       - trivy fs --ignorefile .trivyignore.yaml --skip-version-check .
+
+  secrets:
+    desc: Scan for secrets with gitleaks
+    cmds:
+      - gitleaks detect --source . -v
