@@ -108,4 +108,4 @@ tasks:
     cmds:
       - gh workflow run update-snapshots.yml --ref main
       - sleep 2
-      - gh run list --workflow=update-snapshots.yml --limit=1 --json url --jq '.[0].url'
+      - GH_PAGER= gh run list --workflow=update-snapshots.yml --limit=1 --json url --jq '.[0].url'
