@@ -1,39 +1,55 @@
 import { GlossaryTerm } from "@/components/puzzle/GlossaryTerm"
 import { glossary } from "@/lib/glossary"
 
-export type TipWithGlossaryProps = {
-  tip: string
-}
+type TextRegion = { type: "text"; text: string }
+type GlossaryRegion = { type: "glossary"; term: string; displayText: string }
+type TipRegion = TextRegion | GlossaryRegion
 
-export const TipWithGlossary = ({ tip }: TipWithGlossaryProps) => {
-  const parts: React.ReactNode[] = []
+export const parseTipRegions = (tip: string): TipRegion[] => {
+  const regions: TipRegion[] = []
   const regex = /\[\[([^\]]+)\]\]/g
   let lastIndex = 0
   let match
 
   while ((match = regex.exec(tip)) !== null) {
     if (match.index > lastIndex) {
-      parts.push(tip.slice(lastIndex, match.index))
+      regions.push({ type: "text", text: tip.slice(lastIndex, match.index) })
     }
 
-    const term = match[1]
-    const termLower = term.toLowerCase()
-    if (termLower in glossary) {
-      parts.push(
-        <GlossaryTerm key={match.index} term={termLower}>
-          {term}
-        </GlossaryTerm>,
-      )
+    const displayText = match[1]
+    const term = displayText.toLowerCase()
+    if (term in glossary) {
+      regions.push({ type: "glossary", term, displayText })
     } else {
-      parts.push(term)
+      regions.push({ type: "text", text: displayText })
     }
 
     lastIndex = regex.lastIndex
   }
 
   if (lastIndex < tip.length) {
-    parts.push(tip.slice(lastIndex))
+    regions.push({ type: "text", text: tip.slice(lastIndex) })
   }
 
-  return parts.length === 1 ? parts[0] : parts
+  return regions
+}
+
+export type TipWithGlossaryProps = {
+  tip: string
+}
+
+export const TipWithGlossary = ({ tip }: TipWithGlossaryProps) => {
+  const regions = parseTipRegions(tip)
+
+  const nodes = regions.map((region, index) =>
+    region.type === "text" ? (
+      region.text
+    ) : (
+      <GlossaryTerm key={index} term={region.term}>
+        {region.displayText}
+      </GlossaryTerm>
+    ),
+  )
+
+  return nodes.length === 1 ? nodes[0] : nodes
 }

@@ -1,0 +1,38 @@
+import { Link } from "@tanstack/react-router"
+import { HelpCircle } from "lucide-react"
+import { Puzzle } from "@/lib/Puzzle"
+import { formatDate } from "@/utils/dateUtils"
+import { assetUrl } from "@/utils/utils"
+
+type PuzzleHeaderProps = {
+  puzzleData: Puzzle
+}
+
+export const PuzzleHeader = ({ puzzleData }: PuzzleHeaderProps) => (
+  <header className="min-w-[334px] border-b border-border bg-card">
+    <div className="container mx-auto max-w-7xl px-4">
+      <div className="flex items-center justify-between">
+        <Link to="/" className="flex flex-shrink-0 items-center gap-3">
+          <img src={assetUrl("/logo.png")} alt="" className="size-12 min-[440px]:size-20" />
+          <div>
+            <h1 className="font-serif text-xl font-bold text-foreground min-[440px]:text-2xl">Wortle</h1>
+            <p className="hidden text-sm text-muted-foreground min-[440px]:block">Daily Wild Plant Quiz</p>
+          </div>
+        </Link>
+        <div className="flex flex-shrink-0 items-center gap-4">
+          <div className="text-right">
+            <p className="whitespace-nowrap text-sm font-medium text-foreground">{formatDate(puzzleData.date)}</p>
+            <p className="text-xs text-muted-foreground">Puzzle #{puzzleData.id}</p>
+          </div>
+          <Link
+            to="/about"
+            className="flex size-10 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
+          >
+            <HelpCircle className="size-5" />
+            <span className="sr-only">About Wortle</span>
+          </Link>
+        </div>
+      </div>
+    </div>
+  </header>
+)
