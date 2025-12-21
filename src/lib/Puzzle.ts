@@ -17,7 +17,6 @@ export type PuzzleImage = {
 
 export type Puzzle = {
   id: PuzzleId
-  date: Iso8601Date
   speciesId: SpeciesId
   observationDate: Iso8601Date
   location: string

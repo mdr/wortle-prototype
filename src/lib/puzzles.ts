@@ -5,7 +5,6 @@ import { SpeciesId } from "./Species"
 const allPuzzles: Puzzle[] = [
   {
     id: PuzzleId(40),
-    date: Iso8601Date("2026-06-08"),
     speciesId: SpeciesId(14), // Daisy
     observationDate: Iso8601Date("2025-12-19"),
     location: "North Yorkshire, England",
@@ -23,7 +22,6 @@ const allPuzzles: Puzzle[] = [
   },
   {
     id: PuzzleId(41),
-    date: Iso8601Date("2026-06-09"),
     speciesId: SpeciesId(12), // Herb-Robert
     observationDate: Iso8601Date("2023-07-20"),
     location: "North Yorkshire, England",
@@ -40,7 +38,6 @@ const allPuzzles: Puzzle[] = [
   },
   {
     id: PuzzleId(42),
-    date: Iso8601Date("2026-06-10"),
     speciesId: SpeciesId(11), // Bird's-eye Primrose
     observationDate: Iso8601Date("2024-05-18"),
     location: "North Yorkshire, England",
@@ -58,7 +55,6 @@ const allPuzzles: Puzzle[] = [
   },
   {
     id: PuzzleId(43),
-    date: Iso8601Date("2026-06-11"),
     speciesId: SpeciesId(1), // Devil's-bit Scabious
     observationDate: Iso8601Date("2025-08-13"),
     location: "Northumberland, England",
@@ -77,7 +73,6 @@ const allPuzzles: Puzzle[] = [
   },
   {
     id: PuzzleId(44),
-    date: Iso8601Date("2026-06-12"),
     speciesId: SpeciesId(2), // Tansy
     observationDate: Iso8601Date("2023-08-03"),
     location: "North Yorkshire, England",
