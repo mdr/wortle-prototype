@@ -60,7 +60,7 @@ tasks:
     desc: Build and analyze bundle size
     cmds:
       - ANALYZE=true pnpm build
-      - echo Bundle analysis report written to dist/stats.html
+      - echo Bundle analysis written to dist/stats.html
 
   knip:
     desc: Find unused code
@@ -84,7 +84,7 @@ tasks:
   security:
     desc: Run trivy security scan
     cmds:
-      - trivy fs --ignorefile .trivyignore.yaml --skip-version-check .
+      - trivy fs --ignorefile .trivyignore.yaml --skip-version-check --include-dev-deps .
 
   secrets:
     desc: Scan for secrets with gitleaks

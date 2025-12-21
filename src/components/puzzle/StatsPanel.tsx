@@ -15,7 +15,7 @@ type StatsPanelProps = {
   userStats: UserStats
 }
 
-const getTimeToNextWortle = () => {
+const getTimeToNextWortle = (): string => {
   const now = new Date()
   const tomorrow = new Date(now)
   tomorrow.setUTCDate(tomorrow.getUTCDate() + 1)
