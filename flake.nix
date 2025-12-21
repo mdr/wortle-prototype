@@ -1,5 +1,5 @@
 {
-  description = "Plant ID Game development environment";
+  description = "Wortle development environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -17,7 +17,7 @@
       {
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
-            nodejs_22
+            nodejs_24
             pnpm
             git
             pre-commit
