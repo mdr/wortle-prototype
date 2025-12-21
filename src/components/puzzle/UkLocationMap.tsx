@@ -1,6 +1,7 @@
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps"
 import { cn } from "@/utils/utils"
-import { Degrees, ClassNameList } from "@/utils/brandedTypes"
+import { ClassNameList } from "@/utils/brandedTypes"
+import { Coordinates } from "@/lib/Puzzle"
 
 // Using Natural Earth 50m resolution - more detailed for country-level view
 const WORLD_GEO = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json"
@@ -11,12 +12,11 @@ type GeoFeature = {
 }
 
 interface UkLocationMapProps {
-  latitude: Degrees
-  longitude: Degrees
+  coordinates: Coordinates
   className?: ClassNameList
 }
 
-export const UkLocationMap = ({ latitude, longitude, className }: UkLocationMapProps) => (
+export const UkLocationMap = ({ coordinates, className }: UkLocationMapProps) => (
   <div
     className={cn(className, "[&_*]:outline-none [&_svg]:focus:outline-none")}
     style={{ pointerEvents: "none" }}
@@ -54,7 +54,7 @@ export const UkLocationMap = ({ latitude, longitude, className }: UkLocationMapP
               ))
           }
         </Geographies>
-        <Marker coordinates={[longitude, latitude]}>
+        <Marker coordinates={[coordinates.longitude, coordinates.latitude]}>
           <circle r={1} fill="#16a34a" stroke="#fff" strokeWidth={0.3} />
         </Marker>
       </ZoomableGroup>

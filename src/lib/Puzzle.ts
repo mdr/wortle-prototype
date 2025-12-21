@@ -5,9 +5,14 @@ import { SpeciesId } from "./Species"
 export type PuzzleId = number & Brand.Brand<"PuzzleId">
 export const PuzzleId = Brand.nominal<PuzzleId>()
 
-export type LatLong = {
-  lat: Degrees
-  lng: Degrees
+export type Coordinates = {
+  latitude: Degrees
+  longitude: Degrees
+}
+
+export type Location = {
+  description: string
+  coordinates: Coordinates
 }
 
 export type PuzzleImage = {
@@ -19,8 +24,7 @@ export type Puzzle = {
   id: PuzzleId
   speciesId: SpeciesId
   observationDate: Iso8601Date
-  location: string
-  coordinates: LatLong
+  location: Location
   habitat: string
   images: PuzzleImage[]
   photoAttribution: {

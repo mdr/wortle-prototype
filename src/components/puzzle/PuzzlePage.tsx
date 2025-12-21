@@ -12,7 +12,7 @@ import { Species } from "@/lib/Species"
 import { PuzzleTestIds } from "./PuzzleTestIds"
 
 export type PuzzlePageProps = {
-  puzzleData: Puzzle
+  puzzle: Puzzle
   correctSpecies: Species
 }
 
@@ -23,7 +23,7 @@ const userStats = {
   maxStreak: 12,
 }
 
-export const PuzzlePage = ({ puzzleData, correctSpecies }: PuzzlePageProps) => {
+export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
   const [selectedSpecies, setSelectedSpecies] = useState<Species | undefined>(undefined)
   const [isAnswered, setIsAnswered] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
@@ -32,7 +32,7 @@ export const PuzzlePage = ({ puzzleData, correctSpecies }: PuzzlePageProps) => {
 
   const handleSubmit = () => {
     if (selectedSpecies) {
-      const correct = selectedSpecies.id === puzzleData.speciesId
+      const correct = selectedSpecies.id === puzzle.speciesId
       setIsCorrect(correct)
       setIsAnswered(true)
 
@@ -60,18 +60,18 @@ export const PuzzlePage = ({ puzzleData, correctSpecies }: PuzzlePageProps) => {
 
   return (
     <main className="min-h-screen bg-background" data-testid={PuzzleTestIds.page}>
-      <PuzzleHeader puzzleData={puzzleData} />
+      <PuzzleHeader puzzle={puzzle} />
 
       <div className="container mx-auto max-w-7xl px-4 py-8">
         <div className="grid gap-8 lg:grid-cols-2">
           <div className="space-y-4">
             <Card className="overflow-hidden p-4">
-              <ImageGallery images={puzzleData.images} attribution={puzzleData.photoAttribution} />
+              <ImageGallery images={puzzle.images} attribution={puzzle.photoAttribution} />
             </Card>
           </div>
 
           <div className="space-y-4">
-            <WhereAndWhenCard puzzleData={puzzleData} />
+            <WhereAndWhenCard puzzle={puzzle} />
 
             {!isAnswered ? (
               <AnswerInputCard

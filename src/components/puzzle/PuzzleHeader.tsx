@@ -6,11 +6,11 @@ import { formatDate } from "@/utils/dateUtils"
 import { assetUrl } from "@/utils/utils"
 
 type PuzzleHeaderProps = {
-  puzzleData: Puzzle
+  puzzle: Puzzle
 }
 
-export const PuzzleHeader = ({ puzzleData }: PuzzleHeaderProps) => {
-  const scheduledDate = getFirstDateForPuzzle(puzzleData.id)
+export const PuzzleHeader = ({ puzzle }: PuzzleHeaderProps) => {
+  const scheduledDate = getFirstDateForPuzzle(puzzle.id)
 
   return (
     <header className="min-w-[334px] border-b border-border bg-card">
@@ -28,7 +28,7 @@ export const PuzzleHeader = ({ puzzleData }: PuzzleHeaderProps) => {
               {scheduledDate && (
                 <p className="whitespace-nowrap text-sm font-medium text-foreground">{formatDate(scheduledDate)}</p>
               )}
-              <p className="text-xs text-muted-foreground">Puzzle #{puzzleData.id}</p>
+              <p className="text-xs text-muted-foreground">Puzzle #{puzzle.id}</p>
             </div>
             <Link
               to="/about"

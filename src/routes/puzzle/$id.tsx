@@ -9,17 +9,17 @@ import { ErrorFallback } from "@/components/ErrorFallback"
 export const Route = createFileRoute("/puzzle/$id")({
   loader: ({ params }) => {
     const puzzleId = PuzzleId(parseInt(params.id, 10))
-    const puzzleData = getPuzzle(puzzleId)
-    if (!puzzleData) {
+    const puzzle = getPuzzle(puzzleId)
+    if (!puzzle) {
       // eslint-disable-next-line @typescript-eslint/only-throw-error -- TanStack Router pattern
       throw notFound()
     }
-    const correctSpecies = getSpecies(puzzleData.speciesId)
+    const correctSpecies = getSpecies(puzzle.speciesId)
     if (!correctSpecies) {
       // eslint-disable-next-line @typescript-eslint/only-throw-error -- TanStack Router pattern
       throw notFound()
     }
-    return { puzzleData, correctSpecies }
+    return { puzzle, correctSpecies }
   },
   component: () => <PuzzlePageWrapper />,
   notFoundComponent: () => (
@@ -29,6 +29,6 @@ export const Route = createFileRoute("/puzzle/$id")({
 })
 
 const PuzzlePageWrapper = () => {
-  const { puzzleData, correctSpecies } = Route.useLoaderData()
-  return <PuzzlePage puzzleData={puzzleData} correctSpecies={correctSpecies} />
+  const { puzzle, correctSpecies } = Route.useLoaderData()
+  return <PuzzlePage puzzle={puzzle} correctSpecies={correctSpecies} />
 }

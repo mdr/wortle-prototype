@@ -7,8 +7,10 @@ const allPuzzles: Puzzle[] = [
     id: PuzzleId(40),
     speciesId: SpeciesId(14), // Daisy
     observationDate: Iso8601Date("2025-12-19"),
-    location: "North Yorkshire, England",
-    coordinates: { lat: Degrees(54.0023389), lng: Degrees(-1.5102306) },
+    location: {
+      description: "North Yorkshire, England",
+      coordinates: { latitude: Degrees(54.0023389), longitude: Degrees(-1.5102306) },
+    },
     habitat: "Road verge",
     images: [
       { url: Url("/images/40/whole-plant.jpg"), caption: "Whole plant" },
@@ -24,8 +26,10 @@ const allPuzzles: Puzzle[] = [
     id: PuzzleId(41),
     speciesId: SpeciesId(12), // Herb-Robert
     observationDate: Iso8601Date("2023-07-20"),
-    location: "North Yorkshire, England",
-    coordinates: { lat: Degrees(53.9991278), lng: Degrees(-1.5054472) },
+    location: {
+      description: "North Yorkshire, England",
+      coordinates: { latitude: Degrees(53.9991278), longitude: Degrees(-1.5054472) },
+    },
     habitat: "Pavement plant",
     images: [
       { url: Url("/images/41/plant.jpg"), caption: "Whole plant" },
@@ -40,8 +44,10 @@ const allPuzzles: Puzzle[] = [
     id: PuzzleId(42),
     speciesId: SpeciesId(11), // Bird's-eye Primrose
     observationDate: Iso8601Date("2024-05-18"),
-    location: "North Yorkshire, England",
-    coordinates: { lat: Degrees(54.2015), lng: Degrees(-2.3500028) },
+    location: {
+      description: "North Yorkshire, England",
+      coordinates: { latitude: Degrees(54.2015), longitude: Degrees(-2.3500028) },
+    },
     habitat: "Former limestone quarry",
     images: [
       { url: Url("/images/42/plant.jpg"), caption: "Whole plant" },
@@ -57,8 +63,10 @@ const allPuzzles: Puzzle[] = [
     id: PuzzleId(43),
     speciesId: SpeciesId(1), // Devil's-bit Scabious
     observationDate: Iso8601Date("2025-08-13"),
-    location: "Northumberland, England",
-    coordinates: { lat: Degrees(55.2267806), lng: Degrees(-2.5802806) },
+    location: {
+      description: "Northumberland, England",
+      coordinates: { latitude: Degrees(55.2267806), longitude: Degrees(-2.5802806) },
+    },
     habitat: "Woodland",
     images: [
       { url: Url("/images/43/flower-head.jpg"), caption: "Flower head" },
@@ -75,8 +83,10 @@ const allPuzzles: Puzzle[] = [
     id: PuzzleId(44),
     speciesId: SpeciesId(2), // Tansy
     observationDate: Iso8601Date("2023-08-03"),
-    location: "North Yorkshire, England",
-    coordinates: { lat: Degrees(53.9788528), lng: Degrees(-1.3101916) },
+    location: {
+      description: "North Yorkshire, England",
+      coordinates: { latitude: Degrees(53.9788528), longitude: Degrees(-1.3101916) },
+    },
     habitat: "Flood meadow",
     images: [
       { url: Url("/images/44/plant.jpg"), caption: "Whole plant" },
