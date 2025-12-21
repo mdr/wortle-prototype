@@ -1,5 +1,5 @@
 import { Brand } from "effect"
-import { Degrees, Iso8601Date, Url } from "./brandedTypes"
+import { Degrees, Iso8601Date, Url } from "@/utils/brandedTypes"
 import { SpeciesId } from "./Species"
 
 export type PuzzleId = number & Brand.Brand<"PuzzleId">

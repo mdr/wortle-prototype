@@ -3,9 +3,19 @@ import reactHooks from "eslint-plugin-react-hooks"
 
 const config = [
   {
-    ignores: ["dist/", "node_modules/", "playwright/.cache/", "src/routeTree.gen.ts"],
+    ignores: ["dist/", "node_modules/", "playwright/.cache/", "src/routeTree.gen.ts", "*.config.*"],
   },
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-deprecated": "warn",
+    },
+  },
   {
     plugins: {
       "react-hooks": reactHooks,

@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router"
 import { Card } from "@/components/shadcn/Card"
 import { ArrowLeft } from "lucide-react"
-import { assetUrl } from "@/lib/utils"
+import { assetUrl } from "@/utils/utils"
 
 export const AboutPage = () => (
   <main className="min-h-screen bg-background">

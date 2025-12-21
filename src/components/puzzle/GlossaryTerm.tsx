@@ -7,7 +7,7 @@ interface GlossaryTermProps {
 }
 
 export const GlossaryTerm = ({ term, children }: GlossaryTermProps) => {
-  const definition = glossary[term as keyof typeof glossary]
+  const definition = glossary[term]
 
   if (!definition) {
     return <>{children}</>

@@ -1,22 +1,13 @@
-import { useState, useEffect, useCallback } from "react"
-import FocusTrap from "focus-trap-react"
+import { useState } from "react"
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
+import { ChevronLeft, ChevronRight, Maximize2, Copyright } from "lucide-react"
 import { Button } from "@/components/shadcn/Button"
-import { TransformWrapper, TransformComponent, useControls } from "react-zoom-pan-pinch"
-import { ChevronLeft, ChevronRight, Maximize2, X, ZoomIn, ZoomOut, RotateCcw, Copyright } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/Popover"
-import { assetUrl } from "@/lib/utils"
+import { assetUrl } from "@/utils/utils"
+import { ImageData, Attribution } from "./types"
+import { FullScreenViewer } from "./FullScreenViewer"
 
-interface ImageData {
-  url: string
-  caption: string
-}
-
-interface Attribution {
-  photographer: string
-  license: string
-}
-
-interface ImageGalleryProps {
+type ImageGalleryProps = {
   images: ImageData[]
   attribution?: Attribution
 }
@@ -36,7 +27,6 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
   return (
     <>
       <div className="space-y-4">
-        {/* Main Image */}
         <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-muted">
           <TransformWrapper
             key={currentIndex}
@@ -55,7 +45,6 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
             </TransformComponent>
           </TransformWrapper>
 
-          {/* Navigation Buttons */}
           <div className="pointer-events-none absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-between px-2">
             <Button
               variant="secondary"
@@ -77,7 +66,6 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
             </Button>
           </div>
 
-          {/* Fullscreen Button */}
           <Button
             variant="secondary"
             size="icon"
@@ -88,7 +76,6 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
             <span className="sr-only">View fullscreen</span>
           </Button>
 
-          {/* Attribution Button */}
           {attribution && (
             <Popover>
               <PopoverTrigger asChild>
@@ -128,10 +115,8 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
           )}
         </div>
 
-        {/* Caption */}
         <p className="text-center text-sm text-muted-foreground">{images[currentIndex].caption}</p>
 
-        {/* Thumbnails */}
         <div className="grid grid-cols-4 gap-2">
           {images.map((image, index) => (
             <div key={index} className="flex flex-col items-center">
@@ -159,7 +144,6 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
         </div>
       </div>
 
-      {/* Full-screen Zoom Viewer */}
       {isZoomed && (
         <FullScreenViewer
           images={images}
@@ -169,135 +153,5 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
         />
       )}
     </>
-  )
-}
-
-const ZoomControls = () => {
-  const { zoomIn, zoomOut, resetTransform } = useControls()
-  return (
-    <div className="flex items-center gap-1 rounded-full bg-black/50 p-1">
-      <Button
-        variant="ghost"
-        size="icon"
-        className="size-8 rounded-full text-white hover:bg-black/70 hover:text-white"
-        onClick={() => zoomOut()}
-      >
-        <ZoomOut className="size-4" />
-        <span className="sr-only">Zoom out</span>
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="size-8 rounded-full text-white hover:bg-black/70 hover:text-white"
-        onClick={() => resetTransform()}
-      >
-        <RotateCcw className="size-4" />
-        <span className="sr-only">Reset zoom</span>
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="size-8 rounded-full text-white hover:bg-black/70 hover:text-white"
-        onClick={() => zoomIn()}
-      >
-        <ZoomIn className="size-4" />
-        <span className="sr-only">Zoom in</span>
-      </Button>
-    </div>
-  )
-}
-
-interface FullScreenViewerProps {
-  images: ImageData[]
-  currentIndex: number
-  onClose: () => void
-  onNavigate: (index: number) => void
-}
-
-const FullScreenViewer = ({ images, currentIndex, onClose, onNavigate }: FullScreenViewerProps) => {
-  const goToPrevious = useCallback(() => {
-    onNavigate(currentIndex === 0 ? images.length - 1 : currentIndex - 1)
-  }, [currentIndex, images.length, onNavigate])
-
-  const goToNext = useCallback(() => {
-    onNavigate(currentIndex === images.length - 1 ? 0 : currentIndex + 1)
-  }, [currentIndex, images.length, onNavigate])
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose()
-      if (e.key === "ArrowLeft") goToPrevious()
-      if (e.key === "ArrowRight") goToNext()
-    }
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [onClose, goToPrevious, goToNext])
-
-  return (
-    <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
-      <div className="fixed inset-0 z-50 bg-black" role="dialog" aria-modal="true" aria-label="Image viewer">
-        {/* Close button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute right-4 top-4 z-10 size-10 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
-          onClick={onClose}
-        >
-          <X className="size-6" />
-          <span className="sr-only">Close</span>
-        </Button>
-
-        {/* Navigation arrows */}
-        {images.length > 1 && (
-          <>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute left-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
-              onClick={goToPrevious}
-            >
-              <ChevronLeft className="size-8" />
-              <span className="sr-only">Previous image</span>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute right-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
-              onClick={goToNext}
-            >
-              <ChevronRight className="size-8" />
-              <span className="sr-only">Next image</span>
-            </Button>
-          </>
-        )}
-
-        {/* Zoomable image */}
-        <TransformWrapper
-          key={currentIndex}
-          initialScale={1}
-          minScale={0.5}
-          maxScale={5}
-          centerOnInit
-          doubleClick={{ mode: "toggle", step: 2 }}
-        >
-          <TransformComponent
-            wrapperClass="!w-full !h-full"
-            contentClass="!w-full !h-full flex items-center justify-center"
-          >
-            <img
-              src={assetUrl(images[currentIndex].url || "/placeholder.svg")}
-              alt={images[currentIndex].caption}
-              className="max-h-full max-w-full object-contain"
-            />
-          </TransformComponent>
-
-          {/* Bottom controls */}
-          <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2">
-            <p className="rounded bg-black/50 px-3 py-1 text-sm text-white">{images[currentIndex].caption}</p>
-            <ZoomControls />
-          </div>
-        </TransformWrapper>
-      </div>
-    </FocusTrap>
   )
 }

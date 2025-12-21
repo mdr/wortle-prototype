@@ -14,6 +14,7 @@ type Fixtures = {
 }
 
 export const test = ctBase.extend<Fixtures>({
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   homePage: async ({ mount }, use) => {
     const mountResult = await launchApp(mount)
     const homePage = await new HomePageObject(mountResult).verifyIsShown()

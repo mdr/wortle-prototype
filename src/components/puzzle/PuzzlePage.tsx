@@ -2,7 +2,7 @@ import { useState, useRef } from "react"
 import { Link } from "@tanstack/react-router"
 import { Card } from "@/components/shadcn/Card"
 import { Button } from "@/components/shadcn/Button"
-import { ImageGallery } from "@/components/puzzle/ImageGallery"
+import { ImageGallery } from "@/components/puzzle/imageGallery/ImageGallery"
 import { PlantSearch } from "@/components/puzzle/PlantSearch"
 import { AnswerResult } from "@/components/puzzle/AnswerResult"
 import { UkLocationMap } from "@/components/puzzle/UkLocationMap"
@@ -10,8 +10,8 @@ import { Share2, TrendingUp, Award, Flame, Clock, HelpCircle } from "lucide-reac
 import confetti from "canvas-confetti"
 import { Puzzle } from "@/lib/Puzzle"
 import { Species } from "@/lib/Species"
-import { formatDate } from "@/lib/dateUtils"
-import { assetUrl } from "@/lib/utils"
+import { formatDate } from "@/utils/dateUtils"
+import { assetUrl } from "@/utils/utils"
 
 export type PuzzlePageProps = {
   puzzleData: Puzzle
@@ -45,9 +45,9 @@ export const PuzzlePage = ({ puzzleData, correctSpecies }: PuzzlePageProps) => {
             const rect = panel.getBoundingClientRect()
             const x = (rect.left + rect.width / 2) / window.innerWidth
             const y = (rect.top + rect.height / 2) / window.innerHeight
-            confetti({ origin: { x, y } })
+            void confetti({ origin: { x, y } })
           } else {
-            confetti()
+            void confetti()
           }
         }, 50)
       }

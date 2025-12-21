@@ -1,4 +1,4 @@
-import { Degrees, Iso8601Date, Url } from "./brandedTypes"
+import { Degrees, Iso8601Date, Url } from "@/utils/brandedTypes"
 import { type Puzzle, PuzzleId } from "./Puzzle"
 import { SpeciesId } from "./Species"
 

@@ -9,10 +9,12 @@ export const Route = createFileRoute("/puzzle/$id")({
     const puzzleId = PuzzleId(parseInt(params.id, 10))
     const puzzleData = getPuzzle(puzzleId)
     if (!puzzleData) {
+      // eslint-disable-next-line @typescript-eslint/only-throw-error -- TanStack Router pattern
       throw notFound()
     }
     const correctSpecies = getSpecies(puzzleData.speciesId)
     if (!correctSpecies) {
+      // eslint-disable-next-line @typescript-eslint/only-throw-error -- TanStack Router pattern
       throw notFound()
     }
     return { puzzleData, correctSpecies }

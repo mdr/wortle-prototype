@@ -1,24 +1,11 @@
-import { StrictMode } from "react"
-import { RouterProvider, createRouter, createMemoryHistory } from "@tanstack/react-router"
+import { createRouter, createMemoryHistory } from "@tanstack/react-router"
 import { routeTree } from "@/routeTree.gen"
+import { App } from "@/components/App"
 
-export type TestAppProps = {
-  initialPath?: string
-}
-
-export const TestApp = ({ initialPath = "/" }: TestAppProps) => {
-  const memoryHistory = createMemoryHistory({
-    initialEntries: [initialPath],
-  })
-
+export const TestApp = ({ initialPath = "/" }: { initialPath?: string }) => {
   const router = createRouter({
     routeTree,
-    history: memoryHistory,
+    history: createMemoryHistory({ initialEntries: [initialPath] }),
   })
-
-  return (
-    <StrictMode>
-      <RouterProvider router={router} />
-    </StrictMode>
-  )
+  return <App router={router} />
 }

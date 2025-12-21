@@ -3,7 +3,7 @@ import { Card } from "@/components/shadcn/Card"
 import { Button } from "@/components/shadcn/Button"
 import { HelpCircle } from "lucide-react"
 import { getAllPuzzleIds } from "@/lib/puzzles"
-import { assetUrl } from "@/lib/utils"
+import { assetUrl } from "@/utils/utils"
 
 export const HomePage = () => {
   const puzzleIds = getAllPuzzleIds()

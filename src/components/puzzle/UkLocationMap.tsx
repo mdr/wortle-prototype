@@ -1,8 +1,13 @@
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps"
-import { cn } from "@/lib/utils"
+import { cn } from "@/utils/utils"
 
 // Using Natural Earth 50m resolution - more detailed for country-level view
 const WORLD_GEO = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json"
+
+type GeoFeature = {
+  rsmKey: string
+  properties: { name: string }
+}
 
 interface UkLocationMapProps {
   latitude: number
@@ -29,13 +34,13 @@ export const UkLocationMap = ({ latitude, longitude, className }: UkLocationMapP
     >
       <ZoomableGroup center={[-4.5, 54.75]} zoom={3.5} minZoom={3.5} maxZoom={3.5}>
         <Geographies geography={WORLD_GEO}>
-          {({ geographies }) =>
+          {({ geographies }: { geographies: GeoFeature[] }) =>
             geographies
               .filter((geo) => ["United Kingdom", "Ireland", "Isle of Man"].includes(geo.properties.name))
               .map((geo) => (
                 <Geography
                   key={geo.rsmKey}
-                  geography={geo}
+                  geography={geo as object}
                   fill="#e5e5e5"
                   stroke="#d4d4d4"
                   strokeWidth={0.3}
