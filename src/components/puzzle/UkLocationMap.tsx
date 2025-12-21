@@ -1,4 +1,5 @@
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps"
+import { Feature } from "geojson"
 import { cn } from "@/utils/utils"
 import { ClassNameList } from "@/utils/brandedTypes"
 import { Coordinates } from "@/lib/Puzzle"
@@ -6,10 +7,8 @@ import { Coordinates } from "@/lib/Puzzle"
 // Using Natural Earth 50m resolution - more detailed for country-level view
 const WORLD_GEO = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json"
 
-type GeoFeature = {
-  rsmKey: string
-  properties: { name: string }
-}
+// rsmKey is added by react-simple-maps for use as React key
+type GeoFeature = Feature & { rsmKey: string }
 
 interface UkLocationMapProps {
   coordinates: Coordinates
@@ -37,7 +36,7 @@ export const UkLocationMap = ({ coordinates, className }: UkLocationMapProps) =>
         <Geographies geography={WORLD_GEO}>
           {({ geographies }: { geographies: GeoFeature[] }) =>
             geographies
-              .filter((geo) => ["United Kingdom", "Ireland", "Isle of Man"].includes(geo.properties.name))
+              .filter((geo) => ["United Kingdom", "Ireland", "Isle of Man"].includes(geo.properties?.name as string))
               .map((geo) => (
                 <Geography
                   key={geo.rsmKey}
