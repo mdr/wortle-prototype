@@ -2,6 +2,8 @@
 
 A daily plant identification quiz game.
 
+https://mdr.github.io/wortle-prototype
+
 ## Development
 
 Use [Nix](https://nixos.org/) for a reproducible dev environment:

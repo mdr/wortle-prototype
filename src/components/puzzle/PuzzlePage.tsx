@@ -12,6 +12,7 @@ import { Puzzle } from "@/lib/Puzzle"
 import { Species } from "@/lib/Species"
 import { formatDate } from "@/utils/dateUtils"
 import { assetUrl } from "@/utils/utils"
+import { ClassNameList } from "@/utils/brandedTypes"
 import { PuzzleTestIds } from "./PuzzleTestIds"
 
 export type PuzzlePageProps = {
@@ -124,7 +125,7 @@ export const PuzzlePage = ({ puzzleData, correctSpecies }: PuzzlePageProps) => {
                 <UkLocationMap
                   latitude={puzzleData.coordinates.lat}
                   longitude={puzzleData.coordinates.lng}
-                  className="h-40 w-30 flex-shrink-0 rounded border border-border"
+                  className={ClassNameList("h-40 w-30 flex-shrink-0 rounded border border-border")}
                 />
                 <div className="space-y-2 text-sm">
                   <div className="flex gap-2">

@@ -1,5 +1,6 @@
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps"
 import { cn } from "@/utils/utils"
+import { Degrees, ClassNameList } from "@/utils/brandedTypes"
 
 // Using Natural Earth 50m resolution - more detailed for country-level view
 const WORLD_GEO = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json"
@@ -10,9 +11,9 @@ type GeoFeature = {
 }
 
 interface UkLocationMapProps {
-  latitude: number
-  longitude: number
-  className?: string
+  latitude: Degrees
+  longitude: Degrees
+  className?: ClassNameList
 }
 
 export const UkLocationMap = ({ latitude, longitude, className }: UkLocationMapProps) => (
