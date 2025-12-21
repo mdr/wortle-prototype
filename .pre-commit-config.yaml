@@ -13,3 +13,9 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-commit]
+      - id: eslint
+        name: eslint
+        entry: pnpm eslint --max-warnings=0
+        language: system
+        types: [ts, tsx]
+        stages: [pre-commit]
