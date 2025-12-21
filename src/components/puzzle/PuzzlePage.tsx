@@ -12,6 +12,7 @@ import { Puzzle } from "@/lib/Puzzle"
 import { Species } from "@/lib/Species"
 import { formatDate } from "@/utils/dateUtils"
 import { assetUrl } from "@/utils/utils"
+import { PuzzleTestIds } from "./PuzzleTestIds"
 
 export type PuzzlePageProps = {
   puzzleData: Puzzle
@@ -76,7 +77,7 @@ export const PuzzlePage = ({ puzzleData, correctSpecies }: PuzzlePageProps) => {
   }
 
   return (
-    <main className="min-h-screen bg-background" data-testid="puzzle-page">
+    <main className="min-h-screen bg-background" data-testid={PuzzleTestIds.page}>
       {/* Header */}
       <header className="min-w-[334px] border-b border-border bg-card">
         <div className="container mx-auto max-w-7xl px-4">
@@ -154,7 +155,12 @@ export const PuzzlePage = ({ puzzleData, correctSpecies }: PuzzlePageProps) => {
                   <PlantSearch onSelect={setSelectedSpecies} selectedSpecies={selectedSpecies} />
 
                   {selectedSpecies && (
-                    <Button onClick={handleSubmit} className="w-full" size="lg" data-testid="submit-answer">
+                    <Button
+                      onClick={handleSubmit}
+                      className="w-full"
+                      size="lg"
+                      data-testid={PuzzleTestIds.submitAnswer}
+                    >
                       I'll go with this
                     </Button>
                   )}
@@ -163,6 +169,7 @@ export const PuzzlePage = ({ puzzleData, correctSpecies }: PuzzlePageProps) => {
                     type="button"
                     onClick={handleGiveUp}
                     className="w-full text-sm text-muted-foreground hover:text-foreground"
+                    data-testid={PuzzleTestIds.giveUp}
                   >
                     Give up and show answer
                   </button>

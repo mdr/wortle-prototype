@@ -6,6 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/Pop
 import { assetUrl } from "@/utils/utils"
 import { ImageData, Attribution } from "./types"
 import { FullScreenViewer } from "./FullScreenViewer"
+import { GalleryTestIds } from "./GalleryTestIds"
 
 type ImageGalleryProps = {
   images: ImageData[]
@@ -26,7 +27,7 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
 
   return (
     <>
-      <div className="space-y-4">
+      <div className="space-y-4" data-testid={GalleryTestIds.gallery}>
         <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-muted">
           <TransformWrapper
             key={currentIndex}
@@ -51,6 +52,7 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
               size="icon"
               onClick={goToPrevious}
               className="pointer-events-auto size-10 rounded-full shadow-lg"
+              data-testid={GalleryTestIds.prev}
             >
               <ChevronLeft className="size-5" />
               <span className="sr-only">Previous image</span>
@@ -60,6 +62,7 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
               size="icon"
               onClick={goToNext}
               className="pointer-events-auto size-10 rounded-full shadow-lg"
+              data-testid={GalleryTestIds.next}
             >
               <ChevronRight className="size-5" />
               <span className="sr-only">Next image</span>
@@ -71,6 +74,7 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
             size="icon"
             onClick={() => setIsZoomed(true)}
             className="absolute right-2 top-2 size-10 rounded-full shadow-lg"
+            data-testid={GalleryTestIds.fullscreen}
           >
             <Maximize2 className="size-4" />
             <span className="sr-only">View fullscreen</span>
@@ -115,7 +119,9 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
           )}
         </div>
 
-        <p className="text-center text-sm text-muted-foreground">{images[currentIndex].caption}</p>
+        <p className="text-center text-sm text-muted-foreground" data-testid={GalleryTestIds.caption}>
+          {images[currentIndex].caption}
+        </p>
 
         <div className="grid grid-cols-4 gap-2">
           {images.map((image, index) => (
@@ -127,6 +133,7 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
                     ? "border-muted-foreground/30"
                     : "border-transparent opacity-60 hover:opacity-100 hover:border-muted-foreground/30"
                 }`}
+                data-testid={GalleryTestIds.thumbnail}
               >
                 <img
                   src={assetUrl(image.url || "/placeholder.svg")}

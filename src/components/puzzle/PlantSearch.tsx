@@ -9,6 +9,7 @@ import {
 } from "@/components/shadcn/Command"
 import { getAllSpecies } from "@/lib/plants"
 import { Species } from "@/lib/Species"
+import { PuzzleTestIds } from "./PuzzleTestIds"
 
 interface PlantSearchProps {
   onSelect: (species: Species | undefined) => void
@@ -67,7 +68,7 @@ export const PlantSearch = ({ onSelect, selectedSpecies }: PlantSearchProps) => 
             setOpen(value.length > 0)
           }}
           onFocus={() => query.length > 0 && setOpen(true)}
-          data-testid="plant-search-input"
+          data-testid={PuzzleTestIds.searchInput}
         />
         <CommandList className={open ? "" : "hidden"}>
           <CommandEmpty>No plants found. Try a different name.</CommandEmpty>
@@ -78,7 +79,7 @@ export const PlantSearch = ({ onSelect, selectedSpecies }: PlantSearchProps) => 
                 value={s.commonNames[0]}
                 onSelect={() => handleSelect(s)}
                 className="group"
-                data-testid="plant-option"
+                data-testid={PuzzleTestIds.plantOption}
               >
                 <div className="flex flex-1 flex-col">
                   <span className="font-medium">{s.commonNames[0]}</span>

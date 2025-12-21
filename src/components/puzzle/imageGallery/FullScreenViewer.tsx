@@ -6,6 +6,7 @@ import { Button } from "@/components/shadcn/Button"
 import { assetUrl } from "@/utils/utils"
 import { ImageData } from "./types"
 import { ZoomControls } from "./ZoomControls"
+import { FullscreenTestIds } from "./GalleryTestIds"
 
 type FullScreenViewerProps = {
   images: ImageData[]
@@ -35,12 +36,19 @@ export const FullScreenViewer = ({ images, currentIndex, onClose, onNavigate }: 
 
   return (
     <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
-      <div className="fixed inset-0 z-50 bg-black" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <div
+        className="fixed inset-0 z-50 bg-black"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Image viewer"
+        data-testid={FullscreenTestIds.viewer}
+      >
         <Button
           variant="ghost"
           size="icon"
           className="absolute right-4 top-4 z-10 size-10 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
           onClick={onClose}
+          data-testid={FullscreenTestIds.close}
         >
           <X className="size-6" />
           <span className="sr-only">Close</span>
@@ -53,6 +61,7 @@ export const FullScreenViewer = ({ images, currentIndex, onClose, onNavigate }: 
               size="icon"
               className="absolute left-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
               onClick={goToPrevious}
+              data-testid={FullscreenTestIds.prev}
             >
               <ChevronLeft className="size-8" />
               <span className="sr-only">Previous image</span>
@@ -62,6 +71,7 @@ export const FullScreenViewer = ({ images, currentIndex, onClose, onNavigate }: 
               size="icon"
               className="absolute right-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
               onClick={goToNext}
+              data-testid={FullscreenTestIds.next}
             >
               <ChevronRight className="size-8" />
               <span className="sr-only">Next image</span>
@@ -89,7 +99,9 @@ export const FullScreenViewer = ({ images, currentIndex, onClose, onNavigate }: 
           </TransformComponent>
 
           <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2">
-            <p className="rounded bg-black/50 px-3 py-1 text-sm text-white">{images[currentIndex].caption}</p>
+            <p className="rounded bg-black/50 px-3 py-1 text-sm text-white" data-testid={FullscreenTestIds.caption}>
+              {images[currentIndex].caption}
+            </p>
             <ZoomControls />
           </div>
         </TransformWrapper>

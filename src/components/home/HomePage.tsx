@@ -4,12 +4,13 @@ import { Button } from "@/components/shadcn/Button"
 import { HelpCircle } from "lucide-react"
 import { getAllPuzzleIds } from "@/lib/puzzles"
 import { assetUrl } from "@/utils/utils"
+import { HomeTestIds } from "./HomeTestIds"
 
 export const HomePage = () => {
   const puzzleIds = getAllPuzzleIds()
 
   return (
-    <main className="min-h-screen bg-background" data-testid="home-page">
+    <main className="min-h-screen bg-background" data-testid={HomeTestIds.page}>
       {/* Header */}
       <header className="min-w-[334px] border-b border-border bg-card">
         <div className="container mx-auto max-w-7xl px-4">
@@ -58,7 +59,7 @@ export const HomePage = () => {
 
             <div className="flex flex-col gap-3">
               {puzzleIds.map((id) => (
-                <Link key={id} to="/puzzle/$id" params={{ id: String(id) }} data-testid="puzzle-link">
+                <Link key={id} to="/puzzle/$id" params={{ id: String(id) }} data-testid={HomeTestIds.puzzleLink}>
                   <Button variant="outline" className="w-full justify-start" size="lg">
                     Puzzle #{id}
                   </Button>

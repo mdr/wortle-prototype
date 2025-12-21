@@ -2,6 +2,7 @@ import { Card } from "@/components/shadcn/Card"
 import { Check, X } from "lucide-react"
 import { Species } from "@/lib/Species"
 import { TipWithGlossary } from "@/components/puzzle/TipWithGlossary"
+import { AnswerTestIds } from "./PuzzleTestIds"
 
 interface AnswerResultProps {
   isCorrect: boolean
@@ -26,7 +27,7 @@ export const AnswerResult = ({ isCorrect, gaveUp, userAnswer, correctAnswer }: A
   return (
     <Card
       className={`p-6 ${isCorrect ? "border-primary bg-primary/5" : "border-destructive bg-destructive/5"}`}
-      data-testid={isCorrect ? "answer-correct" : "answer-incorrect"}
+      data-testid={isCorrect ? AnswerTestIds.correct : gaveUp ? AnswerTestIds.gaveUp : AnswerTestIds.incorrect}
     >
       <div className="mb-4 flex items-center gap-3">
         {isCorrect ? (
