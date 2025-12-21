@@ -26,8 +26,10 @@
           ];
 
           shellHook = ''
-            echo "🌿 Wortle dev environment"
-            echo "Run 'task' to see available commands"
+            if [ -t 0 ]; then
+              echo "🌿 Wortle dev environment"
+              echo "Run 'task' to see available commands"
+            fi
           '';
         };
       });

@@ -1,5 +1,5 @@
-import { expect } from "@playwright/test"
 import { PageObject } from "./PageObject"
+import { expect } from "../fixtures"
 
 export class PuzzlePageObject extends PageObject {
   verifyIsShown = (): Promise<this> =>

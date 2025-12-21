@@ -1,6 +1,6 @@
 import { StrictMode } from "react"
 import { RouterProvider, createRouter, Router } from "@tanstack/react-router"
-import { routeTree } from "./routeTree.gen"
+import { routeTree } from "@/routeTree.gen"
 
 const defaultRouter = createRouter({ routeTree, basepath: import.meta.env.BASE_URL })
 

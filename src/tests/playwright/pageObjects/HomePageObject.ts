@@ -1,5 +1,5 @@
-import { expect } from "@playwright/test"
 import { PageObject } from "./PageObject"
+import { expect } from "../fixtures"
 import { PuzzlePageObject } from "./PuzzlePageObject"
 
 export class HomePageObject extends PageObject {

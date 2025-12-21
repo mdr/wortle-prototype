@@ -51,6 +51,11 @@ tasks:
     cmds:
       - pnpm build
 
+  knip:
+    desc: Find unused code
+    cmds:
+      - pnpm exec knip
+
   check:
     desc: Run all checks (tsc, lint, format, tests)
     cmds:

@@ -1,5 +1,6 @@
-import { Locator, Page, expect, test } from "@playwright/test"
+import { Locator, Page } from "@playwright/test"
 import type { MountResult } from "@playwright/experimental-ct-react"
+import { expect, test } from "../fixtures"
 
 export abstract class PageObject {
   protected readonly name: string
