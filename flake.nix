@@ -25,7 +25,6 @@
             ngrok
             trivy
             gitleaks
-            jq
             gh
           ];
 

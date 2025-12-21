@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -21,6 +21,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check if update screenshots mode
+        id: check-us
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          if [[ "$COMMIT_MSG" == US* ]]; then
+            echo "update_screenshots=true" >> $GITHUB_OUTPUT
+          else
+            echo "update_screenshots=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Install Nix
         uses: cachix/install-nix-action@v31
@@ -46,6 +58,29 @@ jobs:
         run: task test:ct:install
 
       - name: Component tests
+        id: test-ct
+        run: task test:ct
+        continue-on-error: ${{ steps.check-us.outputs.update_screenshots == 'true' }}
+
+      - name: Update snapshots if tests failed
+        if: steps.check-us.outputs.update_screenshots == 'true' && steps.test-ct.outcome == 'failure'
+        run: pnpm test:ct --update-snapshots
+
+      - name: Commit updated snapshots
+        if: steps.check-us.outputs.update_screenshots == 'true' && steps.test-ct.outcome == 'failure'
+        run: |
+          git add src/tests/playwright/snapshots
+          if git diff --staged --quiet; then
+            echo "No snapshot changes to commit"
+          else
+            git config --global user.name 'github-actions[bot]'
+            git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+            git commit -m "Update component test snapshots"
+            git push
+          fi
+
+      - name: Re-run component tests after snapshot update
+        if: steps.check-us.outputs.update_screenshots == 'true' && steps.test-ct.outcome == 'failure'
         run: task test:ct
 
       - name: Upload Playwright report

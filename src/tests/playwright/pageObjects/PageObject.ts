@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test"
 import type { MountResult } from "@playwright/experimental-ct-react"
+import AxeBuilder from "@axe-core/playwright"
 import { platform } from "os"
 import { expect, test } from "../fixtures"
 
@@ -42,10 +43,18 @@ export abstract class PageObject {
 
   checkScreenshot = (name: string, { testIdToCapture, elementsToMask }: ScreenshotOptions = {}): Promise<void> =>
     this.step(`checkScreenshot '${name}'`, async () => {
+      await this.verifyIsAccessible()
+
       if (platform() !== "linux") {
         return
       }
       const locator = testIdToCapture === undefined ? this.mountResult : this.get(testIdToCapture)
       await expect(locator).toHaveScreenshot(`${name}.png`, { mask: elementsToMask })
     })
+
+  private verifyIsAccessible = (): Promise<void> =>
+    expect(async () => {
+      const accessibilityScanResults = await new AxeBuilder({ page: this.page }).analyze()
+      expect(accessibilityScanResults.violations).toEqual([])
+    }).toPass()
 }
