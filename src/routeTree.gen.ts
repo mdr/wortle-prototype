@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ErrorTestRouteImport } from './routes/error-test'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PuzzleIdRouteImport } from './routes/puzzle/$id'
 
+const ErrorTestRoute = ErrorTestRouteImport.update({
+  id: '/error-test',
+  path: '/error-test',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -32,35 +38,46 @@ const PuzzleIdRoute = PuzzleIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/error-test': typeof ErrorTestRoute
   '/puzzle/$id': typeof PuzzleIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/error-test': typeof ErrorTestRoute
   '/puzzle/$id': typeof PuzzleIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/error-test': typeof ErrorTestRoute
   '/puzzle/$id': typeof PuzzleIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/puzzle/$id'
+  fullPaths: '/' | '/about' | '/error-test' | '/puzzle/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/puzzle/$id'
-  id: '__root__' | '/' | '/about' | '/puzzle/$id'
+  to: '/' | '/about' | '/error-test' | '/puzzle/$id'
+  id: '__root__' | '/' | '/about' | '/error-test' | '/puzzle/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ErrorTestRoute: typeof ErrorTestRoute
   PuzzleIdRoute: typeof PuzzleIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/error-test': {
+      id: '/error-test'
+      path: '/error-test'
+      fullPath: '/error-test'
+      preLoaderRoute: typeof ErrorTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ErrorTestRoute: ErrorTestRoute,
   PuzzleIdRoute: PuzzleIdRoute,
 }
 export const routeTree = rootRouteImport

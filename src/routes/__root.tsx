@@ -1,4 +1,6 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router"
+import { NotFoundPage } from "@/components/NotFoundPage"
+import { ErrorFallback } from "@/components/ErrorFallback"
 
 export const Route = createRootRoute({
   component: () => (
@@ -6,4 +8,6 @@ export const Route = createRootRoute({
       <Outlet />
     </div>
   ),
+  notFoundComponent: () => <NotFoundPage />,
+  errorComponent: ({ error }) => <ErrorFallback error={error} />,
 })

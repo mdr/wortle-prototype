@@ -3,6 +3,8 @@ import { PuzzlePage } from "@/components/puzzle/PuzzlePage"
 import { getPuzzle } from "@/lib/puzzles"
 import { PuzzleId } from "@/lib/Puzzle"
 import { getSpecies } from "@/lib/plants"
+import { NotFoundPage } from "@/components/NotFoundPage"
+import { ErrorFallback } from "@/components/ErrorFallback"
 
 export const Route = createFileRoute("/puzzle/$id")({
   loader: ({ params }) => {
@@ -20,7 +22,10 @@ export const Route = createFileRoute("/puzzle/$id")({
     return { puzzleData, correctSpecies }
   },
   component: () => <PuzzlePageWrapper />,
-  notFoundComponent: () => <div>Puzzle not found</div>,
+  notFoundComponent: () => (
+    <NotFoundPage message="This puzzle doesn't exist. Please choose a puzzle from the home page." />
+  ),
+  errorComponent: ({ error }) => <ErrorFallback error={error} />,
 })
 
 const PuzzlePageWrapper = () => {
