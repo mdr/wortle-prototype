@@ -74,3 +74,8 @@ tasks:
     desc: Expose local dev server via ngrok
     cmds:
       - ngrok http 5173
+
+  security:
+    desc: Run trivy security scan
+    cmds:
+      - trivy fs --ignorefile .trivyignore.yaml --skip-version-check .

@@ -1,0 +1,6 @@
+vulnerabilities:
+  - id: GHSA-36jr-mh4h-2g58
+    statement: |
+      ReDoS in d3-color color parsing - low risk as we don't parse untrusted color strings.
+      Transitive dep of react-simple-maps via d3-zoom. Check for updates to react-simple-maps periodically.
+      See: https://github.com/zcreativelabs/react-simple-maps/issues/358

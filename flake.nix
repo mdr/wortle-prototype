@@ -23,6 +23,7 @@
             pre-commit
             go-task
             ngrok
+            trivy
           ];
 
           shellHook = ''
