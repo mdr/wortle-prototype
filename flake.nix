@@ -26,6 +26,7 @@
             trivy
             gitleaks
             jq
+            gh
           ];
 
           shellHook = ''

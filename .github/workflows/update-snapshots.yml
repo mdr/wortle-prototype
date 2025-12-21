@@ -15,22 +15,19 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
         with:
-          version: 10
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-          cache: "pnpm"
+      - name: Setup devShell
+        uses: nicknovitski/nix-develop@v1
 
       - name: Install dependencies
-        run: pnpm install
+        run: task install
 
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium
+        run: task test:ct:install
 
       - name: Update component test snapshots
         run: pnpm test:ct --update-snapshots
@@ -38,7 +35,7 @@ jobs:
       - name: Check for changes
         id: git-check
         run: |
-          git add src/tests/playwright/__snapshots__
+          git add src/tests/playwright/snapshots
           changed_files=$(git status --porcelain)
           change_count=$(echo "$changed_files" | grep -c . || true)
           echo "changes=$change_count" >> $GITHUB_OUTPUT
