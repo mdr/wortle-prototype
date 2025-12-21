@@ -84,3 +84,26 @@ tasks:
     desc: Scan for secrets with gitleaks
     cmds:
       - gitleaks detect --source . -v
+
+  update-screenshots:
+    aliases:
+      - us
+    desc: Update screenshots using Docker (for consistent rendering)
+    vars:
+      PLAYWRIGHT_VERSION:
+        sh: jq -r '.devDependencies."@playwright/experimental-ct-react"' package.json
+    cmds:
+      - >-
+        docker run --rm
+        -e CI=true
+        -v $(pwd):$(pwd)
+        -w $(pwd)
+        mcr.microsoft.com/playwright:v{{.PLAYWRIGHT_VERSION}}-jammy
+        sh -c "corepack enable && pnpm install --no-frozen-lockfile && pnpm test:ct --update-snapshots"
+
+  update-screenshots-ci:
+    aliases:
+      - us-ci
+    desc: Trigger GitHub Actions workflow to update snapshots
+    cmds:
+      - gh workflow run update-snapshots.yml --ref main

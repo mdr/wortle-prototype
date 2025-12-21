@@ -25,6 +25,7 @@
             ngrok
             trivy
             gitleaks
+            jq
           ];
 
           shellHook = ''

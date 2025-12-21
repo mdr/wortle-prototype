@@ -1,6 +1,14 @@
 import { Locator, Page } from "@playwright/test"
 import type { MountResult } from "@playwright/experimental-ct-react"
+import { platform } from "os"
 import { expect, test } from "../fixtures"
+
+type TestId = string
+
+interface ScreenshotOptions {
+  testIdToCapture?: TestId
+  elementsToMask?: Locator[]
+}
 
 export abstract class PageObject {
   protected readonly name: string
@@ -32,6 +40,12 @@ export abstract class PageObject {
   expectTextVisible = (text: string | RegExp): Promise<void> =>
     this.step(`expectTextVisible '${text}'`, () => expect(this.getByText(text)).toBeVisible())
 
-  checkScreenshot = (name: string): Promise<void> =>
-    this.step(`checkScreenshot '${name}'`, () => expect(this.page).toHaveScreenshot(`${name}.png`))
+  checkScreenshot = (name: string, { testIdToCapture, elementsToMask }: ScreenshotOptions = {}): Promise<void> =>
+    this.step(`checkScreenshot '${name}'`, async () => {
+      if (platform() !== "linux") {
+        return
+      }
+      const locator = testIdToCapture === undefined ? this.mountResult : this.get(testIdToCapture)
+      await expect(locator).toHaveScreenshot(`${name}.png`, { mask: elementsToMask })
+    })
 }
