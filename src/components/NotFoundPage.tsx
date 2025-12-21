@@ -3,6 +3,7 @@ import { Card } from "@/components/shadcn/Card"
 import { Button } from "@/components/shadcn/Button"
 import { SearchX, Home } from "lucide-react"
 import { assetUrl } from "@/utils/utils"
+import { NotFoundTestIds } from "./NotFoundTestIds"
 
 export type NotFoundPageProps = {
   message?: string
@@ -10,7 +11,7 @@ export type NotFoundPageProps = {
 
 export const NotFoundPage = ({ message = "The page you're looking for doesn't exist." }: NotFoundPageProps) => {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background" data-testid={NotFoundTestIds.page}>
       <header className="min-w-[334px] border-b border-border bg-card">
         <div className="container mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between">

@@ -3,6 +3,7 @@ import { Card } from "@/components/shadcn/Card"
 import { Button } from "@/components/shadcn/Button"
 import { AlertTriangle, Home } from "lucide-react"
 import { assetUrl } from "@/utils/utils"
+import { ErrorTestIds } from "./ErrorTestIds"
 
 export type ErrorFallbackProps = {
   error: Error
@@ -10,7 +11,7 @@ export type ErrorFallbackProps = {
 
 export const ErrorFallback = ({ error }: ErrorFallbackProps) => {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background" data-testid={ErrorTestIds.page}>
       <header className="min-w-[334px] border-b border-border bg-card">
         <div className="container mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between">
