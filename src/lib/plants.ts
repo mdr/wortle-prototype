@@ -1,26 +1,9 @@
-import { Brand } from "effect"
+import { type Species, SpeciesId, Url } from "./Species"
 
-export type SpeciesId = number & Brand.Brand<"SpeciesId">
-export const SpeciesId = Brand.nominal<SpeciesId>()
+export type { Species, SpeciesLink } from "./Species"
+export { SpeciesId, Url } from "./Species"
 
-export type Url = string & Brand.Brand<"Url">
-export const Url = Brand.nominal<Url>()
-
-export interface SpeciesLink {
-  name: string
-  url: Url
-}
-
-export interface Species {
-  id: SpeciesId
-  scientificName: string
-  family: string
-  commonNames: string[]
-  links: SpeciesLink[]
-  idTips: string[]
-}
-
-export const species: Species[] = [
+const allPlants: Species[] = [
   {
     id: SpeciesId(1),
     scientificName: "Succisa pratensis",
@@ -174,6 +157,6 @@ export const species: Species[] = [
   },
 ]
 
-export const getSpecies = (id: SpeciesId): Species | undefined => species.find((s) => s.id === id)
+export const getSpecies = (id: SpeciesId): Species | undefined => allPlants.find((s) => s.id === id)
 
-export const getAllSpecies = (): Species[] => species
+export const getAllSpecies = (): Species[] => allPlants

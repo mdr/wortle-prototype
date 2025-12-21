@@ -66,12 +66,19 @@ export const PlantSearch = ({ onSelect, selectedSpecies }: PlantSearchProps) => 
             setOpen(value.length > 0)
           }}
           onFocus={() => query.length > 0 && setOpen(true)}
+          data-testid="plant-search-input"
         />
         <CommandList className={open ? "" : "hidden"}>
           <CommandEmpty>No plants found. Try a different name.</CommandEmpty>
           <CommandGroup heading="Suggestions">
             {filteredSpecies.map((s) => (
-              <CommandItem key={s.id} value={s.commonNames[0]} onSelect={() => handleSelect(s)} className="group">
+              <CommandItem
+                key={s.id}
+                value={s.commonNames[0]}
+                onSelect={() => handleSelect(s)}
+                className="group"
+                data-testid="plant-option"
+              >
                 <div className="flex flex-1 flex-col">
                   <span className="font-medium">{s.commonNames[0]}</span>
                   <span className="text-xs italic text-muted-foreground group-data-[selected=true]:text-primary-foreground/70">

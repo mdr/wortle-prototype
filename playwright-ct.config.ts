@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   testDir: "./src/tests/playwright/scenarios",
-  testMatch: "*.iwft.tsx",
+  testMatch: "*.iwft.ts",
   snapshotDir: "./src/tests/playwright/snapshots",
   timeout: 10000,
   fullyParallel: true,

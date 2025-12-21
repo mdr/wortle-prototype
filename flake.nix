@@ -26,9 +26,8 @@
           ];
 
           shellHook = ''
-            echo "Node: $(node --version)"
-            echo "pnpm: $(pnpm --version)"
-            echo "Git: $(git --version)"
+            echo "🌿 Wortle dev environment"
+            echo "Run 'task' to see available commands"
           '';
         };
       });

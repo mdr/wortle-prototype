@@ -10,7 +10,7 @@ import { Share2, TrendingUp, Award, Flame, Clock, HelpCircle } from "lucide-reac
 import confetti from "canvas-confetti"
 import { Puzzle } from "@/lib/puzzles"
 import { Species } from "@/lib/plants"
-import { formatDate } from "@/lib/format-date"
+import { formatDate } from "@/lib/dateUtils"
 import { assetUrl } from "@/lib/utils"
 
 export type PuzzlePageProps = {
@@ -76,7 +76,7 @@ export const PuzzlePage = ({ puzzleData, correctSpecies }: PuzzlePageProps) => {
   }
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background" data-testid="puzzle-page">
       {/* Header */}
       <header className="min-w-[334px] border-b border-border bg-card">
         <div className="container mx-auto max-w-7xl px-4">
@@ -154,7 +154,7 @@ export const PuzzlePage = ({ puzzleData, correctSpecies }: PuzzlePageProps) => {
                   <PlantSearch onSelect={setSelectedSpecies} selectedSpecies={selectedSpecies} />
 
                   {selectedSpecies && (
-                    <Button onClick={handleSubmit} className="w-full" size="lg">
+                    <Button onClick={handleSubmit} className="w-full" size="lg" data-testid="submit-answer">
                       I'll go with this
                     </Button>
                   )}

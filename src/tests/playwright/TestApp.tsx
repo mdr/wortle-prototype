@@ -1,10 +1,24 @@
-import { ReactNode } from "react"
+import { StrictMode } from "react"
+import { RouterProvider, createRouter, createMemoryHistory } from "@tanstack/react-router"
+import { routeTree } from "@/routeTree.gen"
 
-interface TestAppProps {
-  children: ReactNode
+export type TestAppProps = {
+  initialPath?: string
 }
 
-// Simple wrapper for testing - styles are imported via playwright/index.tsx
-export const TestApp = ({ children }: TestAppProps) => {
-  return <div className="font-sans antialiased">{children}</div>
+export const TestApp = ({ initialPath = "/" }: TestAppProps) => {
+  const memoryHistory = createMemoryHistory({
+    initialEntries: [initialPath],
+  })
+
+  const router = createRouter({
+    routeTree,
+    history: memoryHistory,
+  })
+
+  return (
+    <StrictMode>
+      <RouterProvider router={router} />
+    </StrictMode>
+  )
 }

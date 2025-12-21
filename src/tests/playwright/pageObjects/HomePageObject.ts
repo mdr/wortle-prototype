@@ -1,5 +1,6 @@
 import { expect } from "@playwright/test"
 import { PageObject } from "./PageObject"
+import { PuzzlePageObject } from "./PuzzlePageObject"
 
 export class HomePageObject extends PageObject {
   verifyIsShown = (): Promise<this> =>
@@ -10,4 +11,10 @@ export class HomePageObject extends PageObject {
 
   verifyPuzzleCount = (count: number): Promise<void> =>
     this.step(`verifyPuzzleCount ${count}`, () => expect(this.get("puzzle-link")).toHaveCount(count))
+
+  clickPuzzle = (index: number): Promise<PuzzlePageObject> =>
+    this.step(`clickPuzzle ${index}`, async () => {
+      await this.get("puzzle-link").nth(index).click()
+      return new PuzzlePageObject(this.mountResult).verifyIsShown()
+    })
 }

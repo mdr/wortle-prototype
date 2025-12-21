@@ -1,7 +1,7 @@
 import { Card } from "@/components/shadcn/Card"
 import { Check, X } from "lucide-react"
 import { Species } from "@/lib/plants"
-import { renderTipWithGlossary } from "@/lib/render-tip"
+import { TipWithGlossary } from "@/components/puzzle/TipWithGlossary"
 
 interface AnswerResultProps {
   isCorrect: boolean
@@ -24,7 +24,10 @@ export const AnswerResult = ({ isCorrect, gaveUp, userAnswer, correctAnswer }: A
   }
 
   return (
-    <Card className={`p-6 ${isCorrect ? "border-primary bg-primary/5" : "border-destructive bg-destructive/5"}`}>
+    <Card
+      className={`p-6 ${isCorrect ? "border-primary bg-primary/5" : "border-destructive bg-destructive/5"}`}
+      data-testid={isCorrect ? "answer-correct" : "answer-incorrect"}
+    >
       <div className="mb-4 flex items-center gap-3">
         {isCorrect ? (
           <div className="flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
@@ -71,7 +74,9 @@ export const AnswerResult = ({ isCorrect, gaveUp, userAnswer, correctAnswer }: A
             <h3 className="mb-2 font-serif text-lg font-semibold text-foreground">Identification Tips</h3>
             <ul className="list-inside list-disc space-y-2 text-sm text-foreground">
               {correctAnswer.idTips.map((tip, index) => (
-                <li key={index}>{renderTipWithGlossary(tip)}</li>
+                <li key={index}>
+                  <TipWithGlossary tip={tip} />
+                </li>
               ))}
             </ul>
           </div>
