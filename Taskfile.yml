@@ -56,6 +56,12 @@ tasks:
     cmds:
       - pnpm build
 
+  analyze:
+    desc: Build and analyze bundle size
+    cmds:
+      - ANALYZE=true pnpm build
+      - echo Bundle analysis report written to dist/stats.html
+
   knip:
     desc: Find unused code
     cmds:
