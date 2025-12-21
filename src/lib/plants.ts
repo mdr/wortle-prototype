@@ -1,7 +1,5 @@
-import { type Species, SpeciesId, Url } from "./Species"
-
-export type { Species, SpeciesLink } from "./Species"
-export { SpeciesId, Url } from "./Species"
+import { type Species, SpeciesId } from "./Species"
+import { Url } from "./brandedTypes"
 
 const allPlants: Species[] = [
   {

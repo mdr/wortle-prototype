@@ -1,42 +1,9 @@
-import { Brand } from "effect"
-import { SpeciesId, Url } from "./plants"
+import { Degrees, Iso8601Date, Url } from "./brandedTypes"
+import { type Puzzle, PuzzleId } from "./Puzzle"
+import { SpeciesId } from "./Species"
 
-export type PuzzleId = number & Brand.Brand<"PuzzleId">
-export const PuzzleId = Brand.nominal<PuzzleId>()
-
-export type Iso8601Date = string & Brand.Brand<"Iso8601Date">
-export const Iso8601Date = Brand.nominal<Iso8601Date>()
-
-export type Degrees = number & Brand.Brand<"Degrees">
-export const Degrees = Brand.nominal<Degrees>()
-
-export interface LatLong {
-  lat: Degrees
-  lng: Degrees
-}
-
-export interface PuzzleImage {
-  url: Url
-  caption: string
-}
-
-export interface Puzzle {
-  id: PuzzleId
-  date: Iso8601Date
-  speciesId: SpeciesId
-  observationDate: Iso8601Date
-  location: string
-  coordinates: LatLong
-  habitat: string
-  images: PuzzleImage[]
-  photoAttribution: {
-    photographer: string
-    license: string
-  }
-}
-
-export const puzzles: Record<PuzzleId, Puzzle> = {
-  [PuzzleId(40)]: {
+const allPuzzles: Puzzle[] = [
+  {
     id: PuzzleId(40),
     date: Iso8601Date("2026-06-08"),
     speciesId: SpeciesId(14), // Daisy
@@ -54,7 +21,7 @@ export const puzzles: Record<PuzzleId, Puzzle> = {
       license: "CC-BY 4.0",
     },
   },
-  [PuzzleId(41)]: {
+  {
     id: PuzzleId(41),
     date: Iso8601Date("2026-06-09"),
     speciesId: SpeciesId(12), // Herb-Robert
@@ -71,7 +38,7 @@ export const puzzles: Record<PuzzleId, Puzzle> = {
       license: "CC-BY 4.0",
     },
   },
-  [PuzzleId(42)]: {
+  {
     id: PuzzleId(42),
     date: Iso8601Date("2026-06-10"),
     speciesId: SpeciesId(11), // Bird's-eye Primrose
@@ -89,7 +56,7 @@ export const puzzles: Record<PuzzleId, Puzzle> = {
       license: "CC-BY 4.0",
     },
   },
-  [PuzzleId(43)]: {
+  {
     id: PuzzleId(43),
     date: Iso8601Date("2026-06-11"),
     speciesId: SpeciesId(1), // Devil's-bit Scabious
@@ -108,7 +75,7 @@ export const puzzles: Record<PuzzleId, Puzzle> = {
       license: "CC-BY 4.0",
     },
   },
-  [PuzzleId(44)]: {
+  {
     id: PuzzleId(44),
     date: Iso8601Date("2026-06-12"),
     speciesId: SpeciesId(2), // Tansy
@@ -126,8 +93,8 @@ export const puzzles: Record<PuzzleId, Puzzle> = {
       license: "CC-BY 4.0",
     },
   },
-}
+]
 
-export const getPuzzle = (id: PuzzleId): Puzzle | undefined => puzzles[id]
+export const getPuzzle = (id: PuzzleId): Puzzle | undefined => allPuzzles.find((p) => p.id === id)
 
-export const getAllPuzzleIds = (): PuzzleId[] => Object.keys(puzzles).map(Number).map(PuzzleId)
+export const getAllPuzzleIds = (): PuzzleId[] => allPuzzles.map((p) => p.id)

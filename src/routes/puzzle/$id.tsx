@@ -1,6 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router"
 import { PuzzlePage } from "@/components/puzzle/PuzzlePage"
-import { getPuzzle, PuzzleId } from "@/lib/puzzles"
+import { getPuzzle } from "@/lib/puzzles"
+import { PuzzleId } from "@/lib/Puzzle"
 import { getSpecies } from "@/lib/plants"
 
 export const Route = createFileRoute("/puzzle/$id")({

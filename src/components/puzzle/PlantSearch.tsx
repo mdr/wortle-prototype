@@ -7,7 +7,8 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/shadcn/Command"
-import { getAllSpecies, Species } from "@/lib/plants"
+import { getAllSpecies } from "@/lib/plants"
+import { Species } from "@/lib/Species"
 
 interface PlantSearchProps {
   onSelect: (species: Species | undefined) => void

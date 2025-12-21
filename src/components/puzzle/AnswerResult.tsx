@@ -1,6 +1,6 @@
 import { Card } from "@/components/shadcn/Card"
 import { Check, X } from "lucide-react"
-import { Species } from "@/lib/plants"
+import { Species } from "@/lib/Species"
 import { TipWithGlossary } from "@/components/puzzle/TipWithGlossary"
 
 interface AnswerResultProps {

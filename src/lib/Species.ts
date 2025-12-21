@@ -1,8 +1,6 @@
 import { Brand } from "effect"
 import { Url } from "./brandedTypes"
 
-export { Url } from "./brandedTypes"
-
 export type SpeciesId = number & Brand.Brand<"SpeciesId">
 export const SpeciesId = Brand.nominal<SpeciesId>()
 
