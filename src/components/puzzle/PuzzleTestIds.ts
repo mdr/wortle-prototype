@@ -4,7 +4,7 @@ export const PuzzleTestIds = {
   plantOption: "plant-option",
   submitAnswer: "submit-answer",
   giveUp: "give-up",
-  guessCounter: "guess-counter",
+  attemptCounter: "attempt-counter",
 } as const
 
 export const AnswerTestIds = {
@@ -13,8 +13,8 @@ export const AnswerTestIds = {
   gaveUp: "answer-gave-up",
 } as const
 
-export const GuessHistoryTestIds = {
-  container: "guess-history",
-  guessItem: "guess-item",
-  hint: "guess-hint",
+export const AttemptHistoryTestIds = {
+  container: "attempt-history",
+  attemptItem: "attempt-item",
+  hint: "attempt-hint",
 } as const

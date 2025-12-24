@@ -5,15 +5,15 @@ import { AnswerResult } from "@/components/puzzle/AnswerResult"
 import { PuzzleHeader } from "@/components/puzzle/PuzzleHeader"
 import { WhereAndWhenCard } from "@/components/puzzle/WhereAndWhenCard"
 import { AnswerInputCard } from "@/components/puzzle/AnswerInputCard"
-import { GuessHistory } from "@/components/puzzle/GuessHistory"
+import { AttemptHistory } from "@/components/puzzle/AttemptHistory"
 import { StatsPanel } from "@/components/puzzle/StatsPanel"
 import confetti from "canvas-confetti"
 import { Puzzle } from "@/lib/Puzzle"
 import { Species } from "@/lib/Species"
-import { GuessFeedback, createGuessFeedback } from "@/lib/GuessFeedback"
+import { AttemptFeedback, createAttemptFeedback } from "@/lib/AttemptFeedback"
 import { PuzzleTestIds } from "./PuzzleTestIds"
 
-const MAX_GUESSES = 3
+const MAX_ATTEMPTS = 3
 
 export type PuzzlePageProps = {
   puzzle: Puzzle
@@ -29,17 +29,18 @@ const userStats = {
 
 export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
   const [selectedSpecies, setSelectedSpecies] = useState<Species | undefined>(undefined)
-  const [guesses, setGuesses] = useState<GuessFeedback[]>([])
+  const [attempts, setAttempts] = useState<AttemptFeedback[]>([])
   const [gaveUp, setGaveUp] = useState(false)
+  const [shaking, setShaking] = useState(false)
   const answerPanelRef = useRef<HTMLDivElement>(null)
 
-  const isCorrect = guesses.some((g) => g.isCorrect)
-  const isAnswered = isCorrect || guesses.length >= MAX_GUESSES || gaveUp
+  const isCorrect = attempts.some((a) => a.isCorrect)
+  const isAnswered = isCorrect || attempts.length >= MAX_ATTEMPTS || gaveUp
 
   const handleSubmit = () => {
     if (selectedSpecies) {
-      const feedback = createGuessFeedback(selectedSpecies, correctSpecies)
-      setGuesses((prev) => [...prev, feedback])
+      const feedback = createAttemptFeedback(selectedSpecies, correctSpecies)
+      setAttempts((prev) => [...prev, feedback])
       setSelectedSpecies(undefined)
 
       if (feedback.isCorrect) {
@@ -54,6 +55,9 @@ export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
             void confetti()
           }
         }, 50)
+      } else {
+        setShaking(true)
+        setTimeout(() => setShaking(false), 300)
       }
     }
   }
@@ -78,7 +82,7 @@ export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
           <div className="space-y-4">
             <WhereAndWhenCard puzzle={puzzle} />
 
-            {guesses.length > 0 && !isAnswered && <GuessHistory guesses={guesses} />}
+            {attempts.length > 0 && !isAnswered && <AttemptHistory attempts={attempts} />}
 
             {!isAnswered ? (
               <AnswerInputCard
@@ -86,8 +90,10 @@ export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
                 onSelectSpecies={setSelectedSpecies}
                 onSubmit={handleSubmit}
                 onGiveUp={handleGiveUp}
-                guessNumber={guesses.length + 1}
-                maxGuesses={MAX_GUESSES}
+                attemptNumber={attempts.length + 1}
+                maxAttempts={MAX_ATTEMPTS}
+                shaking={shaking}
+                excludedSpeciesIds={attempts.map((a) => a.speciesId)}
               />
             ) : (
               <>
@@ -95,7 +101,7 @@ export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
                   <AnswerResult
                     isCorrect={isCorrect}
                     gaveUp={gaveUp}
-                    guesses={guesses}
+                    attempts={attempts}
                     correctAnswer={correctSpecies}
                   />
                 </div>

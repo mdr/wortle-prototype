@@ -1,7 +1,7 @@
 import { Card } from "@/components/shadcn/Card"
 import { Check, X } from "lucide-react"
 import { Species } from "@/lib/Species"
-import { GuessFeedback } from "@/lib/GuessFeedback"
+import { AttemptFeedback } from "@/lib/AttemptFeedback"
 import { getSpecies } from "@/lib/plants"
 import { TipWithGlossary } from "@/components/puzzle/TipWithGlossary"
 import { AnswerTestIds } from "./PuzzleTestIds"
@@ -9,29 +9,29 @@ import { AnswerTestIds } from "./PuzzleTestIds"
 interface AnswerResultProps {
   isCorrect: boolean
   gaveUp: boolean
-  guesses: GuessFeedback[]
+  attempts: AttemptFeedback[]
   correctAnswer: Species
 }
 
-const getHintText = (guess: GuessFeedback): string | undefined => {
-  if (guess.isCorrect) return undefined
-  if (guess.genusMatch) return "Right genus"
-  if (guess.familyMatch) return "Right family"
+const getHintText = (attempt: AttemptFeedback): string | undefined => {
+  if (attempt.isCorrect) return undefined
+  if (attempt.genusMatch) return "Right genus"
+  if (attempt.familyMatch) return "Right family"
   return undefined
 }
 
-export const AnswerResult = ({ isCorrect, gaveUp, guesses, correctAnswer }: AnswerResultProps) => {
+export const AnswerResult = ({ isCorrect, gaveUp, attempts, correctAnswer }: AnswerResultProps) => {
   const getHeading = () => {
     if (isCorrect) return "Correct!"
     if (gaveUp) return "Here's the answer"
-    return "Out of guesses"
+    return "Out of attempts"
   }
 
   const getSubheading = () => {
     if (isCorrect) {
-      const attempts = guesses.length
-      if (attempts === 1) return "Got it on your first try!"
-      return `Got it in ${attempts} ${attempts === 1 ? "guess" : "guesses"}`
+      const attemptCount = attempts.length
+      if (attemptCount === 1) return "Got it on your first try!"
+      return `Got it in ${attemptCount} attempts`
     }
     if (gaveUp) return "Better luck with the next one"
     return "You'll get the next one"
@@ -59,23 +59,23 @@ export const AnswerResult = ({ isCorrect, gaveUp, guesses, correctAnswer }: Answ
       </div>
 
       <div className="space-y-4 border-t pt-4">
-        {guesses.length > 0 && (
+        {attempts.length > 0 && (
           <div>
             <p className="mb-1 text-sm font-medium text-foreground/70">
-              Your {guesses.length === 1 ? "guess" : "guesses"}:
+              Your {attempts.length === 1 ? "attempt" : "attempts"}:
             </p>
             <div className="space-y-2">
-              {guesses.map((guess, index) => {
-                const species = getSpecies(guess.speciesId)
+              {attempts.map((attempt, index) => {
+                const species = getSpecies(attempt.speciesId)
                 if (!species) return undefined
-                const hint = getHintText(guess)
+                const hint = getHintText(attempt)
                 return (
                   <div
-                    key={guess.speciesId}
+                    key={attempt.speciesId}
                     className={`flex items-end justify-between rounded-md p-3 ${
-                      guess.isCorrect
+                      attempt.isCorrect
                         ? "bg-primary/10"
-                        : guess.genusMatch || guess.familyMatch
+                        : attempt.genusMatch || attempt.familyMatch
                           ? "bg-amber-500/10"
                           : "bg-background"
                     }`}

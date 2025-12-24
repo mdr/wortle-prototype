@@ -8,15 +8,16 @@ import {
   CommandList,
 } from "@/components/shadcn/Command"
 import { getAllSpecies } from "@/lib/plants"
-import { Species } from "@/lib/Species"
+import { Species, SpeciesId } from "@/lib/Species"
 import { PuzzleTestIds } from "./PuzzleTestIds"
 
 interface PlantSearchProps {
   onSelect: (species: Species | undefined) => void
   selectedSpecies: Species | undefined
+  excludedSpeciesIds?: SpeciesId[]
 }
 
-export const PlantSearch = ({ onSelect, selectedSpecies }: PlantSearchProps) => {
+export const PlantSearch = ({ onSelect, selectedSpecies, excludedSpeciesIds = [] }: PlantSearchProps) => {
   const [query, setQuery] = useState("")
   const [open, setOpen] = useState(false)
 
@@ -30,8 +31,9 @@ export const PlantSearch = ({ onSelect, selectedSpecies }: PlantSearchProps) => 
 
   const filteredSpecies = allSpecies.filter(
     (s) =>
-      s.commonNames.some((name) => name.toLowerCase().includes(query.toLowerCase())) ||
-      s.scientificName.toLowerCase().includes(query.toLowerCase()),
+      !excludedSpeciesIds.includes(s.id) &&
+      (s.commonNames.some((name) => name.toLowerCase().includes(query.toLowerCase())) ||
+        s.scientificName.toLowerCase().includes(query.toLowerCase())),
   )
 
   const handleClear = () => {

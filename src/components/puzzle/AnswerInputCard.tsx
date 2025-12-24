@@ -1,7 +1,7 @@
 import { Card } from "@/components/shadcn/Card"
 import { Button } from "@/components/shadcn/Button"
 import { PlantSearch } from "@/components/puzzle/PlantSearch"
-import { Species } from "@/lib/Species"
+import { Species, SpeciesId } from "@/lib/Species"
 import { PuzzleTestIds } from "./PuzzleTestIds"
 
 type AnswerInputCardProps = {
@@ -9,8 +9,10 @@ type AnswerInputCardProps = {
   onSelectSpecies: (species: Species | undefined) => void
   onSubmit: () => void
   onGiveUp: () => void
-  guessNumber: number
-  maxGuesses: number
+  attemptNumber: number
+  maxAttempts: number
+  shaking?: boolean
+  excludedSpeciesIds?: SpeciesId[]
 }
 
 export const AnswerInputCard = ({
@@ -18,14 +20,16 @@ export const AnswerInputCard = ({
   onSelectSpecies,
   onSubmit,
   onGiveUp,
-  guessNumber,
-  maxGuesses,
+  attemptNumber,
+  maxAttempts,
+  shaking,
+  excludedSpeciesIds,
 }: AnswerInputCardProps) => (
-  <Card className="p-6">
+  <Card className={`p-6 ${shaking ? "animate-shake" : ""}`}>
     <div className="mb-2 flex items-center justify-between">
       <h2 className="font-serif text-2xl font-bold text-foreground">Can you identify this plant?</h2>
-      <span className="text-sm text-muted-foreground" data-testid={PuzzleTestIds.guessCounter}>
-        Guess {guessNumber} of {maxGuesses}
+      <span className="text-sm text-muted-foreground" data-testid={PuzzleTestIds.attemptCounter}>
+        Attempt {attemptNumber} of {maxAttempts}
       </span>
     </div>
     <p className="text-sm text-muted-foreground">
@@ -33,7 +37,11 @@ export const AnswerInputCard = ({
     </p>
 
     <div className="space-y-4">
-      <PlantSearch onSelect={onSelectSpecies} selectedSpecies={selectedSpecies} />
+      <PlantSearch
+        onSelect={onSelectSpecies}
+        selectedSpecies={selectedSpecies}
+        excludedSpeciesIds={excludedSpeciesIds}
+      />
 
       {selectedSpecies && (
         <Button onClick={onSubmit} className="w-full" size="lg" data-testid={PuzzleTestIds.submitAnswer}>
