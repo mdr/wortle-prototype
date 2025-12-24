@@ -1,25 +1,38 @@
 import { Card } from "@/components/shadcn/Card"
 import { Check, X } from "lucide-react"
 import { Species } from "@/lib/Species"
+import { GuessFeedback } from "@/lib/GuessFeedback"
+import { getSpecies } from "@/lib/plants"
 import { TipWithGlossary } from "@/components/puzzle/TipWithGlossary"
 import { AnswerTestIds } from "./PuzzleTestIds"
 
 interface AnswerResultProps {
   isCorrect: boolean
   gaveUp: boolean
-  userAnswer: Species | undefined
+  guesses: GuessFeedback[]
   correctAnswer: Species
 }
 
-export const AnswerResult = ({ isCorrect, gaveUp, userAnswer, correctAnswer }: AnswerResultProps) => {
+const getHintText = (guess: GuessFeedback): string | undefined => {
+  if (guess.isCorrect) return undefined
+  if (guess.genusMatch) return "Right genus"
+  if (guess.familyMatch) return "Right family"
+  return undefined
+}
+
+export const AnswerResult = ({ isCorrect, gaveUp, guesses, correctAnswer }: AnswerResultProps) => {
   const getHeading = () => {
     if (isCorrect) return "Correct!"
     if (gaveUp) return "Here's the answer"
-    return "Not this time"
+    return "Out of guesses"
   }
 
   const getSubheading = () => {
-    if (isCorrect) return "Well done on identifying the plant"
+    if (isCorrect) {
+      const attempts = guesses.length
+      if (attempts === 1) return "Got it on your first try!"
+      return `Got it in ${attempts} ${attempts === 1 ? "guess" : "guesses"}`
+    }
     if (gaveUp) return "Better luck with the next one"
     return "You'll get the next one"
   }
@@ -46,15 +59,41 @@ export const AnswerResult = ({ isCorrect, gaveUp, userAnswer, correctAnswer }: A
       </div>
 
       <div className="space-y-4 border-t pt-4">
-        {!isCorrect && userAnswer && (
+        {guesses.length > 0 && (
           <div>
-            <p className="mb-1 text-sm font-medium text-foreground/70">Your answer:</p>
-            <div className="flex items-end justify-between rounded-md bg-background p-3">
-              <div>
-                <p className="font-medium text-foreground">{userAnswer.commonNames[0]}</p>
-                <p className="text-sm italic text-muted-foreground">{userAnswer.scientificName}</p>
-              </div>
-              <p className="text-sm text-muted-foreground">{userAnswer.family}</p>
+            <p className="mb-1 text-sm font-medium text-foreground/70">
+              Your {guesses.length === 1 ? "guess" : "guesses"}:
+            </p>
+            <div className="space-y-2">
+              {guesses.map((guess, index) => {
+                const species = getSpecies(guess.speciesId)
+                if (!species) return undefined
+                const hint = getHintText(guess)
+                return (
+                  <div
+                    key={guess.speciesId}
+                    className={`flex items-end justify-between rounded-md p-3 ${
+                      guess.isCorrect
+                        ? "bg-primary/10"
+                        : guess.genusMatch || guess.familyMatch
+                          ? "bg-amber-500/10"
+                          : "bg-background"
+                    }`}
+                  >
+                    <div>
+                      <p className="font-medium text-foreground">
+                        <span className="mr-2 text-muted-foreground">#{index + 1}</span>
+                        {species.commonNames[0]}
+                      </p>
+                      <p className="text-sm italic text-muted-foreground">{species.scientificName}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm text-muted-foreground">{species.family}</p>
+                      {hint && <p className="text-sm font-medium text-amber-600 dark:text-amber-400">{hint}</p>}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
         )}

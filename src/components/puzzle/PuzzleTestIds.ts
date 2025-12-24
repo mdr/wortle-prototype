@@ -4,10 +4,17 @@ export const PuzzleTestIds = {
   plantOption: "plant-option",
   submitAnswer: "submit-answer",
   giveUp: "give-up",
+  guessCounter: "guess-counter",
 } as const
 
 export const AnswerTestIds = {
   correct: "answer-correct",
   incorrect: "answer-incorrect",
   gaveUp: "answer-gave-up",
+} as const
+
+export const GuessHistoryTestIds = {
+  container: "guess-history",
+  guessItem: "guess-item",
+  hint: "guess-hint",
 } as const

@@ -9,11 +9,25 @@ type AnswerInputCardProps = {
   onSelectSpecies: (species: Species | undefined) => void
   onSubmit: () => void
   onGiveUp: () => void
+  guessNumber: number
+  maxGuesses: number
 }
 
-export const AnswerInputCard = ({ selectedSpecies, onSelectSpecies, onSubmit, onGiveUp }: AnswerInputCardProps) => (
+export const AnswerInputCard = ({
+  selectedSpecies,
+  onSelectSpecies,
+  onSubmit,
+  onGiveUp,
+  guessNumber,
+  maxGuesses,
+}: AnswerInputCardProps) => (
   <Card className="p-6">
-    <h2 className="font-serif text-2xl font-bold text-foreground">Can you identify this plant?</h2>
+    <div className="mb-2 flex items-center justify-between">
+      <h2 className="font-serif text-2xl font-bold text-foreground">Can you identify this plant?</h2>
+      <span className="text-sm text-muted-foreground" data-testid={PuzzleTestIds.guessCounter}>
+        Guess {guessNumber} of {maxGuesses}
+      </span>
+    </div>
     <p className="text-sm text-muted-foreground">
       Study the photographs and enter the common or scientific name of the plant you think this is.
     </p>

@@ -5,11 +5,15 @@ import { AnswerResult } from "@/components/puzzle/AnswerResult"
 import { PuzzleHeader } from "@/components/puzzle/PuzzleHeader"
 import { WhereAndWhenCard } from "@/components/puzzle/WhereAndWhenCard"
 import { AnswerInputCard } from "@/components/puzzle/AnswerInputCard"
+import { GuessHistory } from "@/components/puzzle/GuessHistory"
 import { StatsPanel } from "@/components/puzzle/StatsPanel"
 import confetti from "canvas-confetti"
 import { Puzzle } from "@/lib/Puzzle"
 import { Species } from "@/lib/Species"
+import { GuessFeedback, createGuessFeedback } from "@/lib/GuessFeedback"
 import { PuzzleTestIds } from "./PuzzleTestIds"
+
+const MAX_GUESSES = 3
 
 export type PuzzlePageProps = {
   puzzle: Puzzle
@@ -25,18 +29,20 @@ const userStats = {
 
 export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
   const [selectedSpecies, setSelectedSpecies] = useState<Species | undefined>(undefined)
-  const [isAnswered, setIsAnswered] = useState(false)
-  const [isCorrect, setIsCorrect] = useState(false)
+  const [guesses, setGuesses] = useState<GuessFeedback[]>([])
   const [gaveUp, setGaveUp] = useState(false)
   const answerPanelRef = useRef<HTMLDivElement>(null)
 
+  const isCorrect = guesses.some((g) => g.isCorrect)
+  const isAnswered = isCorrect || guesses.length >= MAX_GUESSES || gaveUp
+
   const handleSubmit = () => {
     if (selectedSpecies) {
-      const correct = selectedSpecies.id === puzzle.speciesId
-      setIsCorrect(correct)
-      setIsAnswered(true)
+      const feedback = createGuessFeedback(selectedSpecies, correctSpecies)
+      setGuesses((prev) => [...prev, feedback])
+      setSelectedSpecies(undefined)
 
-      if (correct) {
+      if (feedback.isCorrect) {
         setTimeout(() => {
           const panel = answerPanelRef.current
           if (panel) {
@@ -55,7 +61,6 @@ export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
   const handleGiveUp = () => {
     setSelectedSpecies(undefined)
     setGaveUp(true)
-    setIsAnswered(true)
   }
 
   return (
@@ -73,12 +78,16 @@ export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
           <div className="space-y-4">
             <WhereAndWhenCard puzzle={puzzle} />
 
+            {guesses.length > 0 && !isAnswered && <GuessHistory guesses={guesses} />}
+
             {!isAnswered ? (
               <AnswerInputCard
                 selectedSpecies={selectedSpecies}
                 onSelectSpecies={setSelectedSpecies}
                 onSubmit={handleSubmit}
                 onGiveUp={handleGiveUp}
+                guessNumber={guesses.length + 1}
+                maxGuesses={MAX_GUESSES}
               />
             ) : (
               <>
@@ -86,7 +95,7 @@ export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
                   <AnswerResult
                     isCorrect={isCorrect}
                     gaveUp={gaveUp}
-                    userAnswer={selectedSpecies}
+                    guesses={guesses}
                     correctAnswer={correctSpecies}
                   />
                 </div>

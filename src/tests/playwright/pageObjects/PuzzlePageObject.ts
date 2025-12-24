@@ -1,7 +1,7 @@
 import { PageObject } from "./PageObject"
 import { expect } from "../fixtures"
 import { GalleryPageObject } from "./GalleryPageObject"
-import { PuzzleTestIds, AnswerTestIds } from "@/components/puzzle/PuzzleTestIds"
+import { PuzzleTestIds, AnswerTestIds, GuessHistoryTestIds } from "@/components/puzzle/PuzzleTestIds"
 
 export class PuzzlePageObject extends PageObject {
   verifyIsShown = (): Promise<this> =>
@@ -28,6 +28,17 @@ export class PuzzlePageObject extends PageObject {
 
   verifyGaveUp = (): Promise<void> =>
     this.step("verifyGaveUp", () => expect(this.get(AnswerTestIds.gaveUp)).toBeVisible())
+
+  verifyGuessHistory = (count: number): Promise<void> =>
+    this.step(`verifyGuessHistory(${count})`, async () => {
+      await expect(this.get(GuessHistoryTestIds.container)).toBeVisible()
+      await expect(this.get(GuessHistoryTestIds.guessItem)).toHaveCount(count)
+    })
+
+  verifyGuessCounter = (current: number, max: number): Promise<void> =>
+    this.step(`verifyGuessCounter(${current}/${max})`, () =>
+      expect(this.get(PuzzleTestIds.guessCounter)).toHaveText(`Guess ${current} of ${max}`),
+    )
 
   gallery = (): Promise<GalleryPageObject> =>
     this.step("gallery", () => new GalleryPageObject(this.mountResult).verifyIsShown())

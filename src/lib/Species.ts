@@ -17,3 +17,5 @@ export type Species = {
   links: SpeciesLink[]
   idTips: string[]
 }
+
+export const getGenus = (scientificName: string): string => scientificName.split(" ")[0]
