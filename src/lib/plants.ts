@@ -39,6 +39,14 @@ const allPlants: Species[] = [
     ],
   },
   {
+    id: SpeciesId(15),
+    scientificName: "Tanacetum parthenium",
+    family: "Asteraceae",
+    commonNames: ["Feverfew"],
+    links: [],
+    idTips: [],
+  },
+  {
     id: SpeciesId(3),
     scientificName: "Knautia arvensis",
     family: "Caprifoliaceae",
@@ -111,6 +119,14 @@ const allPlants: Species[] = [
       { name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.94n") },
       { name: "Wikipedia", url: Url("https://en.wikipedia.org/wiki/Primula_farinosa") },
     ],
+    idTips: [],
+  },
+  {
+    id: SpeciesId(16),
+    scientificName: "Primula veris",
+    family: "Primulaceae",
+    commonNames: ["Cowslip"],
+    links: [],
     idTips: [],
   },
   {
