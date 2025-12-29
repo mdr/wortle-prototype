@@ -14,7 +14,7 @@ export const WhereAndWhenCard = ({ puzzle }: WhereAndWhenCardProps) => {
 
   return (
     <Card className="p-4">
-      <h2 className="mb-1 font-serif text-2xl font-bold text-foreground">Where and when</h2>
+      <h2 className="mb-1 font-serif text-2xl font-bold text-foreground">Context</h2>
       <div className="flex gap-4">
         <UkLocationMap
           coordinates={coordinates}

@@ -12,6 +12,7 @@ type AnswerInputCardProps = {
   attemptNumber: number
   maxAttempts: number
   shaking?: boolean
+  incorrectFeedbackText?: string
   excludedSpeciesIds?: SpeciesId[]
 }
 
@@ -23,6 +24,7 @@ export const AnswerInputCard = ({
   attemptNumber,
   maxAttempts,
   shaking,
+  incorrectFeedbackText,
   excludedSpeciesIds,
 }: AnswerInputCardProps) => (
   <Card className={`p-6 ${shaking ? "animate-shake" : ""}`}>
@@ -48,6 +50,8 @@ export const AnswerInputCard = ({
           I'll go with this
         </Button>
       )}
+
+      <p className="text-sm font-medium text-destructive">{incorrectFeedbackText}</p>
 
       <button
         type="button"

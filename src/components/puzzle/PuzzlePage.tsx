@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useRef, useState } from "react"
 import { Card } from "@/components/shadcn/Card"
 import { ImageGallery } from "@/components/puzzle/imageGallery/ImageGallery"
 import { AnswerResult } from "@/components/puzzle/AnswerResult"
@@ -32,6 +32,7 @@ export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
   const [attempts, setAttempts] = useState<AttemptFeedback[]>([])
   const [gaveUp, setGaveUp] = useState(false)
   const [shaking, setShaking] = useState(false)
+  const [incorrectFeedbackText, setIncorrectFeedbackText] = useState("")
   const answerPanelRef = useRef<HTMLDivElement>(null)
 
   const isCorrect = attempts.some((a) => a.isCorrect)
@@ -44,6 +45,7 @@ export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
       setSelectedSpecies(undefined)
 
       if (feedback.isCorrect) {
+        setIncorrectFeedbackText("")
         setTimeout(() => {
           const panel = answerPanelRef.current
           if (panel) {
@@ -56,6 +58,12 @@ export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
           }
         }, 50)
       } else {
+        const feedbackText = feedback.genusMatch
+          ? "Right genus - you're close!"
+          : feedback.familyMatch
+            ? "That's in the right family - have another go."
+            : "That's not it - have another go."
+        setIncorrectFeedbackText(feedbackText)
         setShaking(true)
         setTimeout(() => setShaking(false), 300)
       }
@@ -65,6 +73,7 @@ export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
   const handleGiveUp = () => {
     setSelectedSpecies(undefined)
     setGaveUp(true)
+    setIncorrectFeedbackText("")
   }
 
   return (
@@ -87,12 +96,16 @@ export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
             {!isAnswered ? (
               <AnswerInputCard
                 selectedSpecies={selectedSpecies}
-                onSelectSpecies={setSelectedSpecies}
+                onSelectSpecies={(species) => {
+                  setSelectedSpecies(species)
+                  setIncorrectFeedbackText("")
+                }}
                 onSubmit={handleSubmit}
                 onGiveUp={handleGiveUp}
                 attemptNumber={attempts.length + 1}
                 maxAttempts={MAX_ATTEMPTS}
                 shaking={shaking}
+                incorrectFeedbackText={incorrectFeedbackText}
                 excludedSpeciesIds={attempts.map((a) => a.speciesId)}
               />
             ) : (
