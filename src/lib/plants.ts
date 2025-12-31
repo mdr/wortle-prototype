@@ -171,6 +171,6 @@ const allPlants: Species[] = [
   },
 ]
 
-export const getSpecies = (id: SpeciesId): Species | undefined => allPlants.find((s) => s.id === id)
+export const findSpecies = (id: SpeciesId): Species | undefined => allPlants.find((s) => s.id === id)
 
 export const getAllSpecies = (): Species[] => allPlants

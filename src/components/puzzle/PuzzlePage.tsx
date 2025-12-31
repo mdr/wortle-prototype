@@ -12,12 +12,14 @@ import { Puzzle } from "@/lib/Puzzle"
 import { Species } from "@/lib/Species"
 import { AttemptFeedback, createAttemptFeedback } from "@/lib/AttemptFeedback"
 import { PuzzleTestIds } from "./PuzzleTestIds"
+import { Iso8601Date } from "@/utils/brandedTypes"
 
 const MAX_ATTEMPTS = 3
 
 export type PuzzlePageProps = {
   puzzle: Puzzle
   correctSpecies: Species
+  scheduledDate?: Iso8601Date
 }
 
 const userStats = {
@@ -27,7 +29,7 @@ const userStats = {
   maxStreak: 12,
 }
 
-export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
+export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate }: PuzzlePageProps) => {
   const [selectedSpecies, setSelectedSpecies] = useState<Species | undefined>(undefined)
   const [attempts, setAttempts] = useState<AttemptFeedback[]>([])
   const [gaveUp, setGaveUp] = useState(false)
@@ -78,7 +80,7 @@ export const PuzzlePage = ({ puzzle, correctSpecies }: PuzzlePageProps) => {
 
   return (
     <main className="min-h-screen bg-background" data-testid={PuzzleTestIds.page}>
-      <PuzzleHeader puzzle={puzzle} />
+      <PuzzleHeader puzzle={puzzle} scheduledDate={scheduledDate} />
 
       <div className="container mx-auto max-w-7xl px-4 py-8">
         <div className="grid gap-8 lg:grid-cols-2">

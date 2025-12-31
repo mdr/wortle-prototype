@@ -38,6 +38,18 @@ export const HomePage = () => {
       <div className="container mx-auto max-w-2xl px-4 py-8">
         <div className="space-y-6">
           <Card className="p-6">
+            <h2 className="font-serif text-2xl font-bold text-foreground">Daily puzzle</h2>
+            <p className="text-muted-foreground">
+              Jump into today&apos;s puzzle. Your result counts toward your daily stats.
+            </p>
+            <div className="pt-4">
+              <Link to="/daily">
+                <Button size="lg">Play today&apos;s puzzle</Button>
+              </Link>
+            </div>
+          </Card>
+
+          <Card className="p-6">
             <h2 className="font-serif text-2xl font-bold text-foreground">Welcome to the Wortle prototype!</h2>
             <div className="space-y-4 text-muted-foreground">
               <p>

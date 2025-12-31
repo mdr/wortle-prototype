@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { formatDate, formatDuration } from "./dateUtils"
+import { formatDate, formatDuration, toIso8601Date } from "./dateUtils"
 
 describe("formatDate", () => {
   it("formats an ISO date string", () => {
@@ -39,5 +39,17 @@ describe("formatDuration", () => {
   it("handles same time", () => {
     const time = new Date("2025-01-01T10:00:00")
     expect(formatDuration(time, time)).toBe("0h 0m")
+  })
+})
+
+describe("toIso8601Date", () => {
+  it("formats a Date into ISO date string", () => {
+    const date = new Date("2025-06-08T15:45:30")
+    expect(toIso8601Date(date)).toBe("2025-06-08")
+  })
+
+  it("pads single digit months and days", () => {
+    const date = new Date("2025-01-05T00:00:00")
+    expect(toIso8601Date(date)).toBe("2025-01-05")
   })
 })

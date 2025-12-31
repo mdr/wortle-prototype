@@ -1,16 +1,18 @@
 import { Link } from "@tanstack/react-router"
 import { HelpCircle } from "lucide-react"
 import { Puzzle } from "@/lib/Puzzle"
-import { getFirstDateForPuzzle } from "@/lib/schedule"
+import { findFirstDateForPuzzle } from "@/lib/schedule"
 import { formatDate } from "@/utils/dateUtils"
 import { assetUrl } from "@/utils/utils"
+import { Iso8601Date } from "@/utils/brandedTypes"
 
 type PuzzleHeaderProps = {
   puzzle: Puzzle
+  scheduledDate?: Iso8601Date
 }
 
-export const PuzzleHeader = ({ puzzle }: PuzzleHeaderProps) => {
-  const scheduledDate = getFirstDateForPuzzle(puzzle.id)
+export const PuzzleHeader = ({ puzzle, scheduledDate }: PuzzleHeaderProps) => {
+  const displayDate = scheduledDate ?? findFirstDateForPuzzle(puzzle.id)
 
   return (
     <header className="min-w-[334px] border-b border-border bg-card">
@@ -25,8 +27,8 @@ export const PuzzleHeader = ({ puzzle }: PuzzleHeaderProps) => {
           </Link>
           <div className="flex flex-shrink-0 items-center gap-4">
             <div className="text-right">
-              {scheduledDate && (
-                <p className="whitespace-nowrap text-sm font-medium text-foreground">{formatDate(scheduledDate)}</p>
+              {displayDate && (
+                <p className="whitespace-nowrap text-sm font-medium text-foreground">{formatDate(displayDate)}</p>
               )}
               <p className="text-xs text-muted-foreground">Puzzle #{puzzle.id}</p>
             </div>

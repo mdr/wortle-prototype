@@ -2,7 +2,7 @@ import { Card } from "@/components/shadcn/Card"
 import { Check, X } from "lucide-react"
 import { Species } from "@/lib/Species"
 import { AttemptFeedback } from "@/lib/AttemptFeedback"
-import { getSpecies } from "@/lib/plants"
+import { findSpecies } from "@/lib/plants"
 import { TipWithGlossary } from "@/components/puzzle/TipWithGlossary"
 import { AnswerTestIds } from "./PuzzleTestIds"
 
@@ -66,7 +66,7 @@ export const AnswerResult = ({ isCorrect, gaveUp, attempts, correctAnswer }: Ans
             </p>
             <div className="space-y-2">
               {attempts.map((attempt, index) => {
-                const species = getSpecies(attempt.speciesId)
+                const species = findSpecies(attempt.speciesId)
                 if (!species) return undefined
                 const hint = getHintText(attempt)
                 return (

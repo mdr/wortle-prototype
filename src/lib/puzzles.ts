@@ -100,6 +100,6 @@ const allPuzzles: Puzzle[] = [
   },
 ]
 
-export const getPuzzle = (id: PuzzleId): Puzzle | undefined => allPuzzles.find((p) => p.id === id)
+export const findPuzzle = (id: PuzzleId): Puzzle | undefined => allPuzzles.find((p) => p.id === id)
 
 export const getAllPuzzleIds = (): PuzzleId[] => allPuzzles.map((p) => p.id)

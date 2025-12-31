@@ -14,13 +14,13 @@ const schedule: ScheduleEntry[] = [
   { date: Iso8601Date("2026-06-12"), puzzleId: PuzzleId(44) },
 ]
 
-export const getFirstDateForPuzzle = (puzzleId: PuzzleId): Iso8601Date | undefined =>
+export const findFirstDateForPuzzle = (puzzleId: PuzzleId): Iso8601Date | undefined =>
   schedule.find((entry) => entry.puzzleId === puzzleId)?.date
 
 export const getDatesForPuzzle = (puzzleId: PuzzleId): Iso8601Date[] =>
   schedule.filter((entry) => entry.puzzleId === puzzleId).map((entry) => entry.date)
 
-export const getPuzzleForDate = (date: Iso8601Date): PuzzleId | undefined =>
+export const findPuzzleForDate = (date: Iso8601Date): PuzzleId | undefined =>
   schedule.find((entry) => entry.date === date)?.puzzleId
 
 export const getAllScheduledDates = (): Iso8601Date[] => schedule.map((entry) => entry.date)
