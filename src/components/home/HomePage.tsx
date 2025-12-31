@@ -59,7 +59,12 @@ export const HomePage = () => {
 
             <div className="flex flex-col gap-3">
               {puzzleIds.map((id) => (
-                <Link key={id} to="/puzzle/$id" params={{ id: String(id) }} data-testid={HomeTestIds.puzzleLink}>
+                <Link
+                  key={id}
+                  to="/review/$puzzleId"
+                  params={{ puzzleId: String(id) }}
+                  data-testid={HomeTestIds.puzzleLink}
+                >
                   <Button variant="outline" className="w-full justify-start" size="lg">
                     Puzzle #{id}
                   </Button>

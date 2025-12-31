@@ -12,7 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ErrorTestRouteImport } from './routes/error-test'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as PuzzleIdRouteImport } from './routes/puzzle/$id'
+import { Route as ReviewPuzzleIdRouteImport } from './routes/review/$puzzleId'
 
 const ErrorTestRoute = ErrorTestRouteImport.update({
   id: '/error-test',
@@ -29,9 +29,9 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PuzzleIdRoute = PuzzleIdRouteImport.update({
-  id: '/puzzle/$id',
-  path: '/puzzle/$id',
+const ReviewPuzzleIdRoute = ReviewPuzzleIdRouteImport.update({
+  id: '/review/$puzzleId',
+  path: '/review/$puzzleId',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -39,34 +39,34 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/error-test': typeof ErrorTestRoute
-  '/puzzle/$id': typeof PuzzleIdRoute
+  '/review/$puzzleId': typeof ReviewPuzzleIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/error-test': typeof ErrorTestRoute
-  '/puzzle/$id': typeof PuzzleIdRoute
+  '/review/$puzzleId': typeof ReviewPuzzleIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/error-test': typeof ErrorTestRoute
-  '/puzzle/$id': typeof PuzzleIdRoute
+  '/review/$puzzleId': typeof ReviewPuzzleIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/error-test' | '/puzzle/$id'
+  fullPaths: '/' | '/about' | '/error-test' | '/review/$puzzleId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/error-test' | '/puzzle/$id'
-  id: '__root__' | '/' | '/about' | '/error-test' | '/puzzle/$id'
+  to: '/' | '/about' | '/error-test' | '/review/$puzzleId'
+  id: '__root__' | '/' | '/about' | '/error-test' | '/review/$puzzleId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ErrorTestRoute: typeof ErrorTestRoute
-  PuzzleIdRoute: typeof PuzzleIdRoute
+  ReviewPuzzleIdRoute: typeof ReviewPuzzleIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -92,11 +92,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/puzzle/$id': {
-      id: '/puzzle/$id'
-      path: '/puzzle/$id'
-      fullPath: '/puzzle/$id'
-      preLoaderRoute: typeof PuzzleIdRouteImport
+    '/review/$puzzleId': {
+      id: '/review/$puzzleId'
+      path: '/review/$puzzleId'
+      fullPath: '/review/$puzzleId'
+      preLoaderRoute: typeof ReviewPuzzleIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -106,7 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ErrorTestRoute: ErrorTestRoute,
-  PuzzleIdRoute: PuzzleIdRoute,
+  ReviewPuzzleIdRoute: ReviewPuzzleIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

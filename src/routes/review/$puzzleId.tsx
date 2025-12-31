@@ -6,9 +6,9 @@ import { getSpecies } from "@/lib/plants"
 import { NotFoundPage } from "@/components/NotFoundPage"
 import { ErrorFallback } from "@/components/ErrorFallback"
 
-export const Route = createFileRoute("/puzzle/$id")({
+export const Route = createFileRoute("/review/$puzzleId")({
   loader: ({ params }) => {
-    const puzzleId = PuzzleId(parseInt(params.id, 10))
+    const puzzleId = PuzzleId(parseInt(params.puzzleId, 10))
     const puzzle = getPuzzle(puzzleId)
     if (!puzzle) {
       // eslint-disable-next-line @typescript-eslint/only-throw-error -- TanStack Router pattern
