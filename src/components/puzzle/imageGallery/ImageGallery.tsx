@@ -51,20 +51,20 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
               variant="secondary"
               size="icon"
               onClick={goToPrevious}
-              className="pointer-events-auto size-10 rounded-full shadow-lg"
+              className="pointer-events-auto size-12 rounded-full shadow-lg"
               data-testid={GalleryTestIds.prev}
             >
-              <ChevronLeft className="size-5" />
+              <ChevronLeft className="size-6" />
               <span className="sr-only">Previous image</span>
             </Button>
             <Button
               variant="secondary"
               size="icon"
               onClick={goToNext}
-              className="pointer-events-auto size-10 rounded-full shadow-lg"
+              className="pointer-events-auto size-12 rounded-full shadow-lg"
               data-testid={GalleryTestIds.next}
             >
-              <ChevronRight className="size-5" />
+              <ChevronRight className="size-6" />
               <span className="sr-only">Next image</span>
             </Button>
           </div>
@@ -73,10 +73,10 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
             variant="secondary"
             size="icon"
             onClick={() => setIsZoomed(true)}
-            className="absolute right-2 top-2 size-10 rounded-full shadow-lg"
+            className="absolute right-2 top-2 size-12 rounded-full shadow-lg"
             data-testid={GalleryTestIds.fullscreen}
           >
-            <Maximize2 className="size-4" />
+            <Maximize2 className="size-6" />
             <span className="sr-only">View fullscreen</span>
           </Button>
 
@@ -86,9 +86,9 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
                 <Button
                   variant="secondary"
                   size="icon"
-                  className="absolute bottom-2 right-2 size-10 rounded-full shadow-lg opacity-70 hover:opacity-100"
+                  className="absolute bottom-2 right-2 size-12 rounded-full shadow-lg opacity-70 hover:opacity-100"
                 >
-                  <Copyright className="size-5" />
+                  <Copyright className="size-6" />
                   <span className="sr-only">Photo attribution</span>
                 </Button>
               </PopoverTrigger>

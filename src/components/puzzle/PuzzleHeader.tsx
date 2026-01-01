@@ -34,9 +34,9 @@ export const PuzzleHeader = ({ puzzle, scheduledDate }: PuzzleHeaderProps) => {
             </div>
             <Link
               to="/about"
-              className="flex size-10 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
+              className="flex size-12 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
             >
-              <HelpCircle className="size-5" />
+              <HelpCircle className="size-6" />
               <span className="sr-only">About Wortle</span>
             </Link>
           </div>

@@ -9,28 +9,28 @@ export const ZoomControls = () => {
       <Button
         variant="ghost"
         size="icon"
-        className="size-8 rounded-full text-white hover:bg-black/70 hover:text-white"
+        className="size-12 rounded-full text-white hover:bg-black/70 hover:text-white"
         onClick={() => zoomOut()}
       >
-        <ZoomOut className="size-4" />
+        <ZoomOut className="size-6" />
         <span className="sr-only">Zoom out</span>
       </Button>
       <Button
         variant="ghost"
         size="icon"
-        className="size-8 rounded-full text-white hover:bg-black/70 hover:text-white"
+        className="size-12 rounded-full text-white hover:bg-black/70 hover:text-white"
         onClick={() => resetTransform()}
       >
-        <RotateCcw className="size-4" />
+        <RotateCcw className="size-6" />
         <span className="sr-only">Reset zoom</span>
       </Button>
       <Button
         variant="ghost"
         size="icon"
-        className="size-8 rounded-full text-white hover:bg-black/70 hover:text-white"
+        className="size-12 rounded-full text-white hover:bg-black/70 hover:text-white"
         onClick={() => zoomIn()}
       >
-        <ZoomIn className="size-4" />
+        <ZoomIn className="size-6" />
         <span className="sr-only">Zoom in</span>
       </Button>
     </div>
