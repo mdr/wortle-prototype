@@ -4,16 +4,17 @@ import { ImageGallery } from "@/components/puzzle/imageGallery/ImageGallery"
 import { AnswerResult } from "@/components/puzzle/AnswerResult"
 import { PuzzleHeader } from "@/components/puzzle/PuzzleHeader"
 import { WhereAndWhenCard } from "@/components/puzzle/WhereAndWhenCard"
-import { AnswerInputCard } from "@/components/puzzle/AnswerInputCard"
+import { AnswerInputCard, AnswerInputCardHandle } from "@/components/puzzle/AnswerInputCard"
 import { AttemptHistory } from "@/components/puzzle/AttemptHistory"
 import { StatsPanel } from "@/components/puzzle/StatsPanel"
-import confetti from "canvas-confetti"
+import { useCorrectAnswerConfetti } from "@/components/puzzle/useCorrectAnswerConfetti"
 import { Puzzle } from "@/lib/Puzzle"
 import { Species } from "@/lib/Species"
 import { AttemptFeedback, createAttemptFeedback } from "@/lib/AttemptFeedback"
 import { DailyResult } from "@/lib/StatsStorage"
 import { PuzzleTestIds } from "./PuzzleTestIds"
 import { Iso8601Date } from "@/utils/brandedTypes"
+import { assert } from "tsafe"
 
 const MAX_ATTEMPTS = 3
 
@@ -41,53 +42,41 @@ export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate, onComplete }
   const [selectedSpecies, setSelectedSpecies] = useState<Species | undefined>(undefined)
   const [attempts, setAttempts] = useState<AttemptFeedback[]>([])
   const [gaveUp, setGaveUp] = useState(false)
-  const [shaking, setShaking] = useState(false)
   const [incorrectFeedbackText, setIncorrectFeedbackText] = useState("")
-  const answerPanelRef = useRef<HTMLDivElement>(null)
+  const { fireConfetti, panelRef: answerPanelRef } = useCorrectAnswerConfetti()
+  const answerInputRef = useRef<AnswerInputCardHandle>(null)
 
   const isCorrect = attempts.some((a) => a.isCorrect)
   const isAnswered = isCorrect || attempts.length >= MAX_ATTEMPTS || gaveUp
 
   const handleSubmit = () => {
-    if (selectedSpecies) {
-      const feedback = createAttemptFeedback(selectedSpecies, correctSpecies)
-      const nextAttemptsCount = attempts.length + 1
-      const isFinalAttempt = feedback.isCorrect || nextAttemptsCount >= MAX_ATTEMPTS
+    assert(selectedSpecies, "Selected species is required to submit an answer.")
+    const feedback = createAttemptFeedback(selectedSpecies, correctSpecies)
+    const nextAttemptsCount = attempts.length + 1
+    const isFinalAttempt = feedback.isCorrect || nextAttemptsCount >= MAX_ATTEMPTS
 
-      if (isFinalAttempt) {
-        onComplete?.({
-          result: feedback.isCorrect ? DailyResult.PASS : DailyResult.FAIL,
-          attempts: nextAttemptsCount,
-          gaveUp: false,
-        })
-      }
+    if (isFinalAttempt) {
+      onComplete?.({
+        result: feedback.isCorrect ? DailyResult.PASS : DailyResult.FAIL,
+        attempts: nextAttemptsCount,
+        gaveUp: false,
+      })
+    }
 
-      setAttempts((prev) => [...prev, feedback])
-      setSelectedSpecies(undefined)
+    setAttempts((prev) => [...prev, feedback])
+    setSelectedSpecies(undefined)
 
-      if (feedback.isCorrect) {
-        setIncorrectFeedbackText("")
-        setTimeout(() => {
-          const panel = answerPanelRef.current
-          if (panel) {
-            const rect = panel.getBoundingClientRect()
-            const x = (rect.left + rect.width / 2) / window.innerWidth
-            const y = (rect.top + rect.height / 2) / window.innerHeight
-            void confetti({ origin: { x, y } })
-          } else {
-            void confetti()
-          }
-        }, 50)
-      } else {
-        const feedbackText = feedback.genusMatch
-          ? "Right genus - you're close!"
-          : feedback.familyMatch
-            ? "That's in the right family - have another go."
-            : "That's not it - have another go."
-        setIncorrectFeedbackText(feedbackText)
-        setShaking(true)
-        setTimeout(() => setShaking(false), 300)
-      }
+    if (feedback.isCorrect) {
+      setIncorrectFeedbackText("")
+      fireConfetti()
+    } else {
+      const feedbackText = feedback.genusMatch
+        ? "Right genus - you're close!"
+        : feedback.familyMatch
+          ? "That's in the right family - have another go."
+          : "That's not it - have another go."
+      setIncorrectFeedbackText(feedbackText)
+      answerInputRef.current?.shake()
     }
   }
 
@@ -122,6 +111,7 @@ export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate, onComplete }
 
             {!isAnswered ? (
               <AnswerInputCard
+                ref={answerInputRef}
                 selectedSpecies={selectedSpecies}
                 onSelectSpecies={(species) => {
                   setSelectedSpecies(species)
@@ -131,7 +121,6 @@ export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate, onComplete }
                 onGiveUp={handleGiveUp}
                 attemptNumber={attempts.length + 1}
                 maxAttempts={MAX_ATTEMPTS}
-                shaking={shaking}
                 incorrectFeedbackText={incorrectFeedbackText}
                 excludedSpeciesIds={attempts.map((a) => a.speciesId)}
               />
