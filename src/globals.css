@@ -122,6 +122,12 @@
   }
 }
 
+@media (max-width: 640px) {
+  html {
+    font-size: 18px;
+  }
+}
+
 @keyframes shake {
   0%,
   100% {

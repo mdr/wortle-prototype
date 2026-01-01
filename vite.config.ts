@@ -23,5 +23,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  server: {
+    host: true,
+    allowedHosts: [".ngrok-free.app"],
+  },
   base: process.env.GITHUB_ACTIONS ? "/wortle-prototype/" : "/",
 })
