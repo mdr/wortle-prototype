@@ -1,5 +1,6 @@
 export const PuzzleTestIds = {
   page: "puzzle-page",
+  homeLink: "puzzle-home-link",
   searchInput: "plant-search-input",
   plantOption: "plant-option",
   chooseDifferentPlant: "choose-different-plant",

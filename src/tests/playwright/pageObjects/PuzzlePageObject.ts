@@ -1,6 +1,7 @@
 import { PageObject } from "./PageObject"
 import { expect } from "../fixtures"
 import { GalleryPageObject } from "./GalleryPageObject"
+import { HomePageObject } from "./HomePageObject"
 import { PuzzleTestIds, AnswerTestIds, AttemptHistoryTestIds } from "@/components/puzzle/PuzzleTestIds"
 
 export class PuzzlePageObject extends PageObject {
@@ -46,10 +47,19 @@ export class PuzzlePageObject extends PageObject {
   verifySearchInputVisible = (): Promise<void> =>
     this.step("verifySearchInputVisible", () => expect(this.get(PuzzleTestIds.searchInput)).toBeVisible())
 
+  verifySearchInputHidden = (): Promise<void> =>
+    this.step("verifySearchInputHidden", () => expect(this.get(PuzzleTestIds.searchInput)).not.toBeVisible())
+
   verifySelectedPlantName = (name: string): Promise<void> =>
     this.step(`verifySelectedPlantName(${name})`, () =>
       expect(this.get(PuzzleTestIds.selectedPlantName)).toHaveText(name),
     )
+
+  goHome = (): Promise<HomePageObject> =>
+    this.step("goHome", async () => {
+      await this.get(PuzzleTestIds.homeLink).click()
+      return new HomePageObject(this.mountResult).verifyIsShown()
+    })
 
   gallery = (): Promise<GalleryPageObject> =>
     this.step("gallery", () => new GalleryPageObject(this.mountResult).verifyIsShown())

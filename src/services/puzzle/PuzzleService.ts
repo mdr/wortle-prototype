@@ -59,14 +59,30 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
     state: PuzzleServiceBaseState,
     private readonly options: PuzzleServiceOptions,
   ) {
+    const { statsStorage } = options
+    const hasDailyStats = options.mode === PuzzleMode.DAILY && statsStorage !== undefined
+    const history = hasDailyStats ? statsStorage.load().history : []
+    const completedRecord =
+      hasDailyStats && state.scheduledDate
+        ? history.find((record) => record.date === state.scheduledDate && record.puzzleId === state.puzzle.id)
+        : undefined
+    const attempts = completedRecord
+      ? completedRecord.guessedSpeciesIds.map((speciesId) => {
+          const species = findSpecies(speciesId)
+          assert(species, `Unknown species id: ${speciesId}`)
+          return createAttemptFeedback(species, state.correctSpecies)
+        })
+      : []
+    const gaveUp =
+      completedRecord !== undefined && completedRecord.result === DailyResult.FAIL && attempts.length < MAX_ATTEMPTS
     const statsSummary =
       options.mode === PuzzleMode.DAILY && options.statsStorage
         ? deriveDailySummary(options.statsStorage.load().history)
         : undefined
     super({
       ...state,
-      attempts: [],
-      gaveUp: false,
+      attempts,
+      gaveUp,
       incorrectFeedbackText: undefined,
       selectedSpecies: undefined,
       imageGalleryIndex: 0,

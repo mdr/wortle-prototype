@@ -5,6 +5,7 @@ import { findFirstDateForPuzzle } from "@/lib/schedule"
 import { formatDate } from "@/utils/dateUtils"
 import { assetUrl } from "@/utils/utils"
 import { Iso8601Date } from "@/utils/brandedTypes"
+import { PuzzleTestIds } from "./PuzzleTestIds"
 
 interface PuzzleHeaderProps {
   puzzle: Puzzle
@@ -18,7 +19,7 @@ export const PuzzleHeader = ({ puzzle, scheduledDate }: PuzzleHeaderProps) => {
     <header className="min-w-[334px] border-b border-border bg-card">
       <div className="container mx-auto max-w-7xl px-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex flex-shrink-0 items-center gap-3">
+          <Link to="/" className="flex flex-shrink-0 items-center gap-3" data-testid={PuzzleTestIds.homeLink}>
             <img src={assetUrl("/logo.png")} alt="" className="size-12 min-[440px]:size-20" />
             <div>
               <h1 className="font-serif text-xl font-bold text-foreground min-[440px]:text-2xl">Wortle</h1>

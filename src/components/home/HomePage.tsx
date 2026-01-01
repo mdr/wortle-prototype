@@ -43,7 +43,7 @@ export const HomePage = () => {
               Jump into today's puzzle. Your result counts toward your daily stats.
             </p>
             <div className="pt-4">
-              <Link to="/daily">
+              <Link to="/daily" data-testid={HomeTestIds.dailyPuzzleLink}>
                 <Button size="lg">Play today's puzzle</Button>
               </Link>
             </div>

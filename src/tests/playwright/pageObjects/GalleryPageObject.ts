@@ -64,6 +64,12 @@ export class FullscreenViewerPageObject extends PageObject {
       return Number.isNaN(values[0]) ? 1 : values[0]
     })
 
+  verifyZoomedIn = (initialScale: number): Promise<void> =>
+    this.step("verifyZoomedIn", () => expect.poll(() => this.getTransformScale()).toBeGreaterThan(initialScale))
+
+  verifyZoomedOut = (previousScale: number): Promise<void> =>
+    this.step("verifyZoomedOut", () => expect.poll(() => this.getTransformScale()).toBeLessThan(previousScale))
+
   close = (): Promise<void> =>
     this.step("close", async () => {
       await this.get(FullscreenTestIds.close).click()

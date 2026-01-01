@@ -1,4 +1,4 @@
-import { expect, test } from "../fixtures"
+import { test } from "../fixtures"
 
 test("can navigate gallery with buttons", async ({ homePage }) => {
   const puzzle = await homePage.clickPuzzle(0)
@@ -51,9 +51,9 @@ test("can zoom fullscreen with keyboard shortcuts", async ({ homePage }) => {
   const initialScale = await fullscreen.getTransformScale()
 
   await fullscreen.pressZoomInKey()
-  await expect.poll(() => fullscreen.getTransformScale()).toBeGreaterThan(initialScale)
+  await fullscreen.verifyZoomedIn(initialScale)
 
   const zoomedScale = await fullscreen.getTransformScale()
   await fullscreen.pressZoomOutKey()
-  await expect.poll(() => fullscreen.getTransformScale()).toBeLessThan(zoomedScale)
+  await fullscreen.verifyZoomedOut(zoomedScale)
 })

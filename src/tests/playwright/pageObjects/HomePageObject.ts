@@ -18,4 +18,10 @@ export class HomePageObject extends PageObject {
       await this.get(HomeTestIds.puzzleLink).nth(index).click()
       return new PuzzlePageObject(this.mountResult).verifyIsShown()
     })
+
+  clickDailyPuzzle = (): Promise<PuzzlePageObject> =>
+    this.step("clickDailyPuzzle", async () => {
+      await this.get(HomeTestIds.dailyPuzzleLink).click()
+      return new PuzzlePageObject(this.mountResult).verifyIsShown()
+    })
 }

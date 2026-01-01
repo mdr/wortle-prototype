@@ -69,3 +69,16 @@ test("can choose a different plant", async ({ homePage }) => {
   await puzzlePage.selectFirstPlantOption()
   await puzzlePage.verifySelectedPlantName("Tansy")
 })
+
+test("daily puzzle stays completed after leaving and returning", async ({ homePage }) => {
+  const dailyPuzzle = await homePage.clickDailyPuzzle()
+  await dailyPuzzle.searchForPlant("Daisy")
+  await dailyPuzzle.selectFirstPlantOption()
+  await dailyPuzzle.submitAnswer()
+  await dailyPuzzle.verifyCorrectAnswer()
+
+  const backHome = await dailyPuzzle.goHome()
+  const revisitedDailyPuzzle = await backHome.clickDailyPuzzle()
+  await revisitedDailyPuzzle.verifyCorrectAnswer()
+  await revisitedDailyPuzzle.verifySearchInputHidden()
+})
