@@ -1,11 +1,11 @@
 import { Url } from "@/utils/brandedTypes"
 
-export type ImageData = {
+export interface ImageData {
   url: Url
   caption: string
 }
 
-export type Attribution = {
+export interface Attribution {
   photographer: string
   license: string
 }

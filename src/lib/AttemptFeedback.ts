@@ -1,6 +1,6 @@
 import { Species, SpeciesId, getGenus } from "./Species"
 
-export type AttemptFeedback = {
+export interface AttemptFeedback {
   speciesId: SpeciesId
   isCorrect: boolean
   genusMatch: boolean

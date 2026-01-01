@@ -5,13 +5,15 @@ import { HomePageObject } from "./pageObjects/HomePageObject"
 import { NotFoundPageObject } from "./pageObjects/NotFoundPageObject"
 import { ErrorPageObject } from "./pageObjects/ErrorPageObject"
 
-type MountFunction = (component: React.ReactElement) => Promise<MountResult>
+interface MountFunction {
+  (component: React.ReactElement): Promise<MountResult>
+}
 
 const launchApp = async (mount: MountFunction, initialPath = "/"): Promise<MountResult> => {
   return await mount(<TestApp initialPath={initialPath} />)
 }
 
-type Fixtures = {
+interface Fixtures {
   homePage: HomePageObject
   notFoundPage: NotFoundPageObject
   errorPage: ErrorPageObject

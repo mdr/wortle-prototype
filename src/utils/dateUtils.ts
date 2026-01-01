@@ -23,4 +23,4 @@ export const toIso8601Date = (date: Date): Iso8601Date => {
   return Iso8601Date(`${year}-${month}-${day}`)
 }
 
-export const getTodayIsoDate = (): Iso8601Date => toIso8601Date(new Date())
+export const toDateFromIso8601Date = (isoDate: Iso8601Date): Date => new Date(`${isoDate}T00:00:00Z`)

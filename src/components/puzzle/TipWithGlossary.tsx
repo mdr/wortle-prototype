@@ -1,8 +1,17 @@
 import { GlossaryTerm } from "@/components/puzzle/GlossaryTerm"
 import { glossary } from "@/lib/glossary"
 
-type TextRegion = { type: "text"; text: string }
-type GlossaryRegion = { type: "glossary"; term: string; displayText: string }
+interface TextRegion {
+  type: "text"
+  text: string
+}
+
+interface GlossaryRegion {
+  type: "glossary"
+  term: string
+  displayText: string
+}
+
 type TipRegion = TextRegion | GlossaryRegion
 
 export const parseTipRegions = (tip: string): TipRegion[] => {
@@ -34,7 +43,7 @@ export const parseTipRegions = (tip: string): TipRegion[] => {
   return regions
 }
 
-export type TipWithGlossaryProps = {
+export interface TipWithGlossaryProps {
   tip: string
 }
 

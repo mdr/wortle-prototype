@@ -5,7 +5,7 @@ import { SearchX, Home } from "lucide-react"
 import { assetUrl } from "@/utils/utils"
 import { NotFoundTestIds } from "./NotFoundTestIds"
 
-export type NotFoundPageProps = {
+export interface NotFoundPageProps {
   message?: string
 }
 

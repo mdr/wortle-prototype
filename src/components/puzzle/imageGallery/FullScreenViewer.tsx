@@ -8,7 +8,7 @@ import { ImageData } from "./types"
 import { ZoomControls } from "./ZoomControls"
 import { FullscreenTestIds } from "./GalleryTestIds"
 
-type FullScreenViewerProps = {
+interface FullScreenViewerProps {
   images: ImageData[]
   currentIndex: number
   onClose: () => void

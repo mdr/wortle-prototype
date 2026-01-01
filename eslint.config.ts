@@ -15,6 +15,7 @@ const config = [
     rules: {
       "@typescript-eslint/no-confusing-void-expression": ["error", { ignoreArrowShorthand: true }],
       "@typescript-eslint/restrict-template-expressions": ["error", { allowNumber: true }],
+      "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
     },
   },
   {

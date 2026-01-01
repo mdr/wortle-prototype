@@ -5,7 +5,7 @@ import { AlertTriangle, Home } from "lucide-react"
 import { assetUrl } from "@/utils/utils"
 import { ErrorTestIds } from "./ErrorTestIds"
 
-export type ErrorFallbackProps = {
+export interface ErrorFallbackProps {
   error: Error
 }
 

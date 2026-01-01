@@ -3,7 +3,7 @@ import { AttemptFeedback } from "@/lib/AttemptFeedback"
 import { findSpecies } from "@/lib/plants"
 import { AttemptHistoryTestIds } from "./PuzzleTestIds"
 
-type AttemptHistoryProps = {
+interface AttemptHistoryProps {
   attempts: AttemptFeedback[]
 }
 

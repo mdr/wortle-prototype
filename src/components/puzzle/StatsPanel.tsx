@@ -3,14 +3,14 @@ import { Button } from "@/components/shadcn/Button"
 import { Share2, TrendingUp, Award, Flame, Clock } from "lucide-react"
 import { formatDuration } from "@/utils/dateUtils"
 
-type UserStats = {
+interface UserStats {
   totalIdentifications: number
   correctIdentifications: number
   currentStreak: number
   maxStreak: number
 }
 
-type StatsPanelProps = {
+interface StatsPanelProps {
   isCorrect: boolean
   userStats: UserStats
 }

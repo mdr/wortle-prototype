@@ -4,7 +4,7 @@ import { PlantSearch } from "@/components/puzzle/PlantSearch"
 import { Species, SpeciesId } from "@/lib/Species"
 import { PuzzleTestIds } from "./PuzzleTestIds"
 
-type AnswerInputCardProps = {
+interface AnswerInputCardProps {
   selectedSpecies: Species | undefined
   onSelectSpecies: (species: Species | undefined) => void
   onSubmit: () => void

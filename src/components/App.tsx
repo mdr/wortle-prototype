@@ -10,7 +10,7 @@ declare module "@tanstack/react-router" {
   }
 }
 
-export type AppProps = {
+export interface AppProps {
   router?: Router<typeof routeTree>
 }
 

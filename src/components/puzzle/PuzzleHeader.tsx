@@ -6,7 +6,7 @@ import { formatDate } from "@/utils/dateUtils"
 import { assetUrl } from "@/utils/utils"
 import { Iso8601Date } from "@/utils/brandedTypes"
 
-type PuzzleHeaderProps = {
+interface PuzzleHeaderProps {
   puzzle: Puzzle
   scheduledDate?: Iso8601Date
 }

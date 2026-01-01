@@ -4,12 +4,12 @@ import { Url } from "@/utils/brandedTypes"
 export type SpeciesId = number & Brand.Brand<"SpeciesId">
 export const SpeciesId = Brand.nominal<SpeciesId>()
 
-export type SpeciesLink = {
+export interface SpeciesLink {
   name: string
   url: Url
 }
 
-export type Species = {
+export interface Species {
   id: SpeciesId
   scientificName: string
   family: string

@@ -8,7 +8,7 @@ import { ImageData, Attribution } from "./types"
 import { FullScreenViewer } from "./FullScreenViewer"
 import { GalleryTestIds } from "./GalleryTestIds"
 
-type ImageGalleryProps = {
+interface ImageGalleryProps {
   images: ImageData[]
   attribution?: Attribution
 }

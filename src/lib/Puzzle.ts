@@ -5,22 +5,22 @@ import { SpeciesId } from "./Species"
 export type PuzzleId = number & Brand.Brand<"PuzzleId">
 export const PuzzleId = Brand.nominal<PuzzleId>()
 
-export type Coordinates = {
+export interface Coordinates {
   latitude: Degrees
   longitude: Degrees
 }
 
-export type Location = {
+export interface Location {
   description: string
   coordinates: Coordinates
 }
 
-export type PuzzleImage = {
+export interface PuzzleImage {
   url: Url
   caption: string
 }
 
-export type Puzzle = {
+export interface Puzzle {
   id: PuzzleId
   speciesId: SpeciesId
   observationDate: Iso8601Date

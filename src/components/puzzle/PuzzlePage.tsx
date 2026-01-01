@@ -11,15 +11,23 @@ import confetti from "canvas-confetti"
 import { Puzzle } from "@/lib/Puzzle"
 import { Species } from "@/lib/Species"
 import { AttemptFeedback, createAttemptFeedback } from "@/lib/AttemptFeedback"
+import { DailyResult } from "@/lib/StatsStorage"
 import { PuzzleTestIds } from "./PuzzleTestIds"
 import { Iso8601Date } from "@/utils/brandedTypes"
 
 const MAX_ATTEMPTS = 3
 
-export type PuzzlePageProps = {
+export interface PuzzleCompletion {
+  result: DailyResult
+  attempts: number
+  gaveUp: boolean
+}
+
+export interface PuzzlePageProps {
   puzzle: Puzzle
   correctSpecies: Species
   scheduledDate?: Iso8601Date
+  onComplete?: (completion: PuzzleCompletion) => void
 }
 
 const userStats = {
@@ -29,7 +37,7 @@ const userStats = {
   maxStreak: 12,
 }
 
-export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate }: PuzzlePageProps) => {
+export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate, onComplete }: PuzzlePageProps) => {
   const [selectedSpecies, setSelectedSpecies] = useState<Species | undefined>(undefined)
   const [attempts, setAttempts] = useState<AttemptFeedback[]>([])
   const [gaveUp, setGaveUp] = useState(false)
@@ -43,6 +51,17 @@ export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate }: PuzzlePage
   const handleSubmit = () => {
     if (selectedSpecies) {
       const feedback = createAttemptFeedback(selectedSpecies, correctSpecies)
+      const nextAttemptsCount = attempts.length + 1
+      const isFinalAttempt = feedback.isCorrect || nextAttemptsCount >= MAX_ATTEMPTS
+
+      if (isFinalAttempt) {
+        onComplete?.({
+          result: feedback.isCorrect ? DailyResult.PASS : DailyResult.FAIL,
+          attempts: nextAttemptsCount,
+          gaveUp: false,
+        })
+      }
+
       setAttempts((prev) => [...prev, feedback])
       setSelectedSpecies(undefined)
 
@@ -76,6 +95,12 @@ export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate }: PuzzlePage
     setSelectedSpecies(undefined)
     setGaveUp(true)
     setIncorrectFeedbackText("")
+
+    onComplete?.({
+      result: DailyResult.FAIL,
+      attempts: attempts.length,
+      gaveUp: true,
+    })
   }
 
   return (

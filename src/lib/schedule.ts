@@ -1,7 +1,7 @@
 import { Iso8601Date } from "@/utils/brandedTypes"
 import { PuzzleId } from "./Puzzle"
 
-export type ScheduleEntry = {
+export interface ScheduleEntry {
   date: Iso8601Date
   puzzleId: PuzzleId
 }
@@ -24,3 +24,9 @@ export const findPuzzleForDate = (date: Iso8601Date): PuzzleId | undefined =>
   schedule.find((entry) => entry.date === date)?.puzzleId
 
 export const getAllScheduledDates = (): Iso8601Date[] => schedule.map((entry) => entry.date)
+
+export const findFirstScheduledDate = (): Iso8601Date | undefined =>
+  schedule.reduce<Iso8601Date | undefined>(
+    (earliest, entry) => (!earliest || entry.date < earliest ? entry.date : earliest),
+    undefined,
+  )

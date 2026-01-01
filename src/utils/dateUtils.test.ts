@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest"
-import { formatDate, formatDuration, toIso8601Date } from "./dateUtils"
+import { Iso8601Date } from "@/utils/brandedTypes"
+import { formatDate, formatDuration, toDateFromIso8601Date, toIso8601Date } from "./dateUtils"
 
 describe("formatDate", () => {
   it("formats an ISO date string", () => {
@@ -51,5 +52,12 @@ describe("toIso8601Date", () => {
   it("pads single digit months and days", () => {
     const date = new Date("2025-01-05T00:00:00")
     expect(toIso8601Date(date)).toBe("2025-01-05")
+  })
+})
+
+describe("toDateFromIso8601Date", () => {
+  it("parses ISO date into a Date at UTC midnight", () => {
+    const date = toDateFromIso8601Date(Iso8601Date("2025-06-08"))
+    expect(date.toISOString()).toBe("2025-06-08T00:00:00.000Z")
   })
 })

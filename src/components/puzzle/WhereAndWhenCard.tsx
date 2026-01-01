@@ -4,7 +4,7 @@ import { Puzzle } from "@/lib/Puzzle"
 import { formatDate } from "@/utils/dateUtils"
 import { ClassNameList } from "@/utils/brandedTypes"
 
-type WhereAndWhenCardProps = {
+interface WhereAndWhenCardProps {
   puzzle: Puzzle
 }
 
