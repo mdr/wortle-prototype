@@ -9,7 +9,11 @@ const analyze = process.env.ANALYZE === "true"
 export default defineConfig({
   plugins: [
     tanstackRouter({ routesDirectory: "./src/routes" }),
-    react(),
+    react({
+      babel: {
+        plugins: [["babel-plugin-react-compiler", {}]],
+      },
+    }),
     analyze &&
       visualizer({
         filename: "dist/stats.html",
