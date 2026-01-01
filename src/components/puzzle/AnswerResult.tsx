@@ -59,13 +59,13 @@ export const AnswerResult = ({ isCorrect, gaveUp, attempts, correctAnswer }: Ans
       </div>
 
       <div className="space-y-4 border-t pt-4">
-        {attempts.length > 0 && (
+        {attempts.length > 0 && (!isCorrect || attempts.length > 1) && (
           <div>
             <p className="mb-1 text-sm font-medium text-foreground/70">
               Your {attempts.length === 1 ? "attempt" : "attempts"}:
             </p>
             <div className="space-y-2">
-              {attempts.map((attempt, index) => {
+              {(isCorrect ? attempts.filter((attempt) => !attempt.isCorrect) : attempts).map((attempt, index) => {
                 const species = findSpecies(attempt.speciesId)
                 if (!species) return undefined
                 const hint = getHintText(attempt)
@@ -73,11 +73,7 @@ export const AnswerResult = ({ isCorrect, gaveUp, attempts, correctAnswer }: Ans
                   <div
                     key={attempt.speciesId}
                     className={`flex items-end justify-between rounded-md p-3 ${
-                      attempt.isCorrect
-                        ? "bg-primary/10"
-                        : attempt.genusMatch || attempt.familyMatch
-                          ? "bg-amber-500/10"
-                          : "bg-background"
+                      attempt.isCorrect ? "bg-primary/10" : "bg-background"
                     }`}
                   >
                     <div>
@@ -89,7 +85,7 @@ export const AnswerResult = ({ isCorrect, gaveUp, attempts, correctAnswer }: Ans
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-muted-foreground">{species.family}</p>
-                      {hint && <p className="text-sm font-medium text-amber-600 dark:text-amber-400">{hint}</p>}
+                      {hint && <p className="text-sm font-medium text-muted-foreground">{hint}</p>}
                     </div>
                   </div>
                 )
@@ -98,11 +94,17 @@ export const AnswerResult = ({ isCorrect, gaveUp, attempts, correctAnswer }: Ans
           </div>
         )}
 
-        <div>
-          <p className="mb-1 text-sm font-medium text-foreground/70">Correct answer:</p>
-          <div className="flex items-end justify-between rounded-md bg-background p-3">
+        <div className="rounded-lg border border-border bg-background p-4">
+          <div className="mb-2 flex items-center justify-between">
+            {(!isCorrect || attempts.length !== 1) && (
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                {isCorrect ? "You Correctly Identified It As" : "The Answer Was"}
+              </p>
+            )}
+          </div>
+          <div className="flex items-end justify-between">
             <div>
-              <p className="font-medium text-foreground">{correctAnswer.commonNames[0]}</p>
+              <p className="text-2xl font-semibold text-foreground">{correctAnswer.commonNames[0]}</p>
               <p className="text-sm italic text-muted-foreground">{correctAnswer.scientificName}</p>
             </div>
             <p className="text-sm text-muted-foreground">{correctAnswer.family}</p>

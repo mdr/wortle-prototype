@@ -16,7 +16,7 @@ const getHintText = (attempt: AttemptFeedback): string | undefined => {
 
 const getAttemptStyles = (attempt: AttemptFeedback): string => {
   if (attempt.isCorrect) return "border-primary bg-primary/10"
-  if (attempt.genusMatch || attempt.familyMatch) return "border-amber-500 bg-amber-500/10"
+  if (attempt.genusMatch || attempt.familyMatch) return "border-border bg-muted/60"
   return "border-destructive bg-destructive/10"
 }
 
@@ -41,10 +41,7 @@ export const AttemptHistory = ({ attempts }: AttemptHistoryProps) => (
             <div className="text-right">
               <span className="text-xs text-muted-foreground">#{index + 1}</span>
               {hint && (
-                <p
-                  className="text-sm font-medium text-amber-600 dark:text-amber-400"
-                  data-testid={AttemptHistoryTestIds.hint}
-                >
+                <p className="text-sm font-medium text-muted-foreground" data-testid={AttemptHistoryTestIds.hint}>
                   {hint}
                 </p>
               )}

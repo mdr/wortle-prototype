@@ -73,7 +73,7 @@ export const AnswerInputCard = forwardRef<AnswerInputCardHandle, AnswerInputCard
               </Button>
             )}
 
-            <p className="text-sm font-medium text-destructive">{incorrectFeedbackText}</p>
+            {incorrectFeedbackText && <p className="text-sm font-medium text-destructive">{incorrectFeedbackText}</p>}
 
             <button
               type="button"

@@ -42,12 +42,12 @@ export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate, onComplete }
   const [selectedSpecies, setSelectedSpecies] = useState<Species | undefined>(undefined)
   const [attempts, setAttempts] = useState<AttemptFeedback[]>([])
   const [gaveUp, setGaveUp] = useState(false)
-  const [incorrectFeedbackText, setIncorrectFeedbackText] = useState("")
+  const [incorrectFeedbackText, setIncorrectFeedbackText] = useState<string | undefined>(undefined)
   const { fireConfetti, panelRef: answerPanelRef } = useCorrectAnswerConfetti()
   const answerInputRef = useRef<AnswerInputCardHandle>(null)
 
   const isCorrect = attempts.some((a) => a.isCorrect)
-  const isAnswered = isCorrect || attempts.length >= MAX_ATTEMPTS || gaveUp
+  const isResolved = isCorrect || attempts.length >= MAX_ATTEMPTS || gaveUp
 
   const handleSubmit = () => {
     assert(selectedSpecies, "Selected species is required to submit an answer.")
@@ -67,7 +67,7 @@ export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate, onComplete }
     setSelectedSpecies(undefined)
 
     if (feedback.isCorrect) {
-      setIncorrectFeedbackText("")
+      setIncorrectFeedbackText(undefined)
       fireConfetti()
     } else {
       const feedbackText = feedback.genusMatch
@@ -83,7 +83,7 @@ export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate, onComplete }
   const handleGiveUp = () => {
     setSelectedSpecies(undefined)
     setGaveUp(true)
-    setIncorrectFeedbackText("")
+    setIncorrectFeedbackText(undefined)
 
     onComplete?.({
       result: DailyResult.FAIL,
@@ -107,24 +107,9 @@ export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate, onComplete }
           <div className="space-y-4">
             <WhereAndWhenCard puzzle={puzzle} />
 
-            {attempts.length > 0 && !isAnswered && <AttemptHistory attempts={attempts} />}
+            {attempts.length > 0 && !isResolved && <AttemptHistory attempts={attempts} />}
 
-            {!isAnswered ? (
-              <AnswerInputCard
-                ref={answerInputRef}
-                selectedSpecies={selectedSpecies}
-                onSelectSpecies={(species) => {
-                  setSelectedSpecies(species)
-                  setIncorrectFeedbackText("")
-                }}
-                onSubmit={handleSubmit}
-                onGiveUp={handleGiveUp}
-                attemptNumber={attempts.length + 1}
-                maxAttempts={MAX_ATTEMPTS}
-                incorrectFeedbackText={incorrectFeedbackText}
-                excludedSpeciesIds={attempts.map((a) => a.speciesId)}
-              />
-            ) : (
+            {isResolved ? (
               <>
                 <div ref={answerPanelRef}>
                   <AnswerResult
@@ -136,6 +121,21 @@ export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate, onComplete }
                 </div>
                 <StatsPanel isCorrect={isCorrect} userStats={userStats} />
               </>
+            ) : (
+              <AnswerInputCard
+                ref={answerInputRef}
+                selectedSpecies={selectedSpecies}
+                onSelectSpecies={(species) => {
+                  setSelectedSpecies(species)
+                  setIncorrectFeedbackText(undefined)
+                }}
+                onSubmit={handleSubmit}
+                onGiveUp={handleGiveUp}
+                attemptNumber={attempts.length + 1}
+                maxAttempts={MAX_ATTEMPTS}
+                incorrectFeedbackText={incorrectFeedbackText}
+                excludedSpeciesIds={attempts.map((a) => a.speciesId)}
+              />
             )}
           </div>
         </div>
