@@ -1,5 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router"
-import { PuzzleCompletion, PuzzlePage } from "@/components/puzzle/PuzzlePage"
+import { PuzzlePage } from "@/components/puzzle/PuzzlePage"
 import { findPuzzle } from "@/lib/puzzles"
 import { findSpecies } from "@/lib/plants"
 import { findPuzzleForDate } from "@/lib/schedule"
@@ -11,8 +11,8 @@ import { Species } from "@/lib/Species"
 import { Puzzle } from "@/lib/Puzzle"
 import { StatsStorage } from "@/lib/StatsStorage"
 import { DailyStatsSummary, deriveDailySummary } from "@/lib/dailyStatsSummary"
-import { useCallback, useMemo, useState } from "react"
-import { produce } from "immer"
+import { useMemo, useState } from "react"
+import { PuzzleServiceProvider } from "@/services/puzzle/PuzzleServiceProvider"
 
 interface DailyPuzzleData {
   scheduledDate: Iso8601Date
@@ -52,40 +52,20 @@ const DailyPuzzlePage = () => {
   const storage = useMemo(() => new StatsStorage(window.localStorage), [])
   const [statsSummary, setStatsSummary] = useState<DailyStatsSummary>(() => deriveDailySummary(storage.load().history))
 
-  const handleComplete = useCallback(
-    (completion: PuzzleCompletion) => {
-      const nextStats = storage.update((current) =>
-        produce(current, (draft) => {
-          const puzzleId = puzzle?.id
-          if (!puzzleId) {
-            return
-          }
-          draft.history = draft.history.filter((record) => record.date !== scheduledDate)
-          draft.history.push({
-            date: scheduledDate,
-            puzzleId,
-            result: completion.result,
-            guessedSpeciesIds: completion.guessedSpeciesIds,
-          })
-        }),
-      )
-      setStatsSummary(deriveDailySummary(nextStats.history))
-    },
-    [puzzle?.id, scheduledDate, storage],
-  )
-
   if (!puzzle || !correctSpecies) {
     return <NotFoundPage message="No puzzle is scheduled for today." />
   }
 
   return (
-    <PuzzlePage
+    <PuzzleServiceProvider
       puzzle={puzzle}
       correctSpecies={correctSpecies}
       scheduledDate={scheduledDate}
-      onComplete={handleComplete}
-      statsSummary={statsSummary}
-      clock={defaultClock}
-    />
+      mode="daily"
+      statsStorage={storage}
+      onStatsSummaryUpdated={setStatsSummary}
+    >
+      <PuzzlePage statsSummary={statsSummary} clock={defaultClock} />
+    </PuzzleServiceProvider>
   )
 }

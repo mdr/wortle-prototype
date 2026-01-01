@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { Card } from "@/components/shadcn/Card"
 import { ImageGallery } from "@/components/puzzle/imageGallery/ImageGallery"
 import { AnswerResult } from "@/components/puzzle/AnswerResult"
@@ -8,95 +8,48 @@ import { AnswerInputCard, AnswerInputCardHandle } from "@/components/puzzle/Answ
 import { AttemptHistory } from "@/components/puzzle/AttemptHistory"
 import { StatsPanel } from "@/components/puzzle/StatsPanel"
 import { useCorrectAnswerConfetti } from "@/components/puzzle/useCorrectAnswerConfetti"
-import { Puzzle } from "@/lib/Puzzle"
-import { Species } from "@/lib/Species"
-import { AttemptFeedback, createAttemptFeedback } from "@/lib/AttemptFeedback"
-import { DailyResult } from "@/lib/StatsStorage"
 import { PuzzleTestIds } from "./PuzzleTestIds"
-import { Iso8601Date } from "@/utils/brandedTypes"
 import { assert } from "tsafe"
 import { DailyStatsSummary } from "@/lib/dailyStatsSummary"
 import { Clock } from "@/lib/Clock"
-import { SpeciesId } from "@/lib/Species"
-
-const MAX_ATTEMPTS = 3
-
-export interface PuzzleCompletion {
-  result: DailyResult
-  guessedSpeciesIds: SpeciesId[]
-  gaveUp: boolean
-}
+import {
+  usePuzzleIsCorrect,
+  usePuzzleIsResolved,
+  usePuzzleShowAttemptHistory,
+  usePuzzleService,
+  usePuzzleStateSelector,
+} from "@/services/puzzle/puzzleServiceHooks"
+import { MAX_ATTEMPTS } from "@/services/puzzle/PuzzleService"
 
 export interface PuzzlePageProps {
-  puzzle: Puzzle
-  correctSpecies: Species
-  scheduledDate?: Iso8601Date
-  onComplete?: (completion: PuzzleCompletion) => void
   statsSummary?: DailyStatsSummary
   showStatsPlaceholder?: boolean
   clock: Clock
 }
 
-export const PuzzlePage = ({
-  puzzle,
-  correctSpecies,
-  scheduledDate,
-  onComplete,
-  statsSummary,
-  showStatsPlaceholder,
-  clock,
-}: PuzzlePageProps) => {
-  const [selectedSpecies, setSelectedSpecies] = useState<Species | undefined>(undefined)
-  const [attempts, setAttempts] = useState<AttemptFeedback[]>([])
-  const [gaveUp, setGaveUp] = useState(false)
-  const [incorrectFeedbackText, setIncorrectFeedbackText] = useState<string | undefined>(undefined)
+export const PuzzlePage = ({ statsSummary, showStatsPlaceholder, clock }: PuzzlePageProps) => {
+  const { puzzle, correctSpecies, scheduledDate, attempts, gaveUp, incorrectFeedbackText, selectedSpecies } =
+    usePuzzleStateSelector((state) => state)
+  const puzzleService = usePuzzleService()
   const { fireConfetti, panelRef: answerPanelRef } = useCorrectAnswerConfetti()
   const answerInputRef = useRef<AnswerInputCardHandle>(null)
 
-  const isCorrect = attempts.some((a) => a.isCorrect)
-  const isResolved = isCorrect || attempts.length >= MAX_ATTEMPTS || gaveUp
+  const isCorrect = usePuzzleIsCorrect()
+  const isResolved = usePuzzleIsResolved()
+  const showAttemptHistory = usePuzzleShowAttemptHistory()
 
   const handleSubmit = () => {
     assert(selectedSpecies, "Selected species is required to submit an answer.")
-    const feedback = createAttemptFeedback(selectedSpecies, correctSpecies)
-    const nextAttemptsCount = attempts.length + 1
-    const isFinalAttempt = feedback.isCorrect || nextAttemptsCount >= MAX_ATTEMPTS
-
-    if (isFinalAttempt) {
-      onComplete?.({
-        result: feedback.isCorrect ? DailyResult.PASS : DailyResult.FAIL,
-        guessedSpeciesIds: [...attempts.map((attempt) => attempt.speciesId), feedback.speciesId],
-        gaveUp: false,
-      })
-    }
-
-    setAttempts((prev) => [...prev, feedback])
-    setSelectedSpecies(undefined)
-
+    const { feedback } = puzzleService.submitGuess(selectedSpecies)
     if (feedback.isCorrect) {
-      setIncorrectFeedbackText(undefined)
       fireConfetti()
     } else {
-      const feedbackText = feedback.genusMatch
-        ? "Right genus - you're close!"
-        : feedback.familyMatch
-          ? "That's in the right family - have another go."
-          : "That's not it - have another go."
-      setIncorrectFeedbackText(feedbackText)
       answerInputRef.current?.shake()
     }
   }
 
   const handleGiveUp = () => {
-    setSelectedSpecies(undefined)
-    setGaveUp(true)
-    setIncorrectFeedbackText(undefined)
-
-    onComplete?.({
-      result: DailyResult.FAIL,
-      guessedSpeciesIds: attempts.map((attempt) => attempt.speciesId),
-      gaveUp: true,
-    })
+    puzzleService.giveUp()
   }
 
   return (
@@ -114,7 +67,7 @@ export const PuzzlePage = ({
           <div className="space-y-4">
             <WhereAndWhenCard puzzle={puzzle} />
 
-            {attempts.length > 0 && !isResolved && <AttemptHistory attempts={attempts} />}
+            {showAttemptHistory && !isResolved && <AttemptHistory attempts={attempts} />}
 
             {isResolved ? (
               <>
@@ -139,8 +92,8 @@ export const PuzzlePage = ({
                 ref={answerInputRef}
                 selectedSpecies={selectedSpecies}
                 onSelectSpecies={(species) => {
-                  setSelectedSpecies(species)
-                  setIncorrectFeedbackText(undefined)
+                  puzzleService.setSelectedSpecies(species)
+                  puzzleService.clearIncorrectFeedbackText()
                 }}
                 onSubmit={handleSubmit}
                 onGiveUp={handleGiveUp}
