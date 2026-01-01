@@ -20,6 +20,7 @@ interface PlantSearchProps {
 export const PlantSearch = ({ onSelect, selectedSpecies, excludedSpeciesIds = [] }: PlantSearchProps) => {
   const [query, setQuery] = useState("")
   const [open, setOpen] = useState(false)
+  const inputId = "plant-search-input"
 
   const allSpecies = getAllSpecies()
 
@@ -60,9 +61,12 @@ export const PlantSearch = ({ onSelect, selectedSpecies, excludedSpeciesIds = []
 
   return (
     <div>
-      <label className="mb-2 block text-sm font-medium text-foreground">Enter plant name</label>
+      <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-foreground">
+        Enter plant name
+      </label>
       <Command className="rounded-lg border shadow-md" shouldFilter={false}>
         <CommandInput
+          id={inputId}
           placeholder="Type common or scientific name..."
           value={query}
           onValueChange={(value) => {
