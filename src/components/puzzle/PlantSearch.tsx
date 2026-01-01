@@ -109,9 +109,11 @@ export const PlantSearch = ({ onSelect, selectedSpecies, excludedSpeciesIds = []
   )
 }
 
+// Keep the input and suggestions visible above mobile keyboards.
 const useScrollToLabelOnFocus = (open: boolean) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isFocused, setIsFocused] = useState(false)
+  const hasInteractedRef = useRef(false)
 
   const scrollToLabelIfMobile = () => {
     const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches
@@ -121,11 +123,13 @@ const useScrollToLabelOnFocus = (open: boolean) => {
 
   useEffect(() => {
     if (!open) return
+    if (!hasInteractedRef.current) return
     scrollToLabelIfMobile()
   }, [open])
 
   useEffect(() => {
     if (!isFocused) return undefined
+    if (!hasInteractedRef.current) return undefined
 
     const viewport = window.visualViewport
     const handleResize = () => {
@@ -140,6 +144,7 @@ const useScrollToLabelOnFocus = (open: boolean) => {
   }, [isFocused])
 
   const handleFocus = () => {
+    hasInteractedRef.current = true
     setIsFocused(true)
   }
 
