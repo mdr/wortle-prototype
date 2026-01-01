@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import {
   Command,
   CommandEmpty,
@@ -20,6 +20,7 @@ interface PlantSearchProps {
 export const PlantSearch = ({ onSelect, selectedSpecies, excludedSpeciesIds = [] }: PlantSearchProps) => {
   const [query, setQuery] = useState("")
   const [open, setOpen] = useState(false)
+  const { containerRef, handleFocus, handleBlur } = useScrollToLabelOnFocus(open)
   const inputId = "plant-search-input"
 
   const allSpecies = getAllSpecies()
@@ -60,7 +61,7 @@ export const PlantSearch = ({ onSelect, selectedSpecies, excludedSpeciesIds = []
   }
 
   return (
-    <div>
+    <div ref={containerRef}>
       <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-foreground">
         Enter plant name
       </label>
@@ -73,7 +74,13 @@ export const PlantSearch = ({ onSelect, selectedSpecies, excludedSpeciesIds = []
             setQuery(value)
             setOpen(value.length > 0)
           }}
-          onFocus={() => query.length > 0 && setOpen(true)}
+          onFocus={() => {
+            handleFocus()
+            if (query.length > 0) setOpen(true)
+          }}
+          onBlur={() => {
+            handleBlur()
+          }}
           data-testid={PuzzleTestIds.searchInput}
         />
         <CommandList className={open ? "" : "hidden"}>
@@ -100,4 +107,45 @@ export const PlantSearch = ({ onSelect, selectedSpecies, excludedSpeciesIds = []
       </Command>
     </div>
   )
+}
+
+const useScrollToLabelOnFocus = (open: boolean) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [isFocused, setIsFocused] = useState(false)
+
+  const scrollToLabelIfMobile = () => {
+    const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches
+    if (!isCoarsePointer) return
+    containerRef.current?.scrollIntoView({ block: "start" })
+  }
+
+  useEffect(() => {
+    if (!open) return
+    scrollToLabelIfMobile()
+  }, [open])
+
+  useEffect(() => {
+    if (!isFocused) return undefined
+
+    const viewport = window.visualViewport
+    const handleResize = () => {
+      scrollToLabelIfMobile()
+    }
+
+    viewport?.addEventListener("resize", handleResize)
+
+    return () => {
+      viewport?.removeEventListener("resize", handleResize)
+    }
+  }, [isFocused])
+
+  const handleFocus = () => {
+    setIsFocused(true)
+  }
+
+  const handleBlur = () => {
+    setIsFocused(false)
+  }
+
+  return { containerRef, handleFocus, handleBlur }
 }
