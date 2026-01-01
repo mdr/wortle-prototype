@@ -31,20 +31,23 @@ export const AttemptHistory = ({ attempts }: AttemptHistoryProps) => (
         return (
           <div
             key={attempt.speciesId}
-            className={`flex items-center justify-between rounded-md border p-3 ${getAttemptStyles(attempt)}`}
+            className={`flex items-stretch justify-between rounded-md border p-3 ${getAttemptStyles(attempt)}`}
             data-testid={AttemptHistoryTestIds.attemptItem}
           >
             <div>
-              <p className="font-medium text-foreground">{species.commonNames[0]}</p>
+              <p className="font-medium text-foreground">
+                <span className="mr-2 text-muted-foreground">#{index + 1}</span>
+                {species.commonNames[0]}
+              </p>
               <p className="text-sm italic text-muted-foreground">{species.scientificName}</p>
             </div>
-            <div className="text-right">
-              <span className="text-xs text-muted-foreground">#{index + 1}</span>
+            <div className="flex flex-col items-end text-right">
               {hint && (
                 <p className="text-sm font-medium text-muted-foreground" data-testid={AttemptHistoryTestIds.hint}>
                   {hint}
                 </p>
               )}
+              <p className="mt-auto text-sm text-muted-foreground">{species.family}</p>
             </div>
           </div>
         )

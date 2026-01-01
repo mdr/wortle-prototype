@@ -15,8 +15,8 @@ interface AnswerResultProps {
 
 const getHintText = (attempt: AttemptFeedback): string | undefined => {
   if (attempt.isCorrect) return undefined
-  if (attempt.genusMatch) return "Right genus"
-  if (attempt.familyMatch) return "Right family"
+  if (attempt.genusMatch) return "Right genus!"
+  if (attempt.familyMatch) return "Right family!"
   return undefined
 }
 
@@ -34,7 +34,7 @@ export const AnswerResult = ({ isCorrect, gaveUp, attempts, correctAnswer }: Ans
       return `Got it in ${attemptCount} attempts`
     }
     if (gaveUp) return "Better luck with the next one"
-    return "You'll get the next one"
+    return "You'll get the next one!"
   }
 
   return (
@@ -59,55 +59,57 @@ export const AnswerResult = ({ isCorrect, gaveUp, attempts, correctAnswer }: Ans
       </div>
 
       <div className="space-y-4 border-t pt-4">
-        {attempts.length > 0 && (!isCorrect || attempts.length > 1) && (
-          <div>
-            <p className="mb-1 text-sm font-medium text-foreground/70">
-              Your {attempts.length === 1 ? "attempt" : "attempts"}:
-            </p>
-            <div className="space-y-2">
-              {(isCorrect ? attempts.filter((attempt) => !attempt.isCorrect) : attempts).map((attempt, index) => {
-                const species = findSpecies(attempt.speciesId)
-                if (!species) return undefined
-                const hint = getHintText(attempt)
-                return (
-                  <div
-                    key={attempt.speciesId}
-                    className={`flex items-end justify-between rounded-md p-3 ${
-                      attempt.isCorrect ? "bg-primary/10" : "bg-background"
-                    }`}
-                  >
-                    <div>
-                      <p className="font-medium text-foreground">
-                        <span className="mr-2 text-muted-foreground">#{index + 1}</span>
-                        {species.commonNames[0]}
-                      </p>
-                      <p className="text-sm italic text-muted-foreground">{species.scientificName}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm text-muted-foreground">{species.family}</p>
-                      {hint && <p className="text-sm font-medium text-muted-foreground">{hint}</p>}
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        )}
-
-        <div className="rounded-lg border border-border bg-background p-4">
-          <div className="mb-2 flex items-center justify-between">
-            {(!isCorrect || attempts.length !== 1) && (
-              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                {isCorrect ? "You Correctly Identified It As" : "The Answer Was"}
-              </p>
-            )}
-          </div>
-          <div className="flex items-end justify-between">
+        <div className="space-y-2">
+          {attempts.length > 0 && (!isCorrect || attempts.length > 1) && (
             <div>
-              <p className="text-2xl font-semibold text-foreground">{correctAnswer.commonNames[0]}</p>
-              <p className="text-sm italic text-muted-foreground">{correctAnswer.scientificName}</p>
+              <p className="mb-1 text-sm font-medium text-foreground/70">
+                Your {attempts.length === 1 ? "attempt" : "attempts"}:
+              </p>
+              <div className="space-y-2">
+                {(isCorrect ? attempts.filter((attempt) => !attempt.isCorrect) : attempts).map((attempt, index) => {
+                  const species = findSpecies(attempt.speciesId)
+                  if (!species) return undefined
+                  const hint = getHintText(attempt)
+                  return (
+                    <div
+                      key={attempt.speciesId}
+                      className={`flex items-stretch justify-between rounded-md border p-3 ${
+                        attempt.isCorrect ? "border-primary/40 bg-primary/10" : "border-border bg-background"
+                      }`}
+                    >
+                      <div>
+                        <p className="font-medium text-foreground">
+                          <span className="mr-2 text-muted-foreground">#{index + 1}</span>
+                          {species.commonNames[0]}
+                        </p>
+                        <p className="text-sm italic text-muted-foreground">{species.scientificName}</p>
+                      </div>
+                      <div className="flex flex-col items-end text-right">
+                        {hint && <p className="text-sm font-medium text-muted-foreground">{hint}</p>}
+                        <p className="mt-auto text-sm text-muted-foreground">{species.family}</p>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground">{correctAnswer.family}</p>
+          )}
+
+          <div className="rounded-lg border border-border bg-background p-4">
+            <div className="mb-2 flex items-center justify-between">
+              {(!isCorrect || attempts.length !== 1) && (
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  {isCorrect ? "You Correctly Identified It As" : "The Answer Was"}
+                </p>
+              )}
+            </div>
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="text-2xl font-semibold text-foreground">{correctAnswer.commonNames[0]}</p>
+                <p className="text-sm italic text-muted-foreground">{correctAnswer.scientificName}</p>
+              </div>
+              <p className="text-sm text-muted-foreground">{correctAnswer.family}</p>
+            </div>
           </div>
         </div>
 
