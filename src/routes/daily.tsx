@@ -10,7 +10,8 @@ import { Iso8601Date } from "@/utils/brandedTypes"
 import { Species } from "@/lib/Species"
 import { Puzzle } from "@/lib/Puzzle"
 import { StatsStorage } from "@/lib/StatsStorage"
-import { useCallback, useMemo } from "react"
+import { DailyStatsSummary, deriveDailySummary } from "@/lib/dailyStatsSummary"
+import { useCallback, useMemo, useState } from "react"
 import { produce } from "immer"
 
 interface DailyPuzzleData {
@@ -49,10 +50,11 @@ export const Route = createFileRoute("/daily")({
 const DailyPuzzlePage = () => {
   const { puzzle, correctSpecies, scheduledDate } = Route.useLoaderData()
   const storage = useMemo(() => new StatsStorage(window.localStorage), [])
+  const [statsSummary, setStatsSummary] = useState<DailyStatsSummary>(() => deriveDailySummary(storage.load().history))
 
   const handleComplete = useCallback(
     (completion: PuzzleCompletion) => {
-      storage.update((current) =>
+      const nextStats = storage.update((current) =>
         produce(current, (draft) => {
           const puzzleId = puzzle?.id
           if (!puzzleId) {
@@ -63,10 +65,11 @@ const DailyPuzzlePage = () => {
             date: scheduledDate,
             puzzleId,
             result: completion.result,
-            attempts: completion.attempts,
+            guessedSpeciesIds: completion.guessedSpeciesIds,
           })
         }),
       )
+      setStatsSummary(deriveDailySummary(nextStats.history))
     },
     [puzzle?.id, scheduledDate, storage],
   )
@@ -81,6 +84,8 @@ const DailyPuzzlePage = () => {
       correctSpecies={correctSpecies}
       scheduledDate={scheduledDate}
       onComplete={handleComplete}
+      statsSummary={statsSummary}
+      clock={defaultClock}
     />
   )
 }

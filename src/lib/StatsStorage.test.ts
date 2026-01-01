@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest"
 import { DailyResult, StatsStorage, StatsSnapshot } from "./StatsStorage"
 import { deriveDailySummary } from "./dailyStatsSummary"
 import { PuzzleId } from "./Puzzle"
+import { SpeciesId } from "./Species"
 import { Iso8601Date } from "@/utils/brandedTypes"
 
 const createMemoryStorage = (): Storage => {
@@ -40,7 +41,7 @@ describe("StatsStorage", () => {
           date: Iso8601Date("2026-06-08"),
           puzzleId: PuzzleId(40),
           result: DailyResult.PASS,
-          attempts: 2,
+          guessedSpeciesIds: [SpeciesId(10), SpeciesId(12)],
         },
       ],
     }
@@ -59,7 +60,7 @@ describe("StatsStorage", () => {
           date: Iso8601Date("2026-06-08"),
           puzzleId: PuzzleId(40),
           result: DailyResult.PASS,
-          attempts: 2,
+          guessedSpeciesIds: [SpeciesId(10), SpeciesId(12)],
         },
       ],
     })
@@ -88,13 +89,13 @@ describe("deriveDailySummary", () => {
         date: Iso8601Date("2026-06-08"),
         puzzleId: PuzzleId(40),
         result: DailyResult.PASS,
-        attempts: 2,
+        guessedSpeciesIds: [SpeciesId(10), SpeciesId(12)],
       },
       {
         date: Iso8601Date("2026-06-09"),
         puzzleId: PuzzleId(41),
         result: DailyResult.PASS,
-        attempts: 1,
+        guessedSpeciesIds: [SpeciesId(12)],
       },
     ]
 
@@ -111,13 +112,13 @@ describe("deriveDailySummary", () => {
         date: Iso8601Date("2026-06-08"),
         puzzleId: PuzzleId(40),
         result: DailyResult.PASS,
-        attempts: 2,
+        guessedSpeciesIds: [SpeciesId(10), SpeciesId(12)],
       },
       {
         date: Iso8601Date("2026-06-10"),
         puzzleId: PuzzleId(42),
         result: DailyResult.FAIL,
-        attempts: 3,
+        guessedSpeciesIds: [SpeciesId(12), SpeciesId(15), SpeciesId(18)],
       },
     ]
 

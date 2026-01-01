@@ -15,12 +15,15 @@ import { DailyResult } from "@/lib/StatsStorage"
 import { PuzzleTestIds } from "./PuzzleTestIds"
 import { Iso8601Date } from "@/utils/brandedTypes"
 import { assert } from "tsafe"
+import { DailyStatsSummary } from "@/lib/dailyStatsSummary"
+import { Clock } from "@/lib/Clock"
+import { SpeciesId } from "@/lib/Species"
 
 const MAX_ATTEMPTS = 3
 
 export interface PuzzleCompletion {
   result: DailyResult
-  attempts: number
+  guessedSpeciesIds: SpeciesId[]
   gaveUp: boolean
 }
 
@@ -29,16 +32,20 @@ export interface PuzzlePageProps {
   correctSpecies: Species
   scheduledDate?: Iso8601Date
   onComplete?: (completion: PuzzleCompletion) => void
+  statsSummary?: DailyStatsSummary
+  showStatsPlaceholder?: boolean
+  clock: Clock
 }
 
-const userStats = {
-  totalIdentifications: 42,
-  correctIdentifications: 38,
-  currentStreak: 7,
-  maxStreak: 12,
-}
-
-export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate, onComplete }: PuzzlePageProps) => {
+export const PuzzlePage = ({
+  puzzle,
+  correctSpecies,
+  scheduledDate,
+  onComplete,
+  statsSummary,
+  showStatsPlaceholder,
+  clock,
+}: PuzzlePageProps) => {
   const [selectedSpecies, setSelectedSpecies] = useState<Species | undefined>(undefined)
   const [attempts, setAttempts] = useState<AttemptFeedback[]>([])
   const [gaveUp, setGaveUp] = useState(false)
@@ -58,7 +65,7 @@ export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate, onComplete }
     if (isFinalAttempt) {
       onComplete?.({
         result: feedback.isCorrect ? DailyResult.PASS : DailyResult.FAIL,
-        attempts: nextAttemptsCount,
+        guessedSpeciesIds: [...attempts.map((attempt) => attempt.speciesId), feedback.speciesId],
         gaveUp: false,
       })
     }
@@ -87,7 +94,7 @@ export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate, onComplete }
 
     onComplete?.({
       result: DailyResult.FAIL,
-      attempts: attempts.length,
+      guessedSpeciesIds: attempts.map((attempt) => attempt.speciesId),
       gaveUp: true,
     })
   }
@@ -119,7 +126,13 @@ export const PuzzlePage = ({ puzzle, correctSpecies, scheduledDate, onComplete }
                     correctAnswer={correctSpecies}
                   />
                 </div>
-                <StatsPanel isCorrect={isCorrect} userStats={userStats} />
+                {statsSummary && <StatsPanel summary={statsSummary} clock={clock} />}
+                {!statsSummary && showStatsPlaceholder && (
+                  <Card className="p-4">
+                    <h3 className="mb-2 font-serif text-lg font-semibold text-foreground">Your Statistics</h3>
+                    <p className="text-sm text-muted-foreground">Stats are only tracked for the daily puzzle.</p>
+                  </Card>
+                )}
               </>
             ) : (
               <AnswerInputCard

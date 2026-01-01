@@ -1,30 +1,25 @@
 import { Card } from "@/components/shadcn/Card"
 import { Button } from "@/components/shadcn/Button"
-import { Share2, TrendingUp, Award, Flame, Clock } from "lucide-react"
+import { Share2, TrendingUp, Award, Flame, Clock as ClockIcon } from "lucide-react"
 import { formatDuration } from "@/utils/dateUtils"
-
-interface UserStats {
-  totalIdentifications: number
-  correctIdentifications: number
-  currentStreak: number
-  maxStreak: number
-}
+import { DailyStatsSummary } from "@/lib/dailyStatsSummary"
+import { Clock } from "@/lib/Clock"
 
 interface StatsPanelProps {
-  isCorrect: boolean
-  userStats: UserStats
+  summary: DailyStatsSummary
+  clock: Clock
 }
 
-const getTimeToNextWortle = (): string => {
-  const now = new Date()
+const getTimeToNextWortle = (clock: Clock): string => {
+  const now = clock.now()
   const tomorrow = new Date(now)
   tomorrow.setUTCDate(tomorrow.getUTCDate() + 1)
   tomorrow.setUTCHours(0, 0, 0, 0)
   return formatDuration(now, tomorrow)
 }
 
-export const StatsPanel = ({ isCorrect, userStats }: StatsPanelProps) => {
-  const accuracy = Math.round((userStats.correctIdentifications / userStats.totalIdentifications) * 100)
+export const StatsPanel = ({ summary, clock }: StatsPanelProps) => {
+  const accuracy = Math.round(summary.winRate * 100)
 
   return (
     <Card className="p-4">
@@ -36,8 +31,7 @@ export const StatsPanel = ({ isCorrect, userStats }: StatsPanelProps) => {
             <span className="text-xs text-foreground/70">Total</span>
           </div>
           <p className="text-2xl font-bold text-foreground">
-            {userStats.totalIdentifications}{" "}
-            <span className="text-sm font-normal text-foreground/70">quizzes played</span>
+            {summary.played} <span className="text-sm font-normal text-foreground/70">quizzes played</span>
           </p>
         </div>
         <div className="rounded-lg bg-muted p-3">
@@ -55,8 +49,7 @@ export const StatsPanel = ({ isCorrect, userStats }: StatsPanelProps) => {
             <span className="text-xs text-foreground/70">Streak</span>
           </div>
           <p className="text-2xl font-bold text-foreground">
-            {isCorrect ? userStats.currentStreak : 0}{" "}
-            <span className="text-sm font-normal text-foreground/70">in a row</span>
+            {summary.currentStreak} <span className="text-sm font-normal text-foreground/70">in a row</span>
           </p>
         </div>
         <div className="rounded-lg bg-muted p-3">
@@ -65,7 +58,7 @@ export const StatsPanel = ({ isCorrect, userStats }: StatsPanelProps) => {
             <span className="text-xs text-foreground/70">Max Streak</span>
           </div>
           <p className="text-2xl font-bold text-foreground">
-            {userStats.maxStreak} <span className="text-sm font-normal text-foreground/70">in a row</span>
+            {summary.maxStreak} <span className="text-sm font-normal text-foreground/70">in a row</span>
           </p>
         </div>
       </div>
@@ -73,10 +66,10 @@ export const StatsPanel = ({ isCorrect, userStats }: StatsPanelProps) => {
       <div className="mt-4 space-y-3 border-t pt-4">
         <div className="flex items-center justify-between rounded-lg bg-muted p-3">
           <div className="flex items-center gap-2">
-            <Clock className="size-4 text-foreground" />
+            <ClockIcon className="size-4 text-foreground" />
             <span className="text-sm font-medium text-foreground">Next Wortle</span>
           </div>
-          <span className="text-sm font-bold text-foreground">{getTimeToNextWortle()}</span>
+          <span className="text-sm font-bold text-foreground">{getTimeToNextWortle(clock)}</span>
         </div>
 
         <Button onClick={() => {}} variant="outline" className="w-full bg-transparent" size="sm">

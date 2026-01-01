@@ -1,4 +1,5 @@
 import { PuzzleId } from "@/lib/Puzzle"
+import { SpeciesId } from "@/lib/Species"
 import { Iso8601Date } from "@/utils/brandedTypes"
 import { Equals, assert } from "tsafe"
 import { z } from "zod"
@@ -8,14 +9,11 @@ export enum DailyResult {
   FAIL = "FAIL",
 }
 
-export interface DailyPuzzleStats {
+export interface DailyPuzzleRecord {
+  readonly date: Iso8601Date
   readonly puzzleId: PuzzleId
   readonly result: DailyResult
-  readonly attempts: number
-}
-
-export interface DailyPuzzleRecord extends DailyPuzzleStats {
-  readonly date: Iso8601Date
+  readonly guessedSpeciesIds: SpeciesId[]
 }
 
 export interface StatsSnapshot {
@@ -27,7 +25,7 @@ const dailyPuzzleRecordSchema: z.ZodType<DailyPuzzleRecord> = z
     date: z.string().transform(Iso8601Date),
     puzzleId: z.number().int().transform(PuzzleId),
     result: z.enum([DailyResult.PASS, DailyResult.FAIL]),
-    attempts: z.number().int(),
+    guessedSpeciesIds: z.array(z.number().int().transform(SpeciesId)),
   })
   .readonly()
 
@@ -39,7 +37,7 @@ export const statsSnapshotSchema: z.ZodType<StatsSnapshot> = z
 
 assert<Equals<StatsSnapshot, z.infer<typeof statsSnapshotSchema>>>()
 
-const STORAGE_KEY = "dev:wortle:stats"
+const STORAGE_KEY = "wortle:temp:1:stats"
 
 const defaultStats: StatsSnapshot = {
   history: [],

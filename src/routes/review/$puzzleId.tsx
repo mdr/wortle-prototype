@@ -5,6 +5,7 @@ import { PuzzleId } from "@/lib/Puzzle"
 import { findSpecies } from "@/lib/plants"
 import { NotFoundPage } from "@/components/NotFoundPage"
 import { ErrorFallback } from "@/components/ErrorFallback"
+import { defaultClock } from "@/lib/Clock"
 
 export const Route = createFileRoute("/review/$puzzleId")({
   loader: ({ params }) => {
@@ -30,5 +31,5 @@ export const Route = createFileRoute("/review/$puzzleId")({
 
 const PuzzlePageWrapper = () => {
   const { puzzle, correctSpecies } = Route.useLoaderData()
-  return <PuzzlePage puzzle={puzzle} correctSpecies={correctSpecies} />
+  return <PuzzlePage puzzle={puzzle} correctSpecies={correctSpecies} showStatsPlaceholder clock={defaultClock} />
 }
