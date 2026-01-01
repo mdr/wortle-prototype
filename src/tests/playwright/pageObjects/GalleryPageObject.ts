@@ -40,6 +40,30 @@ export class FullscreenViewerPageObject extends PageObject {
 
   clickPrev = (): Promise<void> => this.step("clickPrev", () => this.get(FullscreenTestIds.prev).click())
 
+  pressZoomInKey = (): Promise<void> => this.step("pressZoomInKey", () => this.page.keyboard.press("Shift+="))
+
+  pressZoomOutKey = (): Promise<void> => this.step("pressZoomOutKey", () => this.page.keyboard.press("-"))
+
+  getTransformScale = (): Promise<number> =>
+    this.step("getTransformScale", async () => {
+      const transform = await this.get(FullscreenTestIds.viewer)
+        .locator(".react-transform-component")
+        .first()
+        .evaluate((element) => window.getComputedStyle(element).transform)
+
+      if (!transform || transform === "none") {
+        return 1
+      }
+
+      const match = transform.match(/matrix(3d)?\((.+)\)/)
+      if (!match) {
+        return 1
+      }
+
+      const values = match[2].split(",").map((value) => Number.parseFloat(value.trim()))
+      return Number.isNaN(values[0]) ? 1 : values[0]
+    })
+
   close = (): Promise<void> =>
     this.step("close", async () => {
       await this.get(FullscreenTestIds.close).click()
