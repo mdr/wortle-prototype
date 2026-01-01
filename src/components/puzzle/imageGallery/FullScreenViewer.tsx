@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { FocusTrap } from "focus-trap-react"
 import { TransformWrapper, TransformComponent, useControls } from "react-zoom-pan-pinch"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
@@ -14,6 +14,13 @@ export const FullScreenViewer = () => {
     imageGalleryIndex: state.imageGalleryIndex,
   }))
   const puzzleActions = usePuzzleServiceActions()
+  const goToPrevious = useCallback(() => {
+    puzzleActions.goToPreviousImage()
+  }, [puzzleActions])
+
+  const goToNext = useCallback(() => {
+    puzzleActions.goToNextImage()
+  }, [puzzleActions])
 
   return (
     <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
@@ -41,7 +48,7 @@ export const FullScreenViewer = () => {
               variant="ghost"
               size="icon"
               className="absolute left-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
-              onClick={puzzleActions.goToPreviousImage}
+              onClick={goToPrevious}
               data-testid={FullscreenTestIds.prev}
             >
               <ChevronLeft className="size-8" />
@@ -51,7 +58,7 @@ export const FullScreenViewer = () => {
               variant="ghost"
               size="icon"
               className="absolute right-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
-              onClick={puzzleActions.goToNextImage}
+              onClick={goToNext}
               data-testid={FullscreenTestIds.next}
             >
               <ChevronRight className="size-8" />
