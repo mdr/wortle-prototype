@@ -20,7 +20,7 @@ export const AboutPage = () => (
         <Card className="p-6">
           <h2 className="text-xl font-semibold">What is Wortle?</h2>
           <p className="text-muted-foreground">
-            Wortle is a daily wild plant identification quiz for plants in Britain and Ireland. Each day, you&apos;re
+            Wortle is a daily wild plant identification quiz for plants in Britain and Ireland. Each day, you're
             presented with photographs of a plant growing in the wild and challenged to identify it by its common or
             scientific name. If you're familiar with Wordle - this is similar, but for plant ID! Everyone gets the same
             puzzle every day.
@@ -33,7 +33,7 @@ export const AboutPage = () => (
             <li>Study the photographs carefully - you can zoom and pan to see details</li>
             <li>Use the observation details (location, habitat, date) as clues</li>
             <li>Search for the plant by common name or scientific name</li>
-            <li>Submit your answer to see if you&apos;re correct</li>
+            <li>Submit your answer to see if you're correct</li>
             <li>Come back tomorrow for a new challenge!</li>
           </ol>
         </Card>
@@ -52,7 +52,7 @@ export const AboutPage = () => (
         <Card className="p-6">
           <h2 className="text-xl font-semibold">How can I learn to identify plants?</h2>
           <p className="mb-3 text-muted-foreground">
-            If you&apos;re new to plant identification, consider getting a good field guide.{" "}
+            If you're new to plant identification, consider getting a good field guide.{" "}
             <a
               href="https://www.summerfieldbooks.com/product/british-and-irish-wild-flowers-and-plants-a-pocket-guide/"
               target="_blank"

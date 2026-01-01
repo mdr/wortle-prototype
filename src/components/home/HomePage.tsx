@@ -40,11 +40,11 @@ export const HomePage = () => {
           <Card className="p-6">
             <h2 className="font-serif text-2xl font-bold text-foreground">Daily puzzle</h2>
             <p className="text-muted-foreground">
-              Jump into today&apos;s puzzle. Your result counts toward your daily stats.
+              Jump into today's puzzle. Your result counts toward your daily stats.
             </p>
             <div className="pt-4">
               <Link to="/daily">
-                <Button size="lg">Play today&apos;s puzzle</Button>
+                <Button size="lg">Play today's puzzle</Button>
               </Link>
             </div>
           </Card>
@@ -59,8 +59,8 @@ export const HomePage = () => {
               </p>
               <p>
                 This site is currently just a proof of concept to demonstrate the idea - click the links below to see
-                examples of how it might work. I&apos;d love to hear your thoughts on the prototype - does it make sense
-                what to do, and could any aspects be improved? And ultimately, is it fun and might it interest people?
+                examples of how it might work. I'd love to hear your thoughts on the prototype - does it make sense what
+                to do, and could any aspects be improved? And ultimately, is it fun and might it interest people?
               </p>
             </div>
           </Card>
@@ -89,19 +89,19 @@ export const HomePage = () => {
             <h2 className="font-serif text-2xl font-bold text-foreground">How you can help</h2>
             <div className="space-y-4 text-muted-foreground">
               <p>
-                I&apos;m a software developer by trade and emphatically not a botanist, in fact very much a beginner!
-                One of the key ways I&apos;ll need help is in making sure the botanical details are correct. Most
-                obviously, to verify that the plants are indeed what they are claimed to be, but also that the
-                photographs give sufficient detail to unambiguously identify the species, and to help give correct and
-                useful ID tips to players.
+                I'm a software developer by trade and emphatically not a botanist, in fact very much a beginner! One of
+                the key ways I'll need help is in making sure the botanical details are correct. Most obviously, to
+                verify that the plants are indeed what they are claimed to be, but also that the photographs give
+                sufficient detail to unambiguously identify the species, and to help give correct and useful ID tips to
+                players.
               </p>
               <p>
-                I&apos;ll also need help to collect enough sets of photos to be able to keep up with the pace of showing
-                a new puzzle each day.
+                I'll also need help to collect enough sets of photos to be able to keep up with the pace of showing a
+                new puzzle each day.
               </p>
               <p>
-                If you&apos;d be interested in helping out this project, either to help with reviewing the botany, or
-                contributing puzzle photos, or helping with the technical aspects - please get in touch. I&apos;m Matt
+                If you'd be interested in helping out this project, either to help with reviewing the botany, or
+                contributing puzzle photos, or helping with the technical aspects - please get in touch. I'm Matt
                 Russell, and you can reach me at{" "}
                 <a href="mailto:mattrusselluk@gmail.com" className="underline hover:text-foreground">
                   mattrusselluk@gmail.com
