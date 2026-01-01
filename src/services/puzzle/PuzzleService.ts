@@ -107,6 +107,7 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
   }
 
   selectImageIndex = (index: number): void => {
+    assert(index >= 0 && index < this.state.puzzle.images.length, `Invalid image index: ${index}`)
     this.setState({ imageGalleryIndex: index })
   }
 
