@@ -18,6 +18,9 @@ export class PuzzlePageObject extends PageObject {
 
   submitAnswer = (): Promise<void> => this.step("submitAnswer", () => this.get(PuzzleTestIds.submitAnswer).click())
 
+  chooseDifferentPlant = (): Promise<void> =>
+    this.step("chooseDifferentPlant", () => this.get(PuzzleTestIds.chooseDifferentPlant).click())
+
   verifyCorrectAnswer = (): Promise<void> =>
     this.step("verifyCorrectAnswer", () => expect(this.get(AnswerTestIds.correct)).toBeVisible())
 
@@ -38,6 +41,14 @@ export class PuzzlePageObject extends PageObject {
   verifyAttemptCounter = (current: number, max: number): Promise<void> =>
     this.step(`verifyAttemptCounter(${current}/${max})`, () =>
       expect(this.get(PuzzleTestIds.attemptCounter)).toHaveText(`Attempt ${current} of ${max}`),
+    )
+
+  verifySearchInputVisible = (): Promise<void> =>
+    this.step("verifySearchInputVisible", () => expect(this.get(PuzzleTestIds.searchInput)).toBeVisible())
+
+  verifySelectedPlantName = (name: string): Promise<void> =>
+    this.step(`verifySelectedPlantName(${name})`, () =>
+      expect(this.get(PuzzleTestIds.selectedPlantName)).toHaveText(name),
     )
 
   gallery = (): Promise<GalleryPageObject> =>

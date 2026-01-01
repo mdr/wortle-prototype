@@ -10,6 +10,7 @@ Run `task check` to verify work before finishing (runs tsc, lint, format, and te
 - Name functions that may return `undefined` with a `find` prefix (e.g. `findPuzzle`).
 - Prefer arrow function properties for class methods (e.g. `load = () => { ... }`).
 - Prefer single expression body form for arrow functions with one-liner returns (e.g., `const fn = (x: string) => x.trim()` over `const fn = (x: string) => { return x.trim() }`).
+- Prefer string enums with all caps (e.g. `enum Status { READY = "READY" }`).
 
 ## Task Commands
 

@@ -1,28 +1,23 @@
-import { useState } from "react"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
 import { ChevronLeft, ChevronRight, Maximize2, Copyright } from "lucide-react"
 import { Button } from "@/components/shadcn/Button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/Popover"
 import { assetUrl } from "@/utils/utils"
-import { ImageData, Attribution } from "./types"
 import { FullScreenViewer } from "./FullScreenViewer"
 import { GalleryTestIds } from "./GalleryTestIds"
+import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
 
-interface ImageGalleryProps {
-  images: ImageData[]
-  attribution?: Attribution
-}
-
-export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isZoomed, setIsZoomed] = useState(false)
+export const ImageGallery = () => {
+  const { images, photoAttribution } = usePuzzleState((state) => state.puzzle)
+  const { imageGalleryIndex, isFullscreenImageMode } = usePuzzleState((state) => state)
+  const puzzleActions = usePuzzleServiceActions()
 
   const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
+    puzzleActions.goToPreviousImage()
   }
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+    puzzleActions.goToNextImage()
   }
 
   return (
@@ -30,7 +25,7 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
       <div className="space-y-4" data-testid={GalleryTestIds.gallery}>
         <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-muted">
           <TransformWrapper
-            key={currentIndex}
+            key={imageGalleryIndex}
             initialScale={1}
             minScale={1}
             maxScale={4}
@@ -39,8 +34,8 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
           >
             <TransformComponent wrapperClass="!w-full !h-full" contentClass="!w-full !h-full">
               <img
-                src={assetUrl(images[currentIndex].url || "/placeholder.svg")}
-                alt={images[currentIndex].caption}
+                src={assetUrl(images[imageGalleryIndex].url || "/placeholder.svg")}
+                alt={images[imageGalleryIndex].caption}
                 className="h-full w-full object-contain"
               />
             </TransformComponent>
@@ -72,7 +67,7 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
           <Button
             variant="secondary"
             size="icon"
-            onClick={() => setIsZoomed(true)}
+            onClick={puzzleActions.enterFullscreenImageMode}
             className="absolute right-2 top-2 size-12 rounded-full shadow-lg"
             data-testid={GalleryTestIds.fullscreen}
           >
@@ -80,56 +75,54 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
             <span className="sr-only">View fullscreen</span>
           </Button>
 
-          {attribution && (
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="absolute bottom-2 right-2 size-12 rounded-full shadow-lg opacity-70 hover:opacity-100"
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="secondary"
+                size="icon"
+                className="absolute bottom-2 right-2 size-12 rounded-full shadow-lg opacity-70 hover:opacity-100"
+              >
+                <Copyright className="size-6" />
+                <span className="sr-only">Photo attribution</span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto text-xs" side="top" align="end">
+              <p className="flex flex-wrap items-center gap-x-1">
+                <span>© 2025 by {photoAttribution.photographer}, licensed under</span>
+                <a
+                  href="https://creativecommons.org/licenses/by/4.0/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center hover:underline"
                 >
-                  <Copyright className="size-6" />
-                  <span className="sr-only">Photo attribution</span>
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto text-xs" side="top" align="end">
-                <p className="flex flex-wrap items-center gap-x-1">
-                  <span>© 2025 by {attribution.photographer}, licensed under</span>
-                  <a
-                    href="https://creativecommons.org/licenses/by/4.0/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center hover:underline"
-                  >
-                    {attribution.license}
-                    <img
-                      src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
-                      alt=""
-                      className="ml-1 inline-block h-4 w-4"
-                    />
-                    <img
-                      src="https://mirrors.creativecommons.org/presskit/icons/by.svg"
-                      alt=""
-                      className="ml-0.5 inline-block h-4 w-4"
-                    />
-                  </a>
-                </p>
-              </PopoverContent>
-            </Popover>
-          )}
+                  {photoAttribution.license}
+                  <img
+                    src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+                    alt=""
+                    className="ml-1 inline-block h-4 w-4"
+                  />
+                  <img
+                    src="https://mirrors.creativecommons.org/presskit/icons/by.svg"
+                    alt=""
+                    className="ml-0.5 inline-block h-4 w-4"
+                  />
+                </a>
+              </p>
+            </PopoverContent>
+          </Popover>
         </div>
 
         <p className="text-center text-sm text-muted-foreground" data-testid={GalleryTestIds.caption}>
-          {images[currentIndex].caption}
+          {images[imageGalleryIndex].caption}
         </p>
 
         <div className="grid grid-cols-4 gap-2">
           {images.map((image, index) => (
             <div key={index} className="flex flex-col items-center">
               <button
-                onClick={() => setCurrentIndex(index)}
+                onClick={() => puzzleActions.selectImageIndex(index)}
                 className={`relative aspect-square w-full overflow-hidden rounded-md border transition-all ${
-                  index === currentIndex
+                  index === imageGalleryIndex
                     ? "border-muted-foreground/30"
                     : "border-transparent opacity-60 hover:opacity-100 hover:border-muted-foreground/30"
                 }`}
@@ -143,7 +136,7 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
               </button>
               <div
                 className={`mt-1 h-0 w-0 border-x-[6px] border-b-[8px] border-x-transparent border-b-primary transition-opacity ${
-                  index === currentIndex ? "opacity-100" : "opacity-0"
+                  index === imageGalleryIndex ? "opacity-100" : "opacity-0"
                 }`}
               />
             </div>
@@ -151,14 +144,7 @@ export const ImageGallery = ({ images, attribution }: ImageGalleryProps) => {
         </div>
       </div>
 
-      {isZoomed && (
-        <FullScreenViewer
-          images={images}
-          currentIndex={currentIndex}
-          onClose={() => setIsZoomed(false)}
-          onNavigate={setCurrentIndex}
-        />
-      )}
+      {isFullscreenImageMode && <FullScreenViewer />}
     </>
   )
 }

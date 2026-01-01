@@ -2,6 +2,7 @@ import { Locator, Page } from "@playwright/test"
 import type { MountResult } from "@playwright/experimental-ct-react"
 import AxeBuilder from "@axe-core/playwright"
 import { platform } from "os"
+import { assert } from "tsafe"
 import { expect, test } from "../fixtures"
 
 type TestId = string
@@ -16,9 +17,10 @@ export abstract class PageObject {
 
   constructor(protected readonly mountResult: MountResult) {
     const constructorName = this.constructor.name
-    if (!constructorName.endsWith("PageObject")) {
-      throw new Error(`Page object class name must end with 'PageObject', but was '${constructorName}'`)
-    }
+    assert(
+      constructorName.endsWith("PageObject"),
+      `Page object class name must end with 'PageObject', but was '${constructorName}'`,
+    )
     this.name = constructorName.replace("PageObject", "")
   }
 

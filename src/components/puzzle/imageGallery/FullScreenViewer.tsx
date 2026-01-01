@@ -1,38 +1,35 @@
-import { useEffect, useCallback } from "react"
+import { useCallback, useEffect } from "react"
 import { FocusTrap } from "focus-trap-react"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/shadcn/Button"
 import { assetUrl } from "@/utils/utils"
-import { ImageData } from "./types"
 import { ZoomControls } from "./ZoomControls"
 import { FullscreenTestIds } from "./GalleryTestIds"
+import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
 
-interface FullScreenViewerProps {
-  images: ImageData[]
-  currentIndex: number
-  onClose: () => void
-  onNavigate: (index: number) => void
-}
+export const FullScreenViewer = () => {
+  const { images } = usePuzzleState((state) => state.puzzle)
+  const { imageGalleryIndex } = usePuzzleState((state) => state)
+  const puzzleActions = usePuzzleServiceActions()
 
-export const FullScreenViewer = ({ images, currentIndex, onClose, onNavigate }: FullScreenViewerProps) => {
   const goToPrevious = useCallback(() => {
-    onNavigate(currentIndex === 0 ? images.length - 1 : currentIndex - 1)
-  }, [currentIndex, images.length, onNavigate])
+    puzzleActions.goToPreviousImage()
+  }, [puzzleActions])
 
   const goToNext = useCallback(() => {
-    onNavigate(currentIndex === images.length - 1 ? 0 : currentIndex + 1)
-  }, [currentIndex, images.length, onNavigate])
+    puzzleActions.goToNextImage()
+  }, [puzzleActions])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose()
+      if (e.key === "Escape") puzzleActions.exitFullscreenImageMode()
       if (e.key === "ArrowLeft") goToPrevious()
       if (e.key === "ArrowRight") goToNext()
     }
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [onClose, goToPrevious, goToNext])
+  }, [goToPrevious, goToNext, puzzleActions])
 
   return (
     <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
@@ -47,7 +44,7 @@ export const FullScreenViewer = ({ images, currentIndex, onClose, onNavigate }: 
           variant="ghost"
           size="icon"
           className="absolute right-4 top-4 z-10 size-12 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
-          onClick={onClose}
+          onClick={puzzleActions.exitFullscreenImageMode}
           data-testid={FullscreenTestIds.close}
         >
           <X className="size-6" />
@@ -80,7 +77,7 @@ export const FullScreenViewer = ({ images, currentIndex, onClose, onNavigate }: 
         )}
 
         <TransformWrapper
-          key={currentIndex}
+          key={imageGalleryIndex}
           initialScale={1}
           minScale={0.5}
           maxScale={5}
@@ -92,15 +89,15 @@ export const FullScreenViewer = ({ images, currentIndex, onClose, onNavigate }: 
             contentClass="!w-full !h-full flex items-center justify-center"
           >
             <img
-              src={assetUrl(images[currentIndex].url || "/placeholder.svg")}
-              alt={images[currentIndex].caption}
+              src={assetUrl(images[imageGalleryIndex].url || "/placeholder.svg")}
+              alt={images[imageGalleryIndex].caption}
               className="max-h-full max-w-full object-contain"
             />
           </TransformComponent>
 
           <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2">
             <p className="rounded bg-black/50 px-3 py-1 text-sm text-white" data-testid={FullscreenTestIds.caption}>
-              {images[currentIndex].caption}
+              {images[imageGalleryIndex].caption}
             </p>
             <ZoomControls />
           </div>

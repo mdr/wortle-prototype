@@ -10,9 +10,9 @@ import { Iso8601Date } from "@/utils/brandedTypes"
 import { Species } from "@/lib/Species"
 import { Puzzle } from "@/lib/Puzzle"
 import { StatsStorage } from "@/lib/StatsStorage"
-import { DailyStatsSummary, deriveDailySummary } from "@/lib/dailyStatsSummary"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { PuzzleServiceProvider } from "@/services/puzzle/PuzzleServiceProvider"
+import { PuzzleMode } from "@/services/puzzle/PuzzleService"
 
 interface DailyPuzzleData {
   scheduledDate: Iso8601Date
@@ -50,8 +50,6 @@ export const Route = createFileRoute("/daily")({
 const DailyPuzzlePage = () => {
   const { puzzle, correctSpecies, scheduledDate } = Route.useLoaderData()
   const storage = useMemo(() => new StatsStorage(window.localStorage), [])
-  const [statsSummary, setStatsSummary] = useState<DailyStatsSummary>(() => deriveDailySummary(storage.load().history))
-
   if (!puzzle || !correctSpecies) {
     return <NotFoundPage message="No puzzle is scheduled for today." />
   }
@@ -61,11 +59,10 @@ const DailyPuzzlePage = () => {
       puzzle={puzzle}
       correctSpecies={correctSpecies}
       scheduledDate={scheduledDate}
-      mode="daily"
+      mode={PuzzleMode.DAILY}
       statsStorage={storage}
-      onStatsSummaryUpdated={setStatsSummary}
     >
-      <PuzzlePage statsSummary={statsSummary} clock={defaultClock} />
+      <PuzzlePage clock={defaultClock} />
     </PuzzleServiceProvider>
   )
 }

@@ -1,15 +1,14 @@
 import { Context, createContext, useCallback, useContext, useSyncExternalStore } from "react"
 
 import { Option } from "../types/Option"
+import { assert } from "tsafe"
 import { AbstractService } from "./AbstractService"
 
 export const createOptionalContext = <T>(): Context<Option<T>> => createContext<Option<T>>(undefined)
 
 export const useService = <T>(context: Context<Option<T>>): T => {
   const service = useContext(context)
-  if (service === undefined) {
-    throw new Error("Cannot find service in context - Provider missing?")
-  }
+  assert(service !== undefined, "Cannot find service in context - Provider missing?")
   return service
 }
 

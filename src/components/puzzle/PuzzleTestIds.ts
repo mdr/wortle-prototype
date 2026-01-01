@@ -2,6 +2,8 @@ export const PuzzleTestIds = {
   page: "puzzle-page",
   searchInput: "plant-search-input",
   plantOption: "plant-option",
+  chooseDifferentPlant: "choose-different-plant",
+  selectedPlantName: "selected-plant-name",
   submitAnswer: "submit-answer",
   giveUp: "give-up",
   attemptCounter: "attempt-counter",

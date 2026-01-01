@@ -7,6 +7,7 @@ import { NotFoundPage } from "@/components/NotFoundPage"
 import { ErrorFallback } from "@/components/ErrorFallback"
 import { defaultClock } from "@/lib/Clock"
 import { PuzzleServiceProvider } from "@/services/puzzle/PuzzleServiceProvider"
+import { PuzzleMode } from "@/services/puzzle/PuzzleService"
 
 export const Route = createFileRoute("/review/$puzzleId")({
   loader: ({ params }) => {
@@ -33,7 +34,7 @@ export const Route = createFileRoute("/review/$puzzleId")({
 const PuzzlePageWrapper = () => {
   const { puzzle, correctSpecies } = Route.useLoaderData()
   return (
-    <PuzzleServiceProvider puzzle={puzzle} correctSpecies={correctSpecies} mode="review">
+    <PuzzleServiceProvider puzzle={puzzle} correctSpecies={correctSpecies} mode={PuzzleMode.REVIEW}>
       <PuzzlePage showStatsPlaceholder clock={defaultClock} />
     </PuzzleServiceProvider>
   )

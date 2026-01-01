@@ -1,17 +1,11 @@
 import { Card } from "@/components/shadcn/Card"
 import { Check, X } from "lucide-react"
-import { Species } from "@/lib/Species"
 import { AttemptFeedback } from "@/lib/AttemptFeedback"
 import { findSpecies } from "@/lib/plants"
 import { TipWithGlossary } from "@/components/puzzle/TipWithGlossary"
 import { AnswerTestIds } from "./PuzzleTestIds"
-
-interface AnswerResultProps {
-  isCorrect: boolean
-  gaveUp: boolean
-  attempts: AttemptFeedback[]
-  correctAnswer: Species
-}
+import { usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
+import { selectIsCorrect } from "@/services/puzzle/puzzleSelectors"
 
 const getHintText = (attempt: AttemptFeedback): string | undefined => {
   if (attempt.isCorrect) return undefined
@@ -20,7 +14,9 @@ const getHintText = (attempt: AttemptFeedback): string | undefined => {
   return undefined
 }
 
-export const AnswerResult = ({ isCorrect, gaveUp, attempts, correctAnswer }: AnswerResultProps) => {
+export const AnswerResult = () => {
+  const isCorrect = usePuzzleState(selectIsCorrect)
+  const { attempts, correctSpecies, gaveUp } = usePuzzleState((state) => state)
   const getHeading = () => {
     if (isCorrect) return "Correct!"
     if (gaveUp) return "Here's the answer"
@@ -111,20 +107,20 @@ export const AnswerResult = ({ isCorrect, gaveUp, attempts, correctAnswer }: Ans
             <div className="flex-1 rounded-lg border border-border bg-background p-4">
               <div className="flex items-end justify-between">
                 <div>
-                  <p className="text-2xl font-semibold text-foreground">{correctAnswer.commonNames[0]}</p>
-                  <p className="text-sm italic text-muted-foreground">{correctAnswer.scientificName}</p>
+                  <p className="text-2xl font-semibold text-foreground">{correctSpecies.commonNames[0]}</p>
+                  <p className="text-sm italic text-muted-foreground">{correctSpecies.scientificName}</p>
                 </div>
-                <p className="text-sm text-muted-foreground">{correctAnswer.family}</p>
+                <p className="text-sm text-muted-foreground">{correctSpecies.family}</p>
               </div>
             </div>
           </div>
         </div>
 
-        {correctAnswer.idTips.length > 0 && (
+        {correctSpecies.idTips.length > 0 && (
           <div className="rounded-lg bg-accent/10 p-4">
             <h3 className="mb-2 font-serif text-lg font-semibold text-foreground">Identification Tips</h3>
             <ul className="list-inside list-disc space-y-2 text-sm text-foreground">
-              {correctAnswer.idTips.map((tip, index) => (
+              {correctSpecies.idTips.map((tip, index) => (
                 <li key={index}>
                   <TipWithGlossary tip={tip} />
                 </li>
@@ -133,11 +129,11 @@ export const AnswerResult = ({ isCorrect, gaveUp, attempts, correctAnswer }: Ans
           </div>
         )}
 
-        {correctAnswer.links.length > 0 && (
+        {correctSpecies.links.length > 0 && (
           <div className="space-y-2">
             <p className="text-sm font-medium text-foreground">Learn more:</p>
             <div className="flex flex-wrap gap-2">
-              {correctAnswer.links.map((link, index) => (
+              {correctSpecies.links.map((link, index) => (
                 <span key={link.name} className="flex items-center gap-2">
                   {index > 0 && <span className="text-muted-foreground">•</span>}
                   <a

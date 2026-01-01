@@ -58,3 +58,14 @@ test("can give up on puzzle", async ({ homePage }) => {
   await puzzlePage.giveUp()
   await puzzlePage.verifyGaveUp()
 })
+
+test("can choose a different plant", async ({ homePage }) => {
+  const puzzlePage = await homePage.clickPuzzle(0)
+  await puzzlePage.searchForPlant("Daisy")
+  await puzzlePage.selectFirstPlantOption()
+  await puzzlePage.chooseDifferentPlant()
+  await puzzlePage.verifySearchInputVisible()
+  await puzzlePage.searchForPlant("Tansy")
+  await puzzlePage.selectFirstPlantOption()
+  await puzzlePage.verifySelectedPlantName("Tansy")
+})

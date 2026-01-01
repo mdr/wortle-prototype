@@ -1,56 +1,38 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { Card } from "@/components/shadcn/Card"
 import { ImageGallery } from "@/components/puzzle/imageGallery/ImageGallery"
 import { AnswerResult } from "@/components/puzzle/AnswerResult"
 import { PuzzleHeader } from "@/components/puzzle/PuzzleHeader"
 import { WhereAndWhenCard } from "@/components/puzzle/WhereAndWhenCard"
-import { AnswerInputCard, AnswerInputCardHandle } from "@/components/puzzle/AnswerInputCard"
+import { AnswerInputCard } from "@/components/puzzle/AnswerInputCard"
 import { AttemptHistory } from "@/components/puzzle/AttemptHistory"
 import { StatsPanel } from "@/components/puzzle/StatsPanel"
 import { useCorrectAnswerConfetti } from "@/components/puzzle/useCorrectAnswerConfetti"
 import { PuzzleTestIds } from "./PuzzleTestIds"
-import { assert } from "tsafe"
-import { DailyStatsSummary } from "@/lib/dailyStatsSummary"
 import { Clock } from "@/lib/Clock"
-import {
-  usePuzzleIsCorrect,
-  usePuzzleIsResolved,
-  usePuzzleShowAttemptHistory,
-  usePuzzleService,
-  usePuzzleStateSelector,
-} from "@/services/puzzle/puzzleServiceHooks"
-import { MAX_ATTEMPTS } from "@/services/puzzle/PuzzleService"
+import { usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
+import { selectIsCorrect, selectIsResolved, selectShowAttemptHistory } from "@/services/puzzle/puzzleSelectors"
 
 export interface PuzzlePageProps {
-  statsSummary?: DailyStatsSummary
   showStatsPlaceholder?: boolean
   clock: Clock
 }
 
-export const PuzzlePage = ({ statsSummary, showStatsPlaceholder, clock }: PuzzlePageProps) => {
-  const { puzzle, correctSpecies, scheduledDate, attempts, gaveUp, incorrectFeedbackText, selectedSpecies } =
-    usePuzzleStateSelector((state) => state)
-  const puzzleService = usePuzzleService()
+export const PuzzlePage = ({ showStatsPlaceholder, clock }: PuzzlePageProps) => {
+  const { puzzle, scheduledDate, attempts, statsSummary } = usePuzzleState()
+
+  const isCorrect = usePuzzleState(selectIsCorrect)
+  const isResolved = usePuzzleState(selectIsResolved)
+  const showAttemptHistory = usePuzzleState(selectShowAttemptHistory)
   const { fireConfetti, panelRef: answerPanelRef } = useCorrectAnswerConfetti()
-  const answerInputRef = useRef<AnswerInputCardHandle>(null)
+  const wasCorrectRef = useRef(isCorrect)
 
-  const isCorrect = usePuzzleIsCorrect()
-  const isResolved = usePuzzleIsResolved()
-  const showAttemptHistory = usePuzzleShowAttemptHistory()
-
-  const handleSubmit = () => {
-    assert(selectedSpecies, "Selected species is required to submit an answer.")
-    const { feedback } = puzzleService.submitGuess(selectedSpecies)
-    if (feedback.isCorrect) {
+  useEffect(() => {
+    if (isCorrect && !wasCorrectRef.current) {
       fireConfetti()
-    } else {
-      answerInputRef.current?.shake()
     }
-  }
-
-  const handleGiveUp = () => {
-    puzzleService.giveUp()
-  }
+    wasCorrectRef.current = isCorrect
+  }, [fireConfetti, isCorrect])
 
   return (
     <main className="min-h-screen bg-background" data-testid={PuzzleTestIds.page}>
@@ -60,7 +42,7 @@ export const PuzzlePage = ({ statsSummary, showStatsPlaceholder, clock }: Puzzle
         <div className="grid gap-8 lg:grid-cols-2">
           <div className="space-y-4">
             <Card className="overflow-hidden p-4">
-              <ImageGallery images={puzzle.images} attribution={puzzle.photoAttribution} />
+              <ImageGallery />
             </Card>
           </div>
 
@@ -72,12 +54,7 @@ export const PuzzlePage = ({ statsSummary, showStatsPlaceholder, clock }: Puzzle
             {isResolved ? (
               <>
                 <div ref={answerPanelRef}>
-                  <AnswerResult
-                    isCorrect={isCorrect}
-                    gaveUp={gaveUp}
-                    attempts={attempts}
-                    correctAnswer={correctSpecies}
-                  />
+                  <AnswerResult />
                 </div>
                 {statsSummary && <StatsPanel summary={statsSummary} clock={clock} />}
                 {!statsSummary && showStatsPlaceholder && (
@@ -88,20 +65,7 @@ export const PuzzlePage = ({ statsSummary, showStatsPlaceholder, clock }: Puzzle
                 )}
               </>
             ) : (
-              <AnswerInputCard
-                ref={answerInputRef}
-                selectedSpecies={selectedSpecies}
-                onSelectSpecies={(species) => {
-                  puzzleService.setSelectedSpecies(species)
-                  puzzleService.clearIncorrectFeedbackText()
-                }}
-                onSubmit={handleSubmit}
-                onGiveUp={handleGiveUp}
-                attemptNumber={attempts.length + 1}
-                maxAttempts={MAX_ATTEMPTS}
-                incorrectFeedbackText={incorrectFeedbackText}
-                excludedSpeciesIds={attempts.map((a) => a.speciesId)}
-              />
+              <AnswerInputCard />
             )}
           </div>
         </div>

@@ -8,16 +8,15 @@ import {
   CommandList,
 } from "@/components/shadcn/Command"
 import { getAllSpecies } from "@/lib/plants"
-import { Species, SpeciesId } from "@/lib/Species"
+import { Species } from "@/lib/Species"
 import { PuzzleTestIds } from "./PuzzleTestIds"
+import { clsx } from "clsx"
+import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
 
-interface PlantSearchProps {
-  onSelect: (species: Species | undefined) => void
-  selectedSpecies: Species | undefined
-  excludedSpeciesIds?: SpeciesId[]
-}
-
-export const PlantSearch = ({ onSelect, selectedSpecies, excludedSpeciesIds = [] }: PlantSearchProps) => {
+export const PlantSearch = () => {
+  const { attempts, selectedSpecies } = usePuzzleState((state) => state)
+  const puzzleActions = usePuzzleServiceActions()
+  const excludedSpeciesIds = attempts.map((attempt) => attempt.speciesId)
   const [query, setQuery] = useState("")
   const [open, setOpen] = useState(false)
   const { containerRef, handleFocus, handleBlur } = useScrollToLabelOnFocus(open)
@@ -26,7 +25,7 @@ export const PlantSearch = ({ onSelect, selectedSpecies, excludedSpeciesIds = []
   const allSpecies = getAllSpecies()
 
   const handleSelect = (species: Species) => {
-    onSelect(species)
+    puzzleActions.selectSpecies(species.id)
     setQuery("")
     setOpen(false)
   }
@@ -39,7 +38,7 @@ export const PlantSearch = ({ onSelect, selectedSpecies, excludedSpeciesIds = []
   )
 
   const handleClear = () => {
-    onSelect(undefined)
+    puzzleActions.chooseDifferentPlant()
     setQuery("")
   }
 
@@ -48,12 +47,19 @@ export const PlantSearch = ({ onSelect, selectedSpecies, excludedSpeciesIds = []
       <div className="space-y-2">
         <div className="flex items-end justify-between rounded-lg border border-border bg-muted p-3">
           <div>
-            <p className="font-medium text-foreground">{selectedSpecies.commonNames[0]}</p>
+            <p className="font-medium text-foreground" data-testid={PuzzleTestIds.selectedPlantName}>
+              {selectedSpecies.commonNames[0]}
+            </p>
             <p className="text-xs italic text-foreground/70">{selectedSpecies.scientificName}</p>
           </div>
           <p className="text-xs text-foreground/70">{selectedSpecies.family}</p>
         </div>
-        <button type="button" onClick={handleClear} className="text-sm text-primary underline-offset-4 hover:underline">
+        <button
+          type="button"
+          onClick={handleClear}
+          className="text-sm text-primary underline-offset-4 hover:underline"
+          data-testid={PuzzleTestIds.chooseDifferentPlant}
+        >
           Choose a different plant
         </button>
       </div>
@@ -83,21 +89,21 @@ export const PlantSearch = ({ onSelect, selectedSpecies, excludedSpeciesIds = []
           }}
           data-testid={PuzzleTestIds.searchInput}
         />
-        <CommandList className={open ? "" : "hidden"}>
+        <CommandList className={clsx({ hidden: !open })}>
           <CommandEmpty>No plants found. Try a different name.</CommandEmpty>
           <CommandGroup heading="Suggestions">
-            {filteredSpecies.map((s) => (
+            {filteredSpecies.map((species) => (
               <CommandItem
-                key={s.id}
-                value={s.commonNames[0]}
-                onSelect={() => handleSelect(s)}
+                key={species.id}
+                value={species.commonNames[0]}
+                onSelect={() => handleSelect(species)}
                 className="group"
                 data-testid={PuzzleTestIds.plantOption}
               >
                 <div className="flex flex-1 flex-col">
-                  <span className="font-medium">{s.commonNames[0]}</span>
+                  <span className="font-medium">{species.commonNames[0]}</span>
                   <span className="text-xs italic text-muted-foreground group-data-[selected=true]:text-primary-foreground/70">
-                    {s.scientificName}
+                    {species.scientificName}
                   </span>
                 </div>
               </CommandItem>
