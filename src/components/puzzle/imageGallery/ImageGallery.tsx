@@ -30,6 +30,8 @@ export const ImageGallery = () => {
             minScale={1}
             maxScale={4}
             centerOnInit
+            limitToBounds
+            centerZoomedOut
             doubleClick={{ mode: "toggle", step: 2 }}
           >
             <TransformComponent wrapperClass="!w-full !h-full" contentClass="!w-full !h-full">

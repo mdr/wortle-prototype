@@ -1,6 +1,6 @@
-import { useCallback, useEffect } from "react"
+import { useEffect } from "react"
 import { FocusTrap } from "focus-trap-react"
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
+import { TransformWrapper, TransformComponent, useControls } from "react-zoom-pan-pinch"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/shadcn/Button"
 import { assetUrl } from "@/utils/utils"
@@ -9,27 +9,11 @@ import { FullscreenTestIds } from "./GalleryTestIds"
 import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
 
 export const FullScreenViewer = () => {
-  const { images } = usePuzzleState((state) => state.puzzle)
-  const { imageGalleryIndex } = usePuzzleState((state) => state)
+  const { images, imageGalleryIndex } = usePuzzleState((state) => ({
+    images: state.puzzle.images,
+    imageGalleryIndex: state.imageGalleryIndex,
+  }))
   const puzzleActions = usePuzzleServiceActions()
-
-  const goToPrevious = useCallback(() => {
-    puzzleActions.goToPreviousImage()
-  }, [puzzleActions])
-
-  const goToNext = useCallback(() => {
-    puzzleActions.goToNextImage()
-  }, [puzzleActions])
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") puzzleActions.exitFullscreenImageMode()
-      if (e.key === "ArrowLeft") goToPrevious()
-      if (e.key === "ArrowRight") goToNext()
-    }
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [goToPrevious, goToNext, puzzleActions])
 
   return (
     <FocusTrap focusTrapOptions={{ initialFocus: false, allowOutsideClick: true }}>
@@ -57,7 +41,7 @@ export const FullScreenViewer = () => {
               variant="ghost"
               size="icon"
               className="absolute left-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
-              onClick={goToPrevious}
+              onClick={puzzleActions.goToPreviousImage}
               data-testid={FullscreenTestIds.prev}
             >
               <ChevronLeft className="size-8" />
@@ -67,7 +51,7 @@ export const FullScreenViewer = () => {
               variant="ghost"
               size="icon"
               className="absolute right-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
-              onClick={goToNext}
+              onClick={puzzleActions.goToNextImage}
               data-testid={FullscreenTestIds.next}
             >
               <ChevronRight className="size-8" />
@@ -82,8 +66,11 @@ export const FullScreenViewer = () => {
           minScale={0.5}
           maxScale={5}
           centerOnInit
+          limitToBounds
+          centerZoomedOut
           doubleClick={{ mode: "toggle", step: 2 }}
         >
+          <FullscreenKeyboardShortcuts />
           <TransformComponent
             wrapperClass="!w-full !h-full"
             contentClass="!w-full !h-full flex items-center justify-center"
@@ -105,4 +92,35 @@ export const FullScreenViewer = () => {
       </div>
     </FocusTrap>
   )
+}
+
+const useFullscreenKeyboardShortcuts = () => {
+  const puzzleActions = usePuzzleServiceActions()
+  const { zoomIn, zoomOut, resetTransform } = useControls()
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        puzzleActions.exitFullscreenImageMode()
+      } else if (event.key === "ArrowLeft") {
+        puzzleActions.goToPreviousImage()
+      } else if (event.key === "ArrowRight") {
+        puzzleActions.goToNextImage()
+      } else if (event.key === "+" || event.key === "=") {
+        zoomIn()
+      } else if (event.key === "-" || event.key === "_") {
+        zoomOut()
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown)
+      resetTransform()
+    }
+  }, [puzzleActions, resetTransform, zoomIn, zoomOut])
+}
+
+const FullscreenKeyboardShortcuts = () => {
+  useFullscreenKeyboardShortcuts()
+  return null
 }

@@ -12,6 +12,7 @@ import { findSpecies } from "@/lib/plants"
 import { assert } from "tsafe"
 
 export const MAX_ATTEMPTS = 3
+
 export enum PuzzleMode {
   DAILY = "DAILY",
   REVIEW = "REVIEW",
