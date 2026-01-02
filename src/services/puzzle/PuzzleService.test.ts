@@ -7,26 +7,7 @@ import { Puzzle, PuzzleId } from "@/lib/Puzzle"
 import { Species, SpeciesId } from "@/lib/Species"
 import { Iso8601Date } from "@/utils/brandedTypes"
 import { assert } from "tsafe"
-
-const createMemoryStorage = (): Storage => {
-  const store = new Map<string, string>()
-  return {
-    getItem: (key) => store.get(key) ?? null,
-    setItem: (key, value) => {
-      store.set(key, value)
-    },
-    removeItem: (key) => {
-      store.delete(key)
-    },
-    clear: () => {
-      store.clear()
-    },
-    key: (index) => Array.from(store.keys())[index] ?? null,
-    get length() {
-      return store.size
-    },
-  }
-}
+import { createMemoryStorage } from "@/lib/storage.testUtils"
 
 const scheduledDate = Iso8601Date("2026-06-08")
 const puzzleId = PuzzleId(40)

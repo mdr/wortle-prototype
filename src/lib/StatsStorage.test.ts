@@ -4,26 +4,7 @@ import { deriveDailySummary } from "./dailyStatsSummary"
 import { PuzzleId } from "./Puzzle"
 import { SpeciesId } from "./Species"
 import { Iso8601Date } from "@/utils/brandedTypes"
-
-const createMemoryStorage = (): Storage => {
-  const store = new Map<string, string>()
-  return {
-    getItem: (key) => store.get(key) ?? null,
-    setItem: (key, value) => {
-      store.set(key, value)
-    },
-    removeItem: (key) => {
-      store.delete(key)
-    },
-    clear: () => {
-      store.clear()
-    },
-    key: (index) => Array.from(store.keys())[index] ?? null,
-    get length() {
-      return store.size
-    },
-  }
-}
+import { createMemoryStorage } from "./storage.testUtils"
 
 describe("StatsStorage", () => {
   it("returns default stats when empty", () => {
