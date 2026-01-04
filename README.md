@@ -2,7 +2,7 @@
 
 A daily plant identification quiz game.
 
-https://mdr.github.io/wortle-prototype
+https://wortle.app
 
 ## Development
 

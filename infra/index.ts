@@ -16,3 +16,13 @@ ghPagesIps.forEach((ip, i) => {
     proxied: false,
   })
 })
+
+// www subdomain CNAME for GitHub Pages
+new cloudflare.DnsRecord("gh-pages-www", {
+  zoneId: zone.then((z) => z.zoneId),
+  name: "www",
+  type: "CNAME",
+  content: "mdr.github.io",
+  ttl: 300,
+  proxied: false,
+})
