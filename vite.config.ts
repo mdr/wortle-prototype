@@ -31,5 +31,5 @@ export default defineConfig({
     host: true,
     allowedHosts: [".ngrok-free.app"],
   },
-  base: process.env.GITHUB_ACTIONS ? "/wortle-prototype/" : "/",
+  base: "/",
 })

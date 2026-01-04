@@ -26,6 +26,8 @@
             trivy
             gitleaks
             gh
+            pulumi
+            pulumiPackages.pulumi-nodejs
           ];
 
           shellHook = ''
