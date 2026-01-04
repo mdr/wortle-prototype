@@ -45,8 +45,14 @@ jobs:
       - name: Install dependencies
         run: task install
 
+      - name: Install infra dependencies
+        run: task infra:install
+
       - name: Type check
         run: task tsc
+
+      - name: Type check infra
+        run: task infra:tsc
 
       - name: Lint
         run: task lint

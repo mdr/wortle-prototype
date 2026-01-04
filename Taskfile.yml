@@ -71,6 +71,7 @@ tasks:
     desc: Run all checks (tsc, lint, format, tests)
     cmds:
       - task: tsc
+      - task: infra:tsc
       - task: lint
       - task: format:check
       - task: test:unit
