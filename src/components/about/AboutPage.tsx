@@ -86,7 +86,7 @@ export const AboutPage = () => (
           <p className="text-muted-foreground">
             This is a free community project, owned by everyone. The{" "}
             <a
-              href="https://github.com/mdr/wortle-prototype"
+              href="https://github.com/mdr/wortle"
               target="_blank"
               rel="noopener noreferrer"
               className="underline hover:text-foreground"

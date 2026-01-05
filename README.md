@@ -1,5 +1,7 @@
 # Wortle
 
+[![Build and Deploy](https://github.com/mdr/wortle/actions/workflows/build.yml/badge.svg)](https://github.com/mdr/wortle/actions/workflows/build.yml)
+
 A daily plant identification quiz game.
 
 https://wortle.app
