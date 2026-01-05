@@ -1,6 +1,25 @@
 import * as cloudflare from "@pulumi/cloudflare"
+import * as pulumi from "@pulumi/pulumi"
+
+const config = new pulumi.Config()
+const accountId = config.require("cloudflareAccountId")
 
 const zone = await cloudflare.getZone({ filter: { name: "wortle.app" } })
+
+// R2 bucket for images
+const imagesBucket = new cloudflare.R2Bucket("images", {
+  accountId,
+  name: "wortle-images",
+})
+
+// Public access via images.wortle.app
+new cloudflare.R2CustomDomain("images-domain", {
+  accountId,
+  bucketName: imagesBucket.name,
+  domain: "images.wortle.app",
+  zoneId: zone.zoneId,
+  enabled: true,
+})
 
 // GitHub Pages A records for apex domain
 // https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain
