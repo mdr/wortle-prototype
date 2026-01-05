@@ -2,7 +2,7 @@ import { FocusTrap } from "focus-trap-react"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/shadcn/Button"
-import { assetUrl } from "@/utils/utils"
+import { imageUrl, imageSrcSet, srcSetPresets } from "@/utils/imageUrls"
 import { ZoomControls } from "./ZoomControls"
 import { FullscreenTestIds } from "./GalleryTestIds"
 import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
@@ -74,7 +74,9 @@ export const FullScreenViewer = () => {
             contentClass="!w-full !h-full flex items-center justify-center"
           >
             <img
-              src={assetUrl(images[imageGalleryIndex].url || "/placeholder.svg")}
+              src={imageUrl(images[imageGalleryIndex].imageKey, 1600)}
+              srcSet={imageSrcSet(images[imageGalleryIndex].imageKey, srcSetPresets.fullscreen)}
+              sizes="100vw"
               alt={images[imageGalleryIndex].caption}
               className="max-h-full max-w-full object-contain"
             />

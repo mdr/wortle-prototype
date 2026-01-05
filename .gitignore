@@ -21,3 +21,9 @@ yarn-error.log*
 /playwright-report
 /test-results
 .pnpm-store/
+
+# wrangler
+.wrangler/
+
+# generated images (uploaded to R2)
+dist/optimized-images/

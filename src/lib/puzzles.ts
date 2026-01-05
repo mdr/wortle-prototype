@@ -1,4 +1,4 @@
-import { Degrees, Iso8601Date, Url } from "@/utils/brandedTypes"
+import { Degrees, Iso8601Date } from "@/utils/brandedTypes"
 import { type Puzzle, PuzzleId } from "./Puzzle"
 import { SpeciesId } from "./Species"
 
@@ -13,9 +13,9 @@ const allPuzzles: Puzzle[] = [
     },
     habitat: "Road verge",
     images: [
-      { url: Url("/images/40/whole-plant.jpg"), caption: "Whole plant" },
-      { url: Url("/images/40/flower-close-up.jpg"), caption: "Flower close-up" },
-      { url: Url("/images/40/leaves-close-up.jpg"), caption: "Leaves close-up" },
+      { imageKey: "40/whole-plant", caption: "Whole plant" },
+      { imageKey: "40/flower-close-up", caption: "Flower close-up" },
+      { imageKey: "40/leaves-close-up", caption: "Leaves close-up" },
     ],
     photoAttribution: {
       photographer: "Matt Russell",
@@ -32,8 +32,8 @@ const allPuzzles: Puzzle[] = [
     },
     habitat: "Pavement plant",
     images: [
-      { url: Url("/images/41/plant.jpg"), caption: "Whole plant" },
-      { url: Url("/images/41/flower-closeup.jpg"), caption: "Flower close-up" },
+      { imageKey: "41/plant", caption: "Whole plant" },
+      { imageKey: "41/flower-closeup", caption: "Flower close-up" },
     ],
     photoAttribution: {
       photographer: "Matt Russell",
@@ -50,9 +50,9 @@ const allPuzzles: Puzzle[] = [
     },
     habitat: "Former limestone quarry",
     images: [
-      { url: Url("/images/42/plant.jpg"), caption: "Whole plant" },
-      { url: Url("/images/42/close-up-of-flowers.jpg"), caption: "Close-up of flowers" },
-      { url: Url("/images/42/leaves.jpg"), caption: "Leaves" },
+      { imageKey: "42/plant", caption: "Whole plant" },
+      { imageKey: "42/close-up-of-flowers", caption: "Close-up of flowers" },
+      { imageKey: "42/leaves", caption: "Leaves" },
     ],
     photoAttribution: {
       photographer: "Matt Russell",
@@ -69,10 +69,10 @@ const allPuzzles: Puzzle[] = [
     },
     habitat: "Woodland",
     images: [
-      { url: Url("/images/43/flower-head.jpg"), caption: "Flower head" },
-      { url: Url("/images/43/flower-rear.jpg"), caption: "Rear view of flower" },
-      { url: Url("/images/43/flower-closeup.jpg"), caption: "Close up of flower head" },
-      { url: Url("/images/43/leaves.jpg"), caption: "Leaves" },
+      { imageKey: "43/flower-head", caption: "Flower head" },
+      { imageKey: "43/flower-rear", caption: "Rear view of flower" },
+      { imageKey: "43/flower-closeup", caption: "Close up of flower head" },
+      { imageKey: "43/leaves", caption: "Leaves" },
     ],
     photoAttribution: {
       photographer: "Matt Russell",
@@ -89,9 +89,9 @@ const allPuzzles: Puzzle[] = [
     },
     habitat: "Flood meadow",
     images: [
-      { url: Url("/images/44/plant.jpg"), caption: "Whole plant" },
-      { url: Url("/images/44/flower-closeup.jpg"), caption: "Flower heads" },
-      { url: Url("/images/44/leaves.jpg"), caption: "Leaves" },
+      { imageKey: "44/plant", caption: "Whole plant" },
+      { imageKey: "44/flower-closeup", caption: "Flower heads" },
+      { imageKey: "44/leaves", caption: "Leaves" },
     ],
     photoAttribution: {
       photographer: "Matt Russell",

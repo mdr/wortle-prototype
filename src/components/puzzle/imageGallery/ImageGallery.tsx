@@ -2,7 +2,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
 import { ChevronLeft, ChevronRight, Maximize2, Copyright } from "lucide-react"
 import { Button } from "@/components/shadcn/Button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/Popover"
-import { assetUrl } from "@/utils/utils"
+import { imageUrl, imageSrcSet, srcSetPresets } from "@/utils/imageUrls"
 import { FullScreenViewer } from "./FullScreenViewer"
 import { GalleryTestIds } from "./GalleryTestIds"
 import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
@@ -36,7 +36,9 @@ export const ImageGallery = () => {
           >
             <TransformComponent wrapperClass="!w-full !h-full" contentClass="!w-full !h-full">
               <img
-                src={assetUrl(images[imageGalleryIndex].url || "/placeholder.svg")}
+                src={imageUrl(images[imageGalleryIndex].imageKey, 800)}
+                srcSet={imageSrcSet(images[imageGalleryIndex].imageKey, srcSetPresets.viewer)}
+                sizes="(max-width: 640px) 100vw, 800px"
                 alt={images[imageGalleryIndex].caption}
                 className="h-full w-full object-contain"
               />
@@ -131,9 +133,12 @@ export const ImageGallery = () => {
                 data-testid={GalleryTestIds.thumbnail}
               >
                 <img
-                  src={assetUrl(image.url || "/placeholder.svg")}
+                  src={imageUrl(image.imageKey, 200)}
+                  srcSet={imageSrcSet(image.imageKey, srcSetPresets.thumbnail)}
+                  sizes="25vw"
                   alt={image.caption}
                   className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
                 />
               </button>
               <div

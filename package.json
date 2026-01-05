@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
+  },
   "scripts": {
     "dev": "vite",
     "// build": "404.html enables SPA routing on GitHub Pages - serves index.html for unknown paths",
@@ -63,6 +68,7 @@
     "postcss": "8.5.6",
     "prettier": "3.7.4",
     "rollup-plugin-visualizer": "^6.0.5",
+    "sharp": "^0.34.5",
     "tailwindcss": "4.1.18",
     "typescript": "5.9.3",
     "typescript-eslint": "8.50.0",

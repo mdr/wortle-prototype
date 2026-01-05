@@ -6,7 +6,7 @@ const accountId = config.require("cloudflareAccountId")
 
 const zone = await cloudflare.getZone({ filter: { name: "wortle.app" } })
 
-// R2 bucket for images
+// R2 bucket for public images (optimized, served via custom domain)
 const imagesBucket = new cloudflare.R2Bucket("images", {
   accountId,
   name: "wortle-images",
@@ -19,6 +19,12 @@ new cloudflare.R2CustomDomain("images-domain", {
   domain: "images.wortle.app",
   zoneId: zone.zoneId,
   enabled: true,
+})
+
+// R2 bucket for private originals (S3 API access only)
+new cloudflare.R2Bucket("originals", {
+  accountId,
+  name: "wortle-originals",
 })
 
 // GitHub Pages A records for apex domain
