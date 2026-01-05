@@ -9,7 +9,7 @@ import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzl
 import { FullscreenKeyboardShortcuts } from "./FullscreenKeyboardShortcuts"
 
 export const FullScreenViewer = () => {
-  const images = usePuzzleState((state) => state.puzzle.images)
+  const { id: puzzleId, images } = usePuzzleState((state) => state.puzzle)
   const imageGalleryIndex = usePuzzleState((state) => state.imageGalleryIndex)
   const puzzleActions = usePuzzleServiceActions()
 
@@ -74,8 +74,8 @@ export const FullScreenViewer = () => {
             contentClass="!w-full !h-full flex items-center justify-center"
           >
             <img
-              src={imageUrl(images[imageGalleryIndex].imageKey, 1600)}
-              srcSet={imageSrcSet(images[imageGalleryIndex].imageKey, srcSetPresets.fullscreen)}
+              src={imageUrl(puzzleId, images[imageGalleryIndex].imageKey, 1600)}
+              srcSet={imageSrcSet(puzzleId, images[imageGalleryIndex].imageKey, srcSetPresets.fullscreen)}
               sizes="100vw"
               alt={images[imageGalleryIndex].caption}
               className="max-h-full max-w-full object-contain"

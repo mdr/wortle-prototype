@@ -8,7 +8,7 @@ import { GalleryTestIds } from "./GalleryTestIds"
 import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
 
 export const ImageGallery = () => {
-  const { images, photoAttribution } = usePuzzleState((state) => state.puzzle)
+  const { id: puzzleId, images, photoAttribution } = usePuzzleState((state) => state.puzzle)
   const { imageGalleryIndex, isFullscreenImageMode } = usePuzzleState((state) => state)
   const puzzleActions = usePuzzleServiceActions()
 
@@ -36,8 +36,8 @@ export const ImageGallery = () => {
           >
             <TransformComponent wrapperClass="!w-full !h-full" contentClass="!w-full !h-full">
               <img
-                src={imageUrl(images[imageGalleryIndex].imageKey, 800)}
-                srcSet={imageSrcSet(images[imageGalleryIndex].imageKey, srcSetPresets.viewer)}
+                src={imageUrl(puzzleId, images[imageGalleryIndex].imageKey, 800)}
+                srcSet={imageSrcSet(puzzleId, images[imageGalleryIndex].imageKey, srcSetPresets.viewer)}
                 sizes="(max-width: 640px) 100vw, 800px"
                 alt={images[imageGalleryIndex].caption}
                 className="h-full w-full object-contain"
@@ -133,8 +133,8 @@ export const ImageGallery = () => {
                 data-testid={GalleryTestIds.thumbnail}
               >
                 <img
-                  src={imageUrl(image.imageKey, 200)}
-                  srcSet={imageSrcSet(image.imageKey, srcSetPresets.thumbnail)}
+                  src={imageUrl(puzzleId, image.imageKey, 200)}
+                  srcSet={imageSrcSet(puzzleId, image.imageKey, srcSetPresets.thumbnail)}
                   sizes="25vw"
                   alt={image.caption}
                   className="absolute inset-0 h-full w-full object-cover"

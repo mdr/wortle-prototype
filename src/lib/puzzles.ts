@@ -13,9 +13,9 @@ const allPuzzles: Puzzle[] = [
     },
     habitat: "Road verge",
     images: [
-      { imageKey: "40/whole-plant", caption: "Whole plant" },
-      { imageKey: "40/flower-close-up", caption: "Flower close-up" },
-      { imageKey: "40/leaves-close-up", caption: "Leaves close-up" },
+      { imageKey: "whole-plant", caption: "Whole plant" },
+      { imageKey: "flower-close-up", caption: "Flower close-up" },
+      { imageKey: "leaves-close-up", caption: "Leaves close-up" },
     ],
     photoAttribution: {
       photographer: "Matt Russell",
@@ -32,8 +32,8 @@ const allPuzzles: Puzzle[] = [
     },
     habitat: "Pavement plant",
     images: [
-      { imageKey: "41/plant", caption: "Whole plant" },
-      { imageKey: "41/flower-closeup", caption: "Flower close-up" },
+      { imageKey: "plant", caption: "Whole plant" },
+      { imageKey: "flower-closeup", caption: "Flower close-up" },
     ],
     photoAttribution: {
       photographer: "Matt Russell",
@@ -50,9 +50,9 @@ const allPuzzles: Puzzle[] = [
     },
     habitat: "Former limestone quarry",
     images: [
-      { imageKey: "42/plant", caption: "Whole plant" },
-      { imageKey: "42/close-up-of-flowers", caption: "Close-up of flowers" },
-      { imageKey: "42/leaves", caption: "Leaves" },
+      { imageKey: "plant", caption: "Whole plant" },
+      { imageKey: "close-up-of-flowers", caption: "Close-up of flowers" },
+      { imageKey: "leaves", caption: "Leaves" },
     ],
     photoAttribution: {
       photographer: "Matt Russell",
@@ -69,10 +69,10 @@ const allPuzzles: Puzzle[] = [
     },
     habitat: "Woodland",
     images: [
-      { imageKey: "43/flower-head", caption: "Flower head" },
-      { imageKey: "43/flower-rear", caption: "Rear view of flower" },
-      { imageKey: "43/flower-closeup", caption: "Close up of flower head" },
-      { imageKey: "43/leaves", caption: "Leaves" },
+      { imageKey: "flower-head", caption: "Flower head" },
+      { imageKey: "flower-rear", caption: "Rear view of flower" },
+      { imageKey: "flower-closeup", caption: "Close up of flower head" },
+      { imageKey: "leaves", caption: "Leaves" },
     ],
     photoAttribution: {
       photographer: "Matt Russell",
@@ -89,9 +89,9 @@ const allPuzzles: Puzzle[] = [
     },
     habitat: "Flood meadow",
     images: [
-      { imageKey: "44/plant", caption: "Whole plant" },
-      { imageKey: "44/flower-closeup", caption: "Flower heads" },
-      { imageKey: "44/leaves", caption: "Leaves" },
+      { imageKey: "plant", caption: "Whole plant" },
+      { imageKey: "flower-closeup", caption: "Flower heads" },
+      { imageKey: "leaves", caption: "Leaves" },
     ],
     photoAttribution: {
       photographer: "Matt Russell",

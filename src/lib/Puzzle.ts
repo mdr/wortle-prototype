@@ -16,7 +16,6 @@ export interface Location {
 }
 
 export interface PuzzleImage {
-  /** Image key for R2, e.g., "40/whole-plant" */
   imageKey: string
   caption: string
 }
