@@ -14,6 +14,7 @@ import { Route as DailyRouteImport } from './routes/daily'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReviewPuzzleIdRouteImport } from './routes/review/$puzzleId'
+import { Route as ArchiveDateRouteImport } from './routes/archive/$date'
 
 const ErrorTestRoute = ErrorTestRouteImport.update({
   id: '/error-test',
@@ -40,12 +41,18 @@ const ReviewPuzzleIdRoute = ReviewPuzzleIdRouteImport.update({
   path: '/review/$puzzleId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArchiveDateRoute = ArchiveDateRouteImport.update({
+  id: '/archive/$date',
+  path: '/archive/$date',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/daily': typeof DailyRoute
   '/error-test': typeof ErrorTestRoute
+  '/archive/$date': typeof ArchiveDateRoute
   '/review/$puzzleId': typeof ReviewPuzzleIdRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/daily': typeof DailyRoute
   '/error-test': typeof ErrorTestRoute
+  '/archive/$date': typeof ArchiveDateRoute
   '/review/$puzzleId': typeof ReviewPuzzleIdRoute
 }
 export interface FileRoutesById {
@@ -61,19 +69,33 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/daily': typeof DailyRoute
   '/error-test': typeof ErrorTestRoute
+  '/archive/$date': typeof ArchiveDateRoute
   '/review/$puzzleId': typeof ReviewPuzzleIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/daily' | '/error-test' | '/review/$puzzleId'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/daily'
+    | '/error-test'
+    | '/archive/$date'
+    | '/review/$puzzleId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/daily' | '/error-test' | '/review/$puzzleId'
+  to:
+    | '/'
+    | '/about'
+    | '/daily'
+    | '/error-test'
+    | '/archive/$date'
+    | '/review/$puzzleId'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/daily'
     | '/error-test'
+    | '/archive/$date'
     | '/review/$puzzleId'
   fileRoutesById: FileRoutesById
 }
@@ -82,6 +104,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   DailyRoute: typeof DailyRoute
   ErrorTestRoute: typeof ErrorTestRoute
+  ArchiveDateRoute: typeof ArchiveDateRoute
   ReviewPuzzleIdRoute: typeof ReviewPuzzleIdRoute
 }
 
@@ -122,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReviewPuzzleIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/archive/$date': {
+      id: '/archive/$date'
+      path: '/archive/$date'
+      fullPath: '/archive/$date'
+      preLoaderRoute: typeof ArchiveDateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -130,6 +160,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   DailyRoute: DailyRoute,
   ErrorTestRoute: ErrorTestRoute,
+  ArchiveDateRoute: ArchiveDateRoute,
   ReviewPuzzleIdRoute: ReviewPuzzleIdRoute,
 }
 export const routeTree = rootRouteImport

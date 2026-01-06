@@ -3,7 +3,7 @@ import { Iso8601Date } from "@/utils/brandedTypes"
 import { Puzzle } from "@/lib/Puzzle"
 import { Species, SpeciesId } from "@/lib/Species"
 import { AttemptFeedback, createAttemptFeedback } from "@/lib/AttemptFeedback"
-import { DailyResult } from "@/lib/StatsStorage"
+import { DailyPuzzleRecord, DailyResult } from "@/lib/StatsStorage"
 import { StatsStorage } from "@/lib/StatsStorage"
 import { DailyStatsSummary, deriveDailySummary } from "@/lib/dailyStatsSummary"
 import { produce } from "immer"
@@ -16,6 +16,7 @@ export const MAX_ATTEMPTS = 3
 export enum PuzzleMode {
   DAILY = "DAILY",
   REVIEW = "REVIEW",
+  ARCHIVE = "ARCHIVE",
 }
 
 export interface PuzzleServiceActions {
@@ -33,6 +34,7 @@ export interface PuzzleServiceActions {
 interface PuzzleServiceOptions {
   mode: PuzzleMode
   statsStorage?: StatsStorage
+  completionRecord?: DailyPuzzleRecord
 }
 
 export interface PuzzleServiceState {
@@ -41,6 +43,7 @@ export interface PuzzleServiceState {
   scheduledDate?: Iso8601Date
   attempts: AttemptFeedback[]
   gaveUp: boolean
+  didNotAttempt: boolean
   incorrectFeedbackText?: string
   selectedSpecies?: Species
   statsSummary?: DailyStatsSummary
@@ -59,13 +62,15 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
     state: PuzzleServiceBaseState,
     private readonly options: PuzzleServiceOptions,
   ) {
-    const { statsStorage } = options
+    const { statsStorage, completionRecord: providedCompletionRecord } = options
     const hasDailyStats = options.mode === PuzzleMode.DAILY && statsStorage !== undefined
     const history = hasDailyStats ? statsStorage.load().history : []
     const completedRecord =
-      hasDailyStats && state.scheduledDate
-        ? history.find((record) => record.date === state.scheduledDate && record.puzzleId === state.puzzle.id)
-        : undefined
+      options.mode === PuzzleMode.ARCHIVE
+        ? providedCompletionRecord
+        : hasDailyStats && state.scheduledDate
+          ? history.find((record) => record.date === state.scheduledDate && record.puzzleId === state.puzzle.id)
+          : undefined
     const attempts = completedRecord
       ? completedRecord.guessedSpeciesIds.map((speciesId) => {
           const species = findSpecies(speciesId)
@@ -75,6 +80,7 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
       : []
     const gaveUp =
       completedRecord !== undefined && completedRecord.result === DailyResult.FAIL && attempts.length < MAX_ATTEMPTS
+    const didNotAttempt = options.mode === PuzzleMode.ARCHIVE && completedRecord === undefined
     const statsSummary =
       options.mode === PuzzleMode.DAILY && options.statsStorage
         ? deriveDailySummary(options.statsStorage.load().history)
@@ -82,7 +88,8 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
     super({
       ...state,
       attempts,
-      gaveUp,
+      gaveUp: gaveUp || didNotAttempt,
+      didNotAttempt,
       incorrectFeedbackText: undefined,
       selectedSpecies: undefined,
       imageGalleryIndex: 0,

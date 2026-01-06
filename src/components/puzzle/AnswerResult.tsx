@@ -1,5 +1,5 @@
 import { Card } from "@/components/shadcn/Card"
-import { Check, X } from "lucide-react"
+import { Check, X, Info } from "lucide-react"
 import { AttemptFeedback } from "@/lib/AttemptFeedback"
 import { findSpecies } from "@/lib/plants"
 import { TipWithGlossary } from "@/components/puzzle/TipWithGlossary"
@@ -16,7 +16,7 @@ const getHintText = (attempt: AttemptFeedback): string | undefined => {
 
 export const AnswerResult = () => {
   const isCorrect = usePuzzleState(selectIsCorrect)
-  const { attempts, correctSpecies, gaveUp } = usePuzzleState((state) => state)
+  const { attempts, correctSpecies, gaveUp, didNotAttempt } = usePuzzleState((state) => state)
   const getHeading = () => {
     if (isCorrect) return "Correct!"
     if (gaveUp) return "Here's the answer"
@@ -29,25 +29,46 @@ export const AnswerResult = () => {
       if (attemptCount === 1) return "Got it on your first try!"
       return `Got it in ${attemptCount} attempts`
     }
+    if (didNotAttempt) return "You didn't attempt this puzzle, but here's the answer"
     if (gaveUp) return "Better luck with the next one"
     return "You'll get the next one!"
   }
 
+  const getCardStyle = () => {
+    if (isCorrect) return "border-primary bg-primary/5"
+    if (didNotAttempt) return "border-border bg-muted/30"
+    return "border-destructive bg-destructive/5"
+  }
+
+  const renderIcon = () => {
+    if (isCorrect) {
+      return (
+        <div className="flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
+          <Check className="size-6" />
+        </div>
+      )
+    }
+    if (didNotAttempt) {
+      return (
+        <div className="flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
+          <Info className="size-6" />
+        </div>
+      )
+    }
+    return (
+      <div className="flex size-12 items-center justify-center rounded-full bg-destructive text-destructive-foreground">
+        <X className="size-6" />
+      </div>
+    )
+  }
+
   return (
     <Card
-      className={`p-6 ${isCorrect ? "border-primary bg-primary/5" : "border-destructive bg-destructive/5"}`}
+      className={`p-6 ${getCardStyle()}`}
       data-testid={isCorrect ? AnswerTestIds.correct : gaveUp ? AnswerTestIds.gaveUp : AnswerTestIds.incorrect}
     >
       <div className="mb-4 flex items-center gap-3">
-        {isCorrect ? (
-          <div className="flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
-            <Check className="size-6" />
-          </div>
-        ) : (
-          <div className="flex size-12 items-center justify-center rounded-full bg-destructive text-destructive-foreground">
-            <X className="size-6" />
-          </div>
-        )}
+        {renderIcon()}
         <div>
           <h2 className="font-serif text-2xl font-bold text-foreground">{getHeading()}</h2>
           <p className="text-sm text-foreground/70">{getSubheading()}</p>
