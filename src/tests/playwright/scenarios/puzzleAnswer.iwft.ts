@@ -72,7 +72,7 @@ test("can choose a different plant", async ({ homePage }) => {
 
 test("daily puzzle stays completed after leaving and returning", async ({ homePage }) => {
   const dailyPuzzle = await homePage.clickDailyPuzzle()
-  await dailyPuzzle.searchForPlant("Daisy")
+  await dailyPuzzle.searchForPlant("Devil's-bit Scabious")
   await dailyPuzzle.selectFirstPlantOption()
   await dailyPuzzle.submitAnswer()
   await dailyPuzzle.verifyCorrectAnswer()

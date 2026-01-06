@@ -7,10 +7,10 @@ export interface ScheduleEntry {
 }
 
 const schedule: ScheduleEntry[] = [
-  { date: Iso8601Date("2026-06-08"), puzzleId: PuzzleId(40) },
+  { date: Iso8601Date("2026-06-08"), puzzleId: PuzzleId(43) },
   { date: Iso8601Date("2026-06-09"), puzzleId: PuzzleId(41) },
   { date: Iso8601Date("2026-06-10"), puzzleId: PuzzleId(42) },
-  { date: Iso8601Date("2026-06-11"), puzzleId: PuzzleId(43) },
+  { date: Iso8601Date("2026-06-11"), puzzleId: PuzzleId(40) },
   { date: Iso8601Date("2026-06-12"), puzzleId: PuzzleId(44) },
 ]
 
