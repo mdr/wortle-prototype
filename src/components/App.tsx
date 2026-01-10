@@ -1,6 +1,9 @@
 import { StrictMode } from "react"
 import { RouterProvider, createRouter, Router } from "@tanstack/react-router"
 import { routeTree } from "@/routeTree.gen"
+import { type GlobalDependencies } from "@/lib/GlobalDependencies"
+import { GlobalDependenciesProvider } from "@/lib/GlobalDependenciesProvider"
+import { defaultClock } from "@/lib/Clock"
 
 const defaultRouter = createRouter({
   routeTree,
@@ -14,12 +17,19 @@ declare module "@tanstack/react-router" {
   }
 }
 
-export interface AppProps {
-  router?: Router<typeof routeTree>
+const defaultDependencies: GlobalDependencies = {
+  clock: defaultClock,
 }
 
-export const App = ({ router = defaultRouter }: AppProps) => (
+export interface AppProps {
+  router?: Router<typeof routeTree>
+  dependencies?: GlobalDependencies
+}
+
+export const App = ({ router = defaultRouter, dependencies = defaultDependencies }: AppProps) => (
   <StrictMode>
-    <RouterProvider router={router} />
+    <GlobalDependenciesProvider dependencies={dependencies}>
+      <RouterProvider router={router} />
+    </GlobalDependenciesProvider>
   </StrictMode>
 )

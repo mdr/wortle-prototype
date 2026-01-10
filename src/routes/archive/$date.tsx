@@ -5,7 +5,6 @@ import { findSpecies } from "@/lib/plants"
 import { findPuzzleForDate } from "@/lib/schedule"
 import { NotFoundPage } from "@/components/NotFoundPage"
 import { ErrorFallback } from "@/components/ErrorFallback"
-import { defaultClock } from "@/lib/Clock"
 import { Iso8601Date } from "@/utils/brandedTypes"
 import { Species } from "@/lib/Species"
 import { Puzzle } from "@/lib/Puzzle"
@@ -67,7 +66,7 @@ const ArchivePuzzlePage = () => {
       mode={PuzzleMode.ARCHIVE}
       completionRecord={completionRecord}
     >
-      <PuzzlePage clock={defaultClock} />
+      <PuzzlePage />
     </PuzzleServiceProvider>
   )
 }

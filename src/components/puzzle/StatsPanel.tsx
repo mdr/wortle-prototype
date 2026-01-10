@@ -3,11 +3,11 @@ import { Button } from "@/components/shadcn/Button"
 import { Share2, TrendingUp, Award, Flame, Clock as ClockIcon } from "lucide-react"
 import { formatDuration } from "@/utils/dateUtils"
 import { DailyStatsSummary } from "@/lib/dailyStatsSummary"
-import { Clock } from "@/lib/Clock"
+import { useClock } from "@/lib/GlobalDependencies"
+import { type Clock } from "@/lib/Clock"
 
 interface StatsPanelProps {
   summary: DailyStatsSummary
-  clock: Clock
 }
 
 const getTimeToNextWortle = (clock: Clock): string => {
@@ -18,7 +18,8 @@ const getTimeToNextWortle = (clock: Clock): string => {
   return formatDuration(now, tomorrow)
 }
 
-export const StatsPanel = ({ summary, clock }: StatsPanelProps) => {
+export const StatsPanel = ({ summary }: StatsPanelProps) => {
+  const clock = useClock()
   const accuracy = Math.round(summary.winRate * 100)
 
   return (

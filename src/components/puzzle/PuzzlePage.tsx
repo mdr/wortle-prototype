@@ -9,16 +9,14 @@ import { AttemptHistory } from "@/components/puzzle/AttemptHistory"
 import { StatsPanel } from "@/components/puzzle/StatsPanel"
 import { useCorrectAnswerConfetti } from "@/components/puzzle/useCorrectAnswerConfetti"
 import { PuzzleTestIds } from "./PuzzleTestIds"
-import { Clock } from "@/lib/Clock"
 import { usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
 import { selectIsCorrect, selectIsResolved, selectShowAttemptHistory } from "@/services/puzzle/puzzleSelectors"
 
 export interface PuzzlePageProps {
   showStatsPlaceholder?: boolean
-  clock: Clock
 }
 
-export const PuzzlePage = ({ showStatsPlaceholder, clock }: PuzzlePageProps) => {
+export const PuzzlePage = ({ showStatsPlaceholder }: PuzzlePageProps) => {
   const { puzzle, scheduledDate, attempts, statsSummary } = usePuzzleState()
 
   const isCorrect = usePuzzleState(selectIsCorrect)
@@ -56,7 +54,7 @@ export const PuzzlePage = ({ showStatsPlaceholder, clock }: PuzzlePageProps) => 
                 <div ref={answerPanelRef}>
                   <AnswerResult />
                 </div>
-                {statsSummary && <StatsPanel summary={statsSummary} clock={clock} />}
+                {statsSummary && <StatsPanel summary={statsSummary} />}
                 {!statsSummary && showStatsPlaceholder && (
                   <Card className="p-4">
                     <h3 className="mb-2 font-serif text-lg font-semibold text-foreground">Your Statistics</h3>

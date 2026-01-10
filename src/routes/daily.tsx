@@ -62,7 +62,7 @@ const DailyPuzzlePage = () => {
       mode={PuzzleMode.DAILY}
       statsStorage={storage}
     >
-      <PuzzlePage clock={defaultClock} />
+      <PuzzlePage />
     </PuzzleServiceProvider>
   )
 }

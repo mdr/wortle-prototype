@@ -5,7 +5,6 @@ import { PuzzleId } from "@/lib/Puzzle"
 import { findSpecies } from "@/lib/plants"
 import { NotFoundPage } from "@/components/NotFoundPage"
 import { ErrorFallback } from "@/components/ErrorFallback"
-import { defaultClock } from "@/lib/Clock"
 import { PuzzleServiceProvider } from "@/services/puzzle/PuzzleServiceProvider"
 import { PuzzleMode } from "@/services/puzzle/PuzzleService"
 
@@ -35,7 +34,7 @@ const PuzzlePageWrapper = () => {
   const { puzzle, correctSpecies } = Route.useLoaderData()
   return (
     <PuzzleServiceProvider puzzle={puzzle} correctSpecies={correctSpecies} mode={PuzzleMode.REVIEW}>
-      <PuzzlePage showStatsPlaceholder clock={defaultClock} />
+      <PuzzlePage showStatsPlaceholder />
     </PuzzleServiceProvider>
   )
 }
