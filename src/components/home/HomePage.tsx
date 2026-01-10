@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router"
 import { Card } from "@/components/shadcn/Card"
 import { Button } from "@/components/shadcn/Button"
-import { HelpCircle } from "lucide-react"
+import { HeaderNav } from "@/components/shared/HeaderNav"
 import { getAllPuzzleIds } from "@/lib/puzzles"
 import { assetUrl } from "@/utils/utils"
 import { HomeTestIds } from "./HomeTestIds"
@@ -22,15 +22,7 @@ export const HomePage = () => {
                 <p className="hidden text-sm text-muted-foreground min-[440px]:block">Daily Wild Plant Quiz</p>
               </div>
             </div>
-            <div className="flex flex-shrink-0 items-center gap-4">
-              <Link
-                to="/about"
-                className="flex size-12 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
-              >
-                <HelpCircle className="size-6" />
-                <span className="sr-only">About Wortle</span>
-              </Link>
-            </div>
+            <HeaderNav />
           </div>
         </div>
       </header>

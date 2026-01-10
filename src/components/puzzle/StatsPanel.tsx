@@ -1,6 +1,7 @@
+import { Link } from "@tanstack/react-router"
 import { Card } from "@/components/shadcn/Card"
 import { Button } from "@/components/shadcn/Button"
-import { Share2, TrendingUp, Award, Flame, Clock as ClockIcon } from "lucide-react"
+import { Share2, TrendingUp, Award, Flame, Clock as ClockIcon, History } from "lucide-react"
 import { formatDuration } from "@/utils/dateUtils"
 import { DailyStatsSummary } from "@/lib/dailyStatsSummary"
 import { useClock } from "@/lib/GlobalDependencies"
@@ -76,6 +77,13 @@ export const StatsPanel = ({ summary }: StatsPanelProps) => {
         <Button onClick={() => {}} variant="outline" className="w-full bg-transparent" size="sm">
           <Share2 className="mr-2 size-4" />
           Share Result
+        </Button>
+
+        <Button asChild variant="outline" className="w-full bg-transparent" size="sm">
+          <Link to="/history">
+            <History className="mr-2 size-4" />
+            View History
+          </Link>
         </Button>
       </div>
     </Card>

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router"
-import { HelpCircle } from "lucide-react"
+import { HeaderNav } from "@/components/shared/HeaderNav"
 import { Puzzle } from "@/lib/Puzzle"
 import { findFirstDateForPuzzle } from "@/lib/schedule"
 import { formatDate } from "@/utils/dateUtils"
@@ -33,13 +33,7 @@ export const PuzzleHeader = ({ puzzle, scheduledDate }: PuzzleHeaderProps) => {
               )}
               <p className="text-xs text-muted-foreground">Puzzle #{puzzle.id}</p>
             </div>
-            <Link
-              to="/about"
-              className="flex size-12 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
-            >
-              <HelpCircle className="size-6" />
-              <span className="sr-only">About Wortle</span>
-            </Link>
+            <HeaderNav />
           </div>
         </div>
       </div>

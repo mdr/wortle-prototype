@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as HistoryRouteImport } from './routes/history'
 import { Route as ErrorTestRouteImport } from './routes/error-test'
 import { Route as DailyRouteImport } from './routes/daily'
 import { Route as AboutRouteImport } from './routes/about'
@@ -16,6 +17,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReviewPuzzleIdRouteImport } from './routes/review/$puzzleId'
 import { Route as ArchiveDateRouteImport } from './routes/archive/$date'
 
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ErrorTestRoute = ErrorTestRouteImport.update({
   id: '/error-test',
   path: '/error-test',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/daily': typeof DailyRoute
   '/error-test': typeof ErrorTestRoute
+  '/history': typeof HistoryRoute
   '/archive/$date': typeof ArchiveDateRoute
   '/review/$puzzleId': typeof ReviewPuzzleIdRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/daily': typeof DailyRoute
   '/error-test': typeof ErrorTestRoute
+  '/history': typeof HistoryRoute
   '/archive/$date': typeof ArchiveDateRoute
   '/review/$puzzleId': typeof ReviewPuzzleIdRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/daily': typeof DailyRoute
   '/error-test': typeof ErrorTestRoute
+  '/history': typeof HistoryRoute
   '/archive/$date': typeof ArchiveDateRoute
   '/review/$puzzleId': typeof ReviewPuzzleIdRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/daily'
     | '/error-test'
+    | '/history'
     | '/archive/$date'
     | '/review/$puzzleId'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/daily'
     | '/error-test'
+    | '/history'
     | '/archive/$date'
     | '/review/$puzzleId'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/daily'
     | '/error-test'
+    | '/history'
     | '/archive/$date'
     | '/review/$puzzleId'
   fileRoutesById: FileRoutesById
@@ -104,12 +116,20 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   DailyRoute: typeof DailyRoute
   ErrorTestRoute: typeof ErrorTestRoute
+  HistoryRoute: typeof HistoryRoute
   ArchiveDateRoute: typeof ArchiveDateRoute
   ReviewPuzzleIdRoute: typeof ReviewPuzzleIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/error-test': {
       id: '/error-test'
       path: '/error-test'
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   DailyRoute: DailyRoute,
   ErrorTestRoute: ErrorTestRoute,
+  HistoryRoute: HistoryRoute,
   ArchiveDateRoute: ArchiveDateRoute,
   ReviewPuzzleIdRoute: ReviewPuzzleIdRoute,
 }
