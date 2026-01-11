@@ -33,9 +33,6 @@ export abstract class PageObject {
 
   protected get = (testId: string): Locator => this.page.getByTestId(testId)
 
-  protected getByRole = (role: Parameters<Page["getByRole"]>[0], options?: Parameters<Page["getByRole"]>[1]): Locator =>
-    this.page.getByRole(role, options)
-
   protected getByText = (text: string | RegExp): Locator => this.page.getByText(text)
 
   expectVisible = (testId: string): Promise<void> =>
