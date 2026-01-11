@@ -1,3 +1,4 @@
+import UmamiAnalytics from "@danielgtmn/umami-react"
 import { createRouter, Router, RouterProvider } from "@tanstack/react-router"
 import { StrictMode } from "react"
 
@@ -31,6 +32,9 @@ export interface AppProps {
 
 export const App = ({ router = defaultRouter, dependencies = defaultDependencies }: AppProps) => (
   <StrictMode>
+    {import.meta.env.PROD && (
+      <UmamiAnalytics url="https://cloud.umami.is" websiteId="e9196c98-109f-4188-b531-40b430369c15" />
+    )}
     <GlobalDependenciesProvider dependencies={dependencies}>
       <RouterProvider router={router} />
     </GlobalDependenciesProvider>
