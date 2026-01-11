@@ -2,6 +2,7 @@ import { Check, Share2 } from "lucide-react"
 import { useState } from "react"
 
 import { Button } from "@/components/shadcn/Button"
+import { getResultMedal } from "@/lib/resultMedal"
 import { selectIsCorrect } from "@/services/puzzle/puzzleSelectors"
 import { usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
 import { Iso8601Date } from "@/utils/brandedTypes"
@@ -14,20 +15,13 @@ const getOrdinal = (n: number): string => {
   return `${n}th`
 }
 
-const getMedal = (attempts: number, isCorrect: boolean): string => {
-  if (!isCorrect) return "❌"
-  if (attempts === 1) return "🥇"
-  if (attempts === 2) return "🥈"
-  return "🥉"
-}
-
 const generateShareText = (
   scheduledDate: Iso8601Date,
   attemptCount: number,
   isCorrect: boolean,
   gaveUp: boolean,
 ): string => {
-  const medal = gaveUp ? "❌" : getMedal(attemptCount, isCorrect)
+  const medal = gaveUp ? "❌" : getResultMedal(attemptCount, isCorrect)
   const attemptText = gaveUp ? "gave up" : `${getOrdinal(attemptCount)} try`
 
   return `Wortle ${formatDate(scheduledDate, undefined, "medium")} ${medal} ${attemptText}

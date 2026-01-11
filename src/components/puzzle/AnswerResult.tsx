@@ -1,9 +1,10 @@
-import { Check, Info, X } from "lucide-react"
+import { Info } from "lucide-react"
 
 import { TipWithGlossary } from "@/components/puzzle/TipWithGlossary"
 import { Card } from "@/components/shadcn/Card"
 import { AttemptFeedback } from "@/lib/AttemptFeedback"
 import { getSpecies } from "@/lib/plants"
+import { getResultMedal } from "@/lib/resultMedal"
 import { selectIsCorrect } from "@/services/puzzle/puzzleSelectors"
 import { usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
 
@@ -43,13 +44,6 @@ export const AnswerResult = () => {
   }
 
   const renderIcon = () => {
-    if (isCorrect) {
-      return (
-        <div className="bg-primary text-primary-foreground flex size-12 items-center justify-center rounded-full">
-          <Check className="size-6" />
-        </div>
-      )
-    }
     if (didNotAttempt) {
       return (
         <div className="bg-muted text-muted-foreground flex size-12 items-center justify-center rounded-full">
@@ -57,11 +51,7 @@ export const AnswerResult = () => {
         </div>
       )
     }
-    return (
-      <div className="bg-destructive text-destructive-foreground flex size-12 items-center justify-center rounded-full">
-        <X className="size-6" />
-      </div>
-    )
+    return <span className="text-5xl">{getResultMedal(attempts.length, isCorrect)}</span>
   }
 
   return (
