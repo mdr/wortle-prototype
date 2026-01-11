@@ -5,12 +5,20 @@ import { Iso8601Date } from "@/utils/brandedTypes"
 import { formatDate, formatDuration, toDateFromIso8601Date, toIso8601Date } from "./dateUtils"
 
 describe("formatDate", () => {
-  it("formats an ISO date string", () => {
-    expect(formatDate("2025-12-21", "en-GB")).toBe("21 December 2025")
+  it("formats with long style by default", () => {
+    expect(formatDate(Iso8601Date("2025-12-21"), "en-GB")).toBe("21 December 2025")
   })
 
   it("handles single digit day", () => {
-    expect(formatDate("2025-01-05", "en-GB")).toBe("5 January 2025")
+    expect(formatDate(Iso8601Date("2025-01-05"), "en-GB")).toBe("5 January 2025")
+  })
+
+  it("formats with medium style", () => {
+    expect(formatDate(Iso8601Date("2025-12-21"), "en-GB", "medium")).toBe("21 Dec 2025")
+  })
+
+  it("formats with short style", () => {
+    expect(formatDate(Iso8601Date("2025-12-21"), "en-GB", "short")).toBe("21/12/2025")
   })
 })
 

@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router"
-import { Award, Clock as ClockIcon, Flame, History, Share2, TrendingUp } from "lucide-react"
+import { Award, Clock as ClockIcon, Flame, History, TrendingUp } from "lucide-react"
 
+import { ShareResultButton } from "@/components/puzzle/ShareResultButton"
 import { Button } from "@/components/shadcn/Button"
 import { Card } from "@/components/shadcn/Card"
 import { type Clock } from "@/lib/Clock"
@@ -75,10 +76,7 @@ export const StatsPanel = ({ summary }: StatsPanelProps) => {
           <span className="text-foreground text-sm font-bold">{getTimeToNextWortle(clock)}</span>
         </div>
 
-        <Button onClick={() => {}} variant="outline" className="w-full bg-transparent" size="sm">
-          <Share2 className="mr-2 size-4" />
-          Share Result
-        </Button>
+        <ShareResultButton />
 
         <Button asChild variant="outline" className="w-full bg-transparent" size="sm">
           <Link to="/history">

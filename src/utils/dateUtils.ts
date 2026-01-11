@@ -1,12 +1,10 @@
 import { Iso8601Date } from "@/utils/brandedTypes"
 
-export const formatDate = (isoDate: string, locale?: string): string => {
+type DateStyle = "full" | "long" | "medium" | "short"
+
+export const formatDate = (isoDate: Iso8601Date, locale?: string, dateStyle: DateStyle = "long"): string => {
   const date = new Date(isoDate + "T00:00:00")
-  return date.toLocaleDateString(locale, {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
+  return date.toLocaleDateString(locale, { dateStyle })
 }
 
 export const formatDuration = (from: Date, to: Date): string => {
