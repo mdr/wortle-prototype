@@ -16,10 +16,10 @@ export const HomePage = () => {
         <div className="container mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between">
             <div className="flex flex-shrink-0 items-center gap-3">
-              <img src={assetUrl("/logo.png")} alt="" className="size-12 min-[440px]:size-20" />
+              <img src={assetUrl("/logo.png")} alt="" className="size-12 min-[520px]:size-20" />
               <div>
-                <h1 className="font-serif text-xl font-bold text-foreground min-[440px]:text-2xl">Wortle</h1>
-                <p className="hidden text-sm text-muted-foreground min-[440px]:block">Daily Wild Plant Quiz</p>
+                <h1 className="font-serif text-xl font-bold text-foreground min-[520px]:text-2xl">Wortle</h1>
+                <p className="hidden text-sm text-muted-foreground min-[520px]:block">Daily Wild Plant Quiz</p>
               </div>
             </div>
             <HeaderNav />

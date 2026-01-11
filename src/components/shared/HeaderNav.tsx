@@ -13,7 +13,7 @@ const iconButtonClass =
 export const HeaderNav = () => (
   <>
     {/* Mobile: Menu with dropdown */}
-    <div className="min-[440px]:hidden">
+    <div className="min-[520px]:hidden">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className={iconButtonClass}>
@@ -22,15 +22,15 @@ export const HeaderNav = () => (
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem asChild>
+          <DropdownMenuItem asChild className="gap-3 px-4 py-3 text-base">
             <Link to="/history">
-              <History />
+              <History className="size-5" />
               History
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
+          <DropdownMenuItem asChild className="gap-3 px-4 py-3 text-base">
             <Link to="/about">
-              <HelpCircle />
+              <HelpCircle className="size-5" />
               About
             </Link>
           </DropdownMenuItem>
@@ -39,7 +39,7 @@ export const HeaderNav = () => (
     </div>
 
     {/* Desktop: Both icons visible */}
-    <div className="hidden items-center gap-2 min-[440px]:flex">
+    <div className="hidden items-center gap-2 min-[520px]:flex">
       <Link to="/history" className={iconButtonClass}>
         <History className="size-6" />
         <span className="sr-only">History</span>
