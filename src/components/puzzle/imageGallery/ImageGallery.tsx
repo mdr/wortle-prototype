@@ -1,11 +1,13 @@
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
-import { ChevronLeft, ChevronRight, Maximize2, Copyright } from "lucide-react"
+import { ChevronLeft, ChevronRight, Copyright, Maximize2 } from "lucide-react"
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch"
+
 import { Button } from "@/components/shadcn/Button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/Popover"
-import { imageUrl, imageSrcSet, srcSetPresets } from "@/utils/imageUrls"
+import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
+import { imageSrcSet, imageUrl, srcSetPresets } from "@/utils/imageUrls"
+
 import { FullScreenViewer } from "./FullScreenViewer"
 import { GalleryTestIds } from "./GalleryTestIds"
-import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
 
 export const ImageGallery = () => {
   const { id: puzzleId, images, photoAttribution } = usePuzzleState((state) => state.puzzle)

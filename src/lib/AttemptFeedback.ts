@@ -1,4 +1,4 @@
-import { Species, SpeciesId, getGenus } from "./Species"
+import { getGenus, Species, SpeciesId } from "./Species"
 
 export interface AttemptFeedback {
   speciesId: SpeciesId

@@ -1,8 +1,9 @@
-import { Locator, Page } from "@playwright/test"
-import type { MountResult } from "@playwright/experimental-ct-react"
 import AxeBuilder from "@axe-core/playwright"
+import type { MountResult } from "@playwright/experimental-ct-react"
+import { Locator, Page } from "@playwright/test"
 import { platform } from "os"
 import { assert } from "tsafe"
+
 import { expect, test } from "../fixtures"
 
 type TestId = string
@@ -54,7 +55,7 @@ export abstract class PageObject {
       await expect(locator).toHaveScreenshot(`${name}.png`, { mask: elementsToMask })
     })
 
-  private verifyIsAccessible = (): Promise<void> =>
+  private readonly verifyIsAccessible = (): Promise<void> =>
     expect(async () => {
       const accessibilityScanResults = await new AxeBuilder({ page: this.page }).analyze()
       expect(accessibilityScanResults.violations).toEqual([])

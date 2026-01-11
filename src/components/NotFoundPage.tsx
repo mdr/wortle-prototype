@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router"
-import { Card } from "@/components/shadcn/Card"
+import { Home, SearchX } from "lucide-react"
+
 import { Button } from "@/components/shadcn/Button"
-import { SearchX, Home } from "lucide-react"
+import { Card } from "@/components/shadcn/Card"
 import { assetUrl } from "@/utils/utils"
+
 import { NotFoundTestIds } from "./NotFoundTestIds"
 
 export interface NotFoundPageProps {

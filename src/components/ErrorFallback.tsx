@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router"
-import { Card } from "@/components/shadcn/Card"
-import { Button } from "@/components/shadcn/Button"
 import { AlertTriangle, Home } from "lucide-react"
+
+import { Button } from "@/components/shadcn/Button"
+import { Card } from "@/components/shadcn/Card"
 import { assetUrl } from "@/utils/utils"
+
 import { ErrorTestIds } from "./ErrorTestIds"
 
 export interface ErrorFallbackProps {

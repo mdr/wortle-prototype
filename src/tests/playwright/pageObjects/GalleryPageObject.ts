@@ -1,6 +1,7 @@
-import { PageObject } from "./PageObject"
+import { FullscreenTestIds, GalleryTestIds } from "@/components/puzzle/imageGallery/GalleryTestIds"
+
 import { expect } from "../fixtures"
-import { GalleryTestIds, FullscreenTestIds } from "@/components/puzzle/imageGallery/GalleryTestIds"
+import { PageObject } from "./PageObject"
 
 export class GalleryPageObject extends PageObject {
   verifyIsShown = (): Promise<this> =>

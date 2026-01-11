@@ -1,8 +1,8 @@
-import { Card } from "@/components/shadcn/Card"
 import { UkLocationMap } from "@/components/puzzle/UkLocationMap"
+import { Card } from "@/components/shadcn/Card"
 import { Puzzle } from "@/lib/Puzzle"
-import { formatDate } from "@/utils/dateUtils"
 import { ClassNameList } from "@/utils/brandedTypes"
+import { formatDate } from "@/utils/dateUtils"
 
 interface WhereAndWhenCardProps {
   puzzle: Puzzle

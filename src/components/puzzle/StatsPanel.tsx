@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/react-router"
-import { Card } from "@/components/shadcn/Card"
+import { Award, Clock as ClockIcon, Flame, History, Share2, TrendingUp } from "lucide-react"
+
 import { Button } from "@/components/shadcn/Button"
-import { Share2, TrendingUp, Award, Flame, Clock as ClockIcon, History } from "lucide-react"
-import { formatDuration } from "@/utils/dateUtils"
+import { Card } from "@/components/shadcn/Card"
+import { type Clock } from "@/lib/Clock"
 import { DailyStatsSummary } from "@/lib/dailyStatsSummary"
 import { useClock } from "@/lib/GlobalDependencies"
-import { type Clock } from "@/lib/Clock"
+import { formatDuration } from "@/utils/dateUtils"
 
 interface StatsPanelProps {
   summary: DailyStatsSummary

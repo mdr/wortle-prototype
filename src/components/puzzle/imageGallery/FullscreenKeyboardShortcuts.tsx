@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useHotkeys } from "react-hotkeys-hook"
 import { useControls } from "react-zoom-pan-pinch"
+
 import { usePuzzleServiceActions } from "@/services/puzzle/puzzleServiceHooks"
 
 export const useFullscreenKeyboardShortcuts = (): void => {

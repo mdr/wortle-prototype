@@ -1,4 +1,6 @@
+import { clsx } from "clsx"
 import { useEffect, useRef, useState } from "react"
+
 import {
   Command,
   CommandEmpty,
@@ -9,9 +11,9 @@ import {
 } from "@/components/shadcn/Command"
 import { getAllSpecies } from "@/lib/plants"
 import { Species } from "@/lib/Species"
-import { PuzzleTestIds } from "./PuzzleTestIds"
-import { clsx } from "clsx"
 import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
+
+import { PuzzleTestIds } from "./PuzzleTestIds"
 
 export const PlantSearch = () => {
   const { attempts, selectedSpecies } = usePuzzleState((state) => state)

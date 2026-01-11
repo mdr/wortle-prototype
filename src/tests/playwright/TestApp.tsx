@@ -1,7 +1,8 @@
-import { createRouter, createMemoryHistory } from "@tanstack/react-router"
-import { routeTree } from "@/routeTree.gen"
+import { createMemoryHistory, createRouter } from "@tanstack/react-router"
+
 import { App } from "@/components/App"
 import { type GlobalDependencies } from "@/lib/GlobalDependencies"
+import { routeTree } from "@/routeTree.gen"
 
 interface TestAppProps {
   initialPath?: string

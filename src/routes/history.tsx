@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
+
 import { HistoryPage } from "@/components/history/HistoryPage"
 import { StatsStorage } from "@/lib/StatsStorage"
 

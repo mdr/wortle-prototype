@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router"
+
 import { HeaderNav } from "@/components/shared/HeaderNav"
 import { Puzzle } from "@/lib/Puzzle"
 import { findFirstDateForPuzzle } from "@/lib/schedule"
+import { Iso8601Date } from "@/utils/brandedTypes"
 import { formatDate } from "@/utils/dateUtils"
 import { assetUrl } from "@/utils/utils"
-import { Iso8601Date } from "@/utils/brandedTypes"
+
 import { PuzzleTestIds } from "./PuzzleTestIds"
 
 interface PuzzleHeaderProps {

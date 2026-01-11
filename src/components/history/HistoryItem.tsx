@@ -1,9 +1,11 @@
 import { Link } from "@tanstack/react-router"
 import { CheckCircle, XCircle } from "lucide-react"
-import { type DailyPuzzleRecord, DailyResult } from "@/lib/StatsStorage"
-import { findPuzzle } from "@/lib/puzzles"
+
 import { findSpecies } from "@/lib/plants"
+import { findPuzzle } from "@/lib/puzzles"
+import { type DailyPuzzleRecord, DailyResult } from "@/lib/StatsStorage"
 import { formatDate } from "@/utils/dateUtils"
+
 import { HistoryTestIds } from "./HistoryTestIds"
 
 interface HistoryItemProps {

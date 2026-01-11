@@ -1,4 +1,5 @@
 import { Degrees, Iso8601Date } from "@/utils/brandedTypes"
+
 import { ImageKey, type Puzzle, PuzzleId } from "./Puzzle"
 import { SpeciesId } from "./Species"
 

@@ -1,4 +1,5 @@
 import { Brand } from "effect"
+
 import { Url } from "@/utils/brandedTypes"
 
 export type SpeciesId = number & Brand.Brand<"SpeciesId">

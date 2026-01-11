@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router"
-import { Card } from "@/components/shadcn/Card"
 import { ArrowLeft } from "lucide-react"
+
+import { Card } from "@/components/shadcn/Card"
 import { assetUrl } from "@/utils/utils"
 
 export const AboutPage = () => (

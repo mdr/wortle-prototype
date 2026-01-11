@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest"
+
 import { Iso8601Date } from "@/utils/brandedTypes"
+
 import { formatDate, formatDuration, toDateFromIso8601Date, toIso8601Date } from "./dateUtils"
 
 describe("formatDate", () => {

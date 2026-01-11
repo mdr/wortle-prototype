@@ -1,6 +1,7 @@
+import { mkdir, readdir } from "node:fs/promises"
+import { basename, extname, join } from "node:path"
+
 import sharp from "sharp"
-import { readdir, mkdir } from "node:fs/promises"
-import { join, basename, extname } from "node:path"
 
 const WIDTHS = [200, 400, 800, 1200, 1600, 2400]
 const QUALITY = 80

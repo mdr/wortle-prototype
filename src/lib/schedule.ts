@@ -1,4 +1,5 @@
 import { Iso8601Date } from "@/utils/brandedTypes"
+
 import { PuzzleId } from "./Puzzle"
 
 export interface ScheduleEntry {

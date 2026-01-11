@@ -1,9 +1,10 @@
-import { PageObject } from "./PageObject"
-import { expect } from "../fixtures"
-import { PuzzlePageObject } from "./PuzzlePageObject"
-import { HistoryPageObject } from "./HistoryPageObject"
 import { HomeTestIds } from "@/components/home/HomeTestIds"
 import { SharedTestIds } from "@/components/shared/SharedTestIds"
+
+import { expect } from "../fixtures"
+import { HistoryPageObject } from "./HistoryPageObject"
+import { PageObject } from "./PageObject"
+import { PuzzlePageObject } from "./PuzzlePageObject"
 
 export class HomePageObject extends PageObject {
   verifyIsShown = (): Promise<this> =>

@@ -1,11 +1,13 @@
+import { Check, Info, X } from "lucide-react"
+
+import { TipWithGlossary } from "@/components/puzzle/TipWithGlossary"
 import { Card } from "@/components/shadcn/Card"
-import { Check, X, Info } from "lucide-react"
 import { AttemptFeedback } from "@/lib/AttemptFeedback"
 import { findSpecies } from "@/lib/plants"
-import { TipWithGlossary } from "@/components/puzzle/TipWithGlossary"
-import { AnswerTestIds } from "./PuzzleTestIds"
-import { usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
 import { selectIsCorrect } from "@/services/puzzle/puzzleSelectors"
+import { usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
+
+import { AnswerTestIds } from "./PuzzleTestIds"
 
 const getHintText = (attempt: AttemptFeedback): string | undefined => {
   if (attempt.isCorrect) return undefined

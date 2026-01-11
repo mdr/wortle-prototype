@@ -1,7 +1,7 @@
 import { Context, createContext, useCallback, useContext, useSyncExternalStore } from "react"
+import { assert } from "tsafe"
 
 import { Option } from "../types/Option"
-import { assert } from "tsafe"
 import { AbstractService } from "./AbstractService"
 
 export const createOptionalContext = <T>(): Context<Option<T>> => createContext<Option<T>>(undefined)

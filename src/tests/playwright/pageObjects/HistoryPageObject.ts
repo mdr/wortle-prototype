@@ -1,6 +1,7 @@
-import { PageObject } from "./PageObject"
-import { expect } from "../fixtures"
 import { HistoryTestIds } from "@/components/history/HistoryTestIds"
+
+import { expect } from "../fixtures"
+import { PageObject } from "./PageObject"
 
 export class HistoryPageObject extends PageObject {
   verifyIsShown = (): Promise<this> =>

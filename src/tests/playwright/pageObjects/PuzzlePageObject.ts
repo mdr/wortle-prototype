@@ -1,8 +1,9 @@
-import { PageObject } from "./PageObject"
+import { AnswerTestIds, AttemptHistoryTestIds, PuzzleTestIds } from "@/components/puzzle/PuzzleTestIds"
+
 import { expect } from "../fixtures"
 import { GalleryPageObject } from "./GalleryPageObject"
 import { HomePageObject } from "./HomePageObject"
-import { PuzzleTestIds, AnswerTestIds, AttemptHistoryTestIds } from "@/components/puzzle/PuzzleTestIds"
+import { PageObject } from "./PageObject"
 
 export class PuzzlePageObject extends PageObject {
   verifyIsShown = (): Promise<this> =>

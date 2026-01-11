@@ -1,16 +1,18 @@
 import { useEffect, useRef } from "react"
-import { Card } from "@/components/shadcn/Card"
-import { ImageGallery } from "@/components/puzzle/imageGallery/ImageGallery"
-import { AnswerResult } from "@/components/puzzle/AnswerResult"
-import { PuzzleHeader } from "@/components/puzzle/PuzzleHeader"
-import { WhereAndWhenCard } from "@/components/puzzle/WhereAndWhenCard"
+
 import { AnswerInputCard } from "@/components/puzzle/AnswerInputCard"
+import { AnswerResult } from "@/components/puzzle/AnswerResult"
 import { AttemptHistory } from "@/components/puzzle/AttemptHistory"
+import { ImageGallery } from "@/components/puzzle/imageGallery/ImageGallery"
+import { PuzzleHeader } from "@/components/puzzle/PuzzleHeader"
 import { StatsPanel } from "@/components/puzzle/StatsPanel"
 import { useCorrectAnswerConfetti } from "@/components/puzzle/useCorrectAnswerConfetti"
-import { PuzzleTestIds } from "./PuzzleTestIds"
-import { usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
+import { WhereAndWhenCard } from "@/components/puzzle/WhereAndWhenCard"
+import { Card } from "@/components/shadcn/Card"
 import { selectIsCorrect, selectIsResolved, selectShowAttemptHistory } from "@/services/puzzle/puzzleSelectors"
+import { usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
+
+import { PuzzleTestIds } from "./PuzzleTestIds"
 
 export interface PuzzlePageProps {
   showStatsPlaceholder?: boolean

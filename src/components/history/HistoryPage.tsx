@@ -1,13 +1,15 @@
 import { Link } from "@tanstack/react-router"
+import { ArrowLeft, Award, Calendar, Flame, TrendingUp } from "lucide-react"
 import { useMemo } from "react"
-import { Card } from "@/components/shadcn/Card"
+
 import { Button } from "@/components/shadcn/Button"
-import { ArrowLeft, Calendar, TrendingUp, Award, Flame } from "lucide-react"
-import { type StatsStorage } from "@/lib/StatsStorage"
+import { Card } from "@/components/shadcn/Card"
 import { deriveDailySummary } from "@/lib/dailyStatsSummary"
+import { type StatsStorage } from "@/lib/StatsStorage"
 import { assetUrl } from "@/utils/utils"
-import { HistoryTestIds } from "./HistoryTestIds"
+
 import { HistoryItem } from "./HistoryItem"
+import { HistoryTestIds } from "./HistoryTestIds"
 
 interface HistoryPageProps {
   storage: StatsStorage

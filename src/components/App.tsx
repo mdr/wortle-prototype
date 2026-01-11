@@ -1,9 +1,10 @@
+import { createRouter, Router, RouterProvider } from "@tanstack/react-router"
 import { StrictMode } from "react"
-import { RouterProvider, createRouter, Router } from "@tanstack/react-router"
-import { routeTree } from "@/routeTree.gen"
+
+import { defaultClock } from "@/lib/Clock"
 import { type GlobalDependencies } from "@/lib/GlobalDependencies"
 import { GlobalDependenciesProvider } from "@/lib/GlobalDependenciesProvider"
-import { defaultClock } from "@/lib/Clock"
+import { routeTree } from "@/routeTree.gen"
 
 const defaultRouter = createRouter({
   routeTree,

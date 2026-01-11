@@ -1,5 +1,6 @@
-import { type Species, SpeciesId } from "./Species"
 import { Url } from "@/utils/brandedTypes"
+
+import { type Species, SpeciesId } from "./Species"
 
 const allPlants: Species[] = [
   {

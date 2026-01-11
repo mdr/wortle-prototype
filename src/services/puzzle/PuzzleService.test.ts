@@ -1,13 +1,15 @@
+import { assert } from "tsafe"
 import { describe, expect, it } from "vitest"
-import { PuzzleService, PuzzleMode, MAX_ATTEMPTS } from "./PuzzleService"
-import { StatsStorage, DailyResult } from "@/lib/StatsStorage"
-import { findPuzzle } from "@/lib/puzzles"
+
 import { findSpecies } from "@/lib/plants"
 import { Puzzle, PuzzleId } from "@/lib/Puzzle"
+import { findPuzzle } from "@/lib/puzzles"
 import { Species, SpeciesId } from "@/lib/Species"
-import { Iso8601Date } from "@/utils/brandedTypes"
-import { assert } from "tsafe"
+import { DailyResult, StatsStorage } from "@/lib/StatsStorage"
 import { createMemoryStorage } from "@/lib/storage.testUtils"
+import { Iso8601Date } from "@/utils/brandedTypes"
+
+import { MAX_ATTEMPTS, PuzzleMode, PuzzleService } from "./PuzzleService"
 
 const scheduledDate = Iso8601Date("2026-06-08")
 const puzzleId = PuzzleId(40)

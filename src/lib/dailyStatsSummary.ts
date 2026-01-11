@@ -1,4 +1,5 @@
 import { Iso8601Date } from "@/utils/brandedTypes"
+
 import { DailyPuzzleRecord, DailyResult } from "./StatsStorage"
 
 export interface DailyStatsSummary {

@@ -39,5 +39,5 @@ export class AbstractService<State> {
     }
   }
 
-  private fireListeners = (): void => this.listeners.forEach((listener) => listener())
+  private readonly fireListeners = (): void => this.listeners.forEach((listener) => listener())
 }

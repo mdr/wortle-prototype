@@ -1,12 +1,14 @@
 import { FocusTrap } from "focus-trap-react"
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch"
+
 import { Button } from "@/components/shadcn/Button"
-import { imageUrl, imageSrcSet, srcSetPresets } from "@/utils/imageUrls"
-import { ZoomControls } from "./ZoomControls"
-import { FullscreenTestIds } from "./GalleryTestIds"
 import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
+import { imageSrcSet, imageUrl, srcSetPresets } from "@/utils/imageUrls"
+
 import { FullscreenKeyboardShortcuts } from "./FullscreenKeyboardShortcuts"
+import { FullscreenTestIds } from "./GalleryTestIds"
+import { ZoomControls } from "./ZoomControls"
 
 export const FullScreenViewer = () => {
   const { id: puzzleId, images } = usePuzzleState((state) => state.puzzle)

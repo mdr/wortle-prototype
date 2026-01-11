@@ -1,5 +1,6 @@
 import { type ReactNode } from "react"
-import { GlobalDependenciesContext, type GlobalDependencies } from "./GlobalDependencies"
+
+import { type GlobalDependencies, GlobalDependenciesContext } from "./GlobalDependencies"
 
 interface GlobalDependenciesProviderProps {
   dependencies: GlobalDependencies

@@ -1,7 +1,8 @@
-import { useCallback, useRef } from "react"
 import confetti from "canvas-confetti"
-import { unawaited } from "@/utils/unawaited"
+import { useCallback, useRef } from "react"
 import { assert } from "tsafe"
+
+import { unawaited } from "@/utils/unawaited"
 
 export const useCorrectAnswerConfetti = () => {
   const panelRef = useRef<HTMLDivElement>(null)

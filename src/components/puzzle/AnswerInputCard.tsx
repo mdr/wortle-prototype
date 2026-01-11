@@ -1,13 +1,15 @@
-import { useCallback } from "react"
-import { useAnimate } from "motion/react"
 import type { AnimationOptions, DOMKeyframesDefinition } from "motion/react"
-import { Card } from "@/components/shadcn/Card"
-import { Button } from "@/components/shadcn/Button"
-import { PlantSearch } from "@/components/puzzle/PlantSearch"
-import { PuzzleTestIds } from "./PuzzleTestIds"
-import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
-import { MAX_ATTEMPTS } from "@/services/puzzle/PuzzleService"
+import { useAnimate } from "motion/react"
+import { useCallback } from "react"
 import { assert } from "tsafe"
+
+import { PlantSearch } from "@/components/puzzle/PlantSearch"
+import { Button } from "@/components/shadcn/Button"
+import { Card } from "@/components/shadcn/Card"
+import { MAX_ATTEMPTS } from "@/services/puzzle/PuzzleService"
+import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
+
+import { PuzzleTestIds } from "./PuzzleTestIds"
 
 const SHAKE_ANIMATION: DOMKeyframesDefinition = { x: [0, -6, 6, -4, 4, 0] }
 const SHAKE_TRANSITION: AnimationOptions = { duration: 0.35, ease: "easeInOut" }

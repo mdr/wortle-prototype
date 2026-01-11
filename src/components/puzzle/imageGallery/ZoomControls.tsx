@@ -1,5 +1,6 @@
+import { RotateCcw, ZoomIn, ZoomOut } from "lucide-react"
 import { useControls } from "react-zoom-pan-pinch"
-import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react"
+
 import { Button } from "@/components/shadcn/Button"
 
 export const ZoomControls = () => {

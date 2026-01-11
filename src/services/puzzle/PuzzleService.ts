@@ -1,15 +1,17 @@
-import { AbstractService } from "@/utils/providerish/AbstractService"
-import { Iso8601Date } from "@/utils/brandedTypes"
+import { produce } from "immer"
+import { assert } from "tsafe"
+
+import { AttemptFeedback, createAttemptFeedback } from "@/lib/AttemptFeedback"
+import { DailyStatsSummary, deriveDailySummary } from "@/lib/dailyStatsSummary"
+import { findSpecies } from "@/lib/plants"
 import { Puzzle } from "@/lib/Puzzle"
 import { Species, SpeciesId } from "@/lib/Species"
-import { AttemptFeedback, createAttemptFeedback } from "@/lib/AttemptFeedback"
 import { DailyPuzzleRecord, DailyResult } from "@/lib/StatsStorage"
 import { StatsStorage } from "@/lib/StatsStorage"
-import { DailyStatsSummary, deriveDailySummary } from "@/lib/dailyStatsSummary"
-import { produce } from "immer"
+import { Iso8601Date } from "@/utils/brandedTypes"
+import { AbstractService } from "@/utils/providerish/AbstractService"
+
 import { PuzzleCompletion } from "./puzzleTypes"
-import { findSpecies } from "@/lib/plants"
-import { assert } from "tsafe"
 
 export const MAX_ATTEMPTS = 3
 
@@ -175,7 +177,7 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
     this.updateStats(completion.result, completion.guessedSpeciesIds)
   }
 
-  private updateStats = (result: DailyResult, guessedSpeciesIds: SpeciesId[]): void => {
+  private readonly updateStats = (result: DailyResult, guessedSpeciesIds: SpeciesId[]): void => {
     if (this.options.mode === PuzzleMode.DAILY) {
       const { statsStorage } = this.options
       assert(statsStorage, "PuzzleService requires stats storage in daily mode.")

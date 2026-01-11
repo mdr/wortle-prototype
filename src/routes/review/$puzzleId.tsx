@@ -1,12 +1,13 @@
 import { createFileRoute, notFound } from "@tanstack/react-router"
-import { PuzzlePage } from "@/components/puzzle/PuzzlePage"
-import { findPuzzle } from "@/lib/puzzles"
-import { PuzzleId } from "@/lib/Puzzle"
-import { findSpecies } from "@/lib/plants"
-import { NotFoundPage } from "@/components/NotFoundPage"
+
 import { ErrorFallback } from "@/components/ErrorFallback"
-import { PuzzleServiceProvider } from "@/services/puzzle/PuzzleServiceProvider"
+import { NotFoundPage } from "@/components/NotFoundPage"
+import { PuzzlePage } from "@/components/puzzle/PuzzlePage"
+import { findSpecies } from "@/lib/plants"
+import { PuzzleId } from "@/lib/Puzzle"
+import { findPuzzle } from "@/lib/puzzles"
 import { PuzzleMode } from "@/services/puzzle/PuzzleService"
+import { PuzzleServiceProvider } from "@/services/puzzle/PuzzleServiceProvider"
 
 export const Route = createFileRoute("/review/$puzzleId")({
   loader: ({ params }) => {

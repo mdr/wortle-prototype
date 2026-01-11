@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest"
-import { DailyResult, StatsStorage, StatsSnapshot } from "./StatsStorage"
+
+import { Iso8601Date } from "@/utils/brandedTypes"
+
 import { deriveDailySummary } from "./dailyStatsSummary"
 import { PuzzleId } from "./Puzzle"
 import { SpeciesId } from "./Species"
-import { Iso8601Date } from "@/utils/brandedTypes"
+import { DailyResult, StatsSnapshot, StatsStorage } from "./StatsStorage"
 import { createMemoryStorage } from "./storage.testUtils"
 
 describe("StatsStorage", () => {

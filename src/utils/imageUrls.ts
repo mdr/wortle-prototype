@@ -1,4 +1,5 @@
 import type { ImageKey, PuzzleId } from "@/lib/Puzzle"
+
 import { Url } from "./brandedTypes"
 
 const R2_BASE_URL = "https://images.wortle.app/puzzles"
