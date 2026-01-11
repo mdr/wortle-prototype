@@ -124,7 +124,7 @@ export const ImageGallery = () => {
 
         <div className="grid grid-cols-4 gap-2">
           {images.map((image, index) => (
-            <div key={index} className="flex flex-col items-center">
+            <div key={image.imageKey} className="flex flex-col items-center">
               <button
                 onClick={() => puzzleActions.selectImageIndex(index)}
                 className={`relative aspect-square w-full overflow-hidden rounded-md border transition-all ${

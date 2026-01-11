@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router"
 import { CheckCircle, XCircle } from "lucide-react"
 
-import { findSpecies } from "@/lib/plants"
+import { getSpecies } from "@/lib/plants"
 import { findPuzzle } from "@/lib/puzzles"
 import { type DailyPuzzleRecord, DailyResult } from "@/lib/StatsStorage"
 import { formatDate } from "@/utils/dateUtils"
@@ -14,7 +14,7 @@ interface HistoryItemProps {
 
 export const HistoryItem = ({ record }: HistoryItemProps) => {
   const puzzle = findPuzzle(record.puzzleId)
-  const species = puzzle ? findSpecies(puzzle.speciesId) : undefined
+  const species = puzzle ? getSpecies(puzzle.speciesId) : undefined
   const speciesName = species?.commonNames[0] ?? species?.scientificName ?? "Unknown"
   const isPassed = record.result === DailyResult.PASS
   const guessCount = record.guessedSpeciesIds.length

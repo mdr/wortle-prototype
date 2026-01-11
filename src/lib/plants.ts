@@ -1,3 +1,5 @@
+import { assert } from "tsafe"
+
 import { Url } from "@/utils/brandedTypes"
 
 import { type Species, SpeciesId } from "./Species"
@@ -901,5 +903,11 @@ const allPlants: Species[] = [
 ]
 
 export const findSpecies = (id: SpeciesId): Species | undefined => allPlants.find((s) => s.id === id)
+
+export const getSpecies = (id: SpeciesId): Species => {
+  const species = findSpecies(id)
+  assert(species, `Unknown species id: ${id}`)
+  return species
+}
 
 export const getAllSpecies = (): Species[] => allPlants

@@ -1,9 +1,8 @@
-import { assert } from "tsafe"
 import { describe, expect, it } from "vitest"
 
-import { findSpecies } from "@/lib/plants"
+import { getSpecies } from "@/lib/plants"
 import { Puzzle, PuzzleId } from "@/lib/Puzzle"
-import { findPuzzle } from "@/lib/puzzles"
+import { getPuzzle } from "@/lib/puzzles"
 import { Species, SpeciesId } from "@/lib/Species"
 import { DailyResult, StatsStorage } from "@/lib/StatsStorage"
 import { createMemoryStorage } from "@/lib/storage.testUtils"
@@ -14,10 +13,8 @@ import { MAX_ATTEMPTS, PuzzleMode, PuzzleService } from "./PuzzleService"
 const scheduledDate = Iso8601Date("2026-06-08")
 const puzzleId = PuzzleId(40)
 const getPuzzleData = (): { puzzle: Puzzle; correctSpecies: Species } => {
-  const puzzle = findPuzzle(puzzleId)
-  assert(puzzle, `Expected puzzle ${puzzleId} to exist`)
-  const correctSpecies = findSpecies(puzzle.speciesId)
-  assert(correctSpecies, `Expected species ${puzzle.speciesId} to exist`)
+  const puzzle = getPuzzle(puzzleId)
+  const correctSpecies = getSpecies(puzzle.speciesId)
   return { puzzle, correctSpecies }
 }
 

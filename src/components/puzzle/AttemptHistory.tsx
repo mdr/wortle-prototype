@@ -1,6 +1,6 @@
 import { Card } from "@/components/shadcn/Card"
 import { AttemptFeedback } from "@/lib/AttemptFeedback"
-import { findSpecies } from "@/lib/plants"
+import { getSpecies } from "@/lib/plants"
 
 import { AttemptHistoryTestIds } from "./PuzzleTestIds"
 
@@ -26,8 +26,7 @@ export const AttemptHistory = ({ attempts }: AttemptHistoryProps) => (
     <h3 className="text-muted-foreground mb-3 text-sm font-medium">Previous attempts</h3>
     <div className="space-y-2">
       {attempts.map((attempt, index) => {
-        const species = findSpecies(attempt.speciesId)
-        if (!species) return undefined
+        const species = getSpecies(attempt.speciesId)
         const hint = getHintText(attempt)
         return (
           <div key={attempt.speciesId} className="flex items-stretch gap-2">

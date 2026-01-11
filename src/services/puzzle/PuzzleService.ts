@@ -3,7 +3,7 @@ import { assert } from "tsafe"
 
 import { AttemptFeedback, createAttemptFeedback } from "@/lib/AttemptFeedback"
 import { calculateDailyStatsSummary, DailyStatsSummary } from "@/lib/dailyStatsSummary"
-import { findSpecies } from "@/lib/plants"
+import { getSpecies } from "@/lib/plants"
 import { Puzzle } from "@/lib/Puzzle"
 import { Species, SpeciesId } from "@/lib/Species"
 import { DailyPuzzleRecord, DailyResult } from "@/lib/StatsStorage"
@@ -75,8 +75,7 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
           : undefined
     const attempts = completedRecord
       ? completedRecord.guessedSpeciesIds.map((speciesId) => {
-          const species = findSpecies(speciesId)
-          assert(species, `Unknown species id: ${speciesId}`)
+          const species = getSpecies(speciesId)
           return createAttemptFeedback(species, state.correctSpecies)
         })
       : []
@@ -106,8 +105,7 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
     })
 
   selectSpecies = (speciesId: SpeciesId): void => {
-    const species = findSpecies(speciesId)
-    assert(species, `Unknown species id: ${speciesId}`)
+    const species = getSpecies(speciesId)
     this.setState({ selectedSpecies: species, incorrectFeedbackText: undefined })
   }
 
@@ -139,8 +137,7 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
   }
 
   submitGuess = (speciesId: SpeciesId): boolean => {
-    const species = findSpecies(speciesId)
-    assert(species, `Unknown species id: ${speciesId}`)
+    const species = getSpecies(speciesId)
     const feedback = createAttemptFeedback(species, this.state.correctSpecies)
     const nextAttempts = [...this.state.attempts, feedback]
     const incorrectFeedbackText = feedback.isCorrect

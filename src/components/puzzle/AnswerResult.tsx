@@ -3,7 +3,7 @@ import { Check, Info, X } from "lucide-react"
 import { TipWithGlossary } from "@/components/puzzle/TipWithGlossary"
 import { Card } from "@/components/shadcn/Card"
 import { AttemptFeedback } from "@/lib/AttemptFeedback"
-import { findSpecies } from "@/lib/plants"
+import { getSpecies } from "@/lib/plants"
 import { selectIsCorrect } from "@/services/puzzle/puzzleSelectors"
 import { usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
 
@@ -86,8 +86,7 @@ export const AnswerResult = () => {
               </p>
               <div className="space-y-2">
                 {(isCorrect ? attempts.filter((attempt) => !attempt.isCorrect) : attempts).map((attempt, index) => {
-                  const species = findSpecies(attempt.speciesId)
-                  if (!species) return undefined
+                  const species = getSpecies(attempt.speciesId)
                   const hint = getHintText(attempt)
                   return (
                     <div key={attempt.speciesId} className="flex items-stretch gap-2">
