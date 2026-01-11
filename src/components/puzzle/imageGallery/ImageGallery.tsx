@@ -41,7 +41,7 @@ export const ImageGallery = () => {
                 src={imageUrl(puzzleId, images[imageGalleryIndex].imageKey, 800)}
                 srcSet={imageSrcSet(puzzleId, images[imageGalleryIndex].imageKey, srcSetPresets.viewer)}
                 sizes="(max-width: 640px) 100vw, 800px"
-                alt={images[imageGalleryIndex].caption}
+                aria-labelledby="gallery-caption"
                 className="h-full w-full object-contain"
               />
             </TransformComponent>
@@ -118,7 +118,11 @@ export const ImageGallery = () => {
           </Popover>
         </div>
 
-        <p className="text-muted-foreground text-center text-sm" data-testid={GalleryTestIds.caption}>
+        <p
+          id="gallery-caption"
+          className="text-muted-foreground text-center text-sm"
+          data-testid={GalleryTestIds.caption}
+        >
           {images[imageGalleryIndex].caption}
         </p>
 

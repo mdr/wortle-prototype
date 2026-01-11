@@ -1,6 +1,7 @@
 import { assert, Equals } from "tsafe"
 import { z } from "zod"
 
+import { logger } from "@/lib/Logger"
 import { PuzzleId } from "@/lib/Puzzle"
 import { SpeciesId } from "@/lib/Species"
 import { Iso8601Date } from "@/utils/brandedTypes"
@@ -61,12 +62,14 @@ export class StatsStorage {
       const parsed: unknown = JSON.parse(raw)
       const result = statsSnapshotSchema.safeParse(parsed)
       if (!result.success) {
-        console.error("Failed to parse stats snapshot from storage.", result.error)
+        logger.error("stats.parseSchema", "Failed to parse stats snapshot from storage", {
+          zodError: z.treeifyError(result.error),
+        })
         return defaultStats
       }
       return result.data
     } catch (error) {
-      console.error("Failed to parse stats snapshot from storage.", error)
+      logger.error("stats.parseJson", "Failed to parse stats snapshot from storage", undefined, error)
       return defaultStats
     }
   }

@@ -79,13 +79,17 @@ export const FullScreenViewer = () => {
               src={imageUrl(puzzleId, images[imageGalleryIndex].imageKey, 1600)}
               srcSet={imageSrcSet(puzzleId, images[imageGalleryIndex].imageKey, srcSetPresets.fullscreen)}
               sizes="100vw"
-              alt={images[imageGalleryIndex].caption}
+              aria-labelledby="fullscreen-caption"
               className="max-h-full max-w-full object-contain"
             />
           </TransformComponent>
 
           <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2">
-            <p className="rounded bg-black/50 px-3 py-1 text-sm text-white" data-testid={FullscreenTestIds.caption}>
+            <p
+              id="fullscreen-caption"
+              className="rounded bg-black/50 px-3 py-1 text-sm text-white"
+              data-testid={FullscreenTestIds.caption}
+            >
               {images[imageGalleryIndex].caption}
             </p>
             <ZoomControls />

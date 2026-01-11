@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router"
 import { AlertTriangle, Home } from "lucide-react"
+import { useEffect } from "react"
 
 import { Button } from "@/components/shadcn/Button"
 import { Card } from "@/components/shadcn/Card"
+import { logger } from "@/lib/Logger"
 import { assetUrl } from "@/utils/utils"
 
 import { ErrorTestIds } from "./ErrorTestIds"
@@ -12,6 +14,9 @@ export interface ErrorFallbackProps {
 }
 
 export const ErrorFallback = ({ error }: ErrorFallbackProps) => {
+  useEffect(() => {
+    logger.error("app.errorBoundary", "Unhandled error caught by error boundary", undefined, error)
+  }, [error])
   return (
     <main className="bg-background min-h-screen" data-testid={ErrorTestIds.page}>
       <header className="border-border bg-card min-w-[334px] border-b">
