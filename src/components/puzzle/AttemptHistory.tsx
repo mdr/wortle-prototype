@@ -23,7 +23,7 @@ const getAttemptStyles = (attempt: AttemptFeedback): string => {
 
 export const AttemptHistory = ({ attempts }: AttemptHistoryProps) => (
   <Card className="p-4" data-testid={AttemptHistoryTestIds.container}>
-    <h3 className="mb-3 text-sm font-medium text-muted-foreground">Previous attempts</h3>
+    <h3 className="text-muted-foreground mb-3 text-sm font-medium">Previous attempts</h3>
     <div className="space-y-2">
       {attempts.map((attempt, index) => {
         const species = findSpecies(attempt.speciesId)
@@ -31,22 +31,22 @@ export const AttemptHistory = ({ attempts }: AttemptHistoryProps) => (
         const hint = getHintText(attempt)
         return (
           <div key={attempt.speciesId} className="flex items-stretch gap-2">
-            <div className="flex w-6 items-center justify-center text-sm text-muted-foreground">#{index + 1}</div>
+            <div className="text-muted-foreground flex w-6 items-center justify-center text-sm">#{index + 1}</div>
             <div
               className={`flex flex-1 items-stretch justify-between rounded-md border p-3 ${getAttemptStyles(attempt)}`}
               data-testid={AttemptHistoryTestIds.attemptItem}
             >
               <div>
-                <p className="font-medium text-foreground">{species.commonNames[0]}</p>
-                <p className="text-sm italic text-muted-foreground">{species.scientificName}</p>
+                <p className="text-foreground font-medium">{species.commonNames[0]}</p>
+                <p className="text-muted-foreground text-sm italic">{species.scientificName}</p>
               </div>
               <div className="flex flex-col items-end text-right">
                 {hint && (
-                  <p className="text-sm font-medium text-muted-foreground" data-testid={AttemptHistoryTestIds.hint}>
+                  <p className="text-muted-foreground text-sm font-medium" data-testid={AttemptHistoryTestIds.hint}>
                     {hint}
                   </p>
                 )}
-                <p className="mt-auto text-sm text-muted-foreground">{species.family}</p>
+                <p className="text-muted-foreground mt-auto text-sm">{species.family}</p>
               </div>
             </div>
           </div>

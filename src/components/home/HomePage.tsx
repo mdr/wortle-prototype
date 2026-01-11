@@ -12,16 +12,16 @@ export const HomePage = () => {
   const puzzleIds = getAllPuzzleIds()
 
   return (
-    <main className="min-h-screen bg-background" data-testid={HomeTestIds.page}>
+    <main className="bg-background min-h-screen" data-testid={HomeTestIds.page}>
       {/* Header */}
-      <header className="min-w-[334px] border-b border-border bg-card">
+      <header className="border-border bg-card min-w-[334px] border-b">
         <div className="container mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between">
             <div className="flex flex-shrink-0 items-center gap-3">
               <img src={assetUrl("/logo.png")} alt="" className="size-12 min-[520px]:size-20" />
               <div>
-                <h1 className="font-serif text-xl font-bold text-foreground min-[520px]:text-2xl">Wortle</h1>
-                <p className="hidden text-sm text-muted-foreground min-[520px]:block">Daily Wild Plant Quiz</p>
+                <h1 className="text-foreground font-serif text-xl font-bold min-[520px]:text-2xl">Wortle</h1>
+                <p className="text-muted-foreground hidden text-sm min-[520px]:block">Daily Wild Plant Quiz</p>
               </div>
             </div>
             <HeaderNav />
@@ -32,7 +32,7 @@ export const HomePage = () => {
       <div className="container mx-auto max-w-2xl px-4 py-8">
         <div className="space-y-6">
           <Card className="p-6">
-            <h2 className="font-serif text-2xl font-bold text-foreground">Daily puzzle</h2>
+            <h2 className="text-foreground font-serif text-2xl font-bold">Daily puzzle</h2>
             <p className="text-muted-foreground">
               Jump into today's puzzle. Your result counts toward your daily stats.
             </p>
@@ -44,8 +44,8 @@ export const HomePage = () => {
           </Card>
 
           <Card className="p-6">
-            <h2 className="font-serif text-2xl font-bold text-foreground">Welcome to the Wortle prototype!</h2>
-            <div className="space-y-4 text-muted-foreground">
+            <h2 className="text-foreground font-serif text-2xl font-bold">Welcome to the Wortle prototype!</h2>
+            <div className="text-muted-foreground space-y-4">
               <p>
                 This is a project to create a daily plant ID quiz - a bit like the "Wordle" but for botany! The idea is
                 to be a fun community-driven thing to get people interested in wild plants and help them practice their
@@ -60,7 +60,7 @@ export const HomePage = () => {
           </Card>
 
           <Card className="p-6">
-            <h2 className="font-serif text-2xl font-bold text-foreground">Try the prototype</h2>
+            <h2 className="text-foreground font-serif text-2xl font-bold">Try the prototype</h2>
             <p className="text-muted-foreground">Select a puzzle below to see how it might work:</p>
 
             <div className="flex flex-col gap-3">
@@ -80,8 +80,8 @@ export const HomePage = () => {
           </Card>
 
           <Card className="p-6">
-            <h2 className="font-serif text-2xl font-bold text-foreground">How you can help</h2>
-            <div className="space-y-4 text-muted-foreground">
+            <h2 className="text-foreground font-serif text-2xl font-bold">How you can help</h2>
+            <div className="text-muted-foreground space-y-4">
               <p>
                 I'm a software developer by trade and emphatically not a botanist, in fact very much a beginner! One of
                 the key ways I'll need help is in making sure the botanical details are correct. Most obviously, to
@@ -97,7 +97,7 @@ export const HomePage = () => {
                 If you'd be interested in helping out this project, either to help with reviewing the botany, or
                 contributing puzzle photos, or helping with the technical aspects - please get in touch. I'm Matt
                 Russell, and you can reach me at{" "}
-                <a href="mailto:mattrusselluk@gmail.com" className="underline hover:text-foreground">
+                <a href="mailto:mattrusselluk@gmail.com" className="hover:text-foreground underline">
                   mattrusselluk@gmail.com
                 </a>
                 .

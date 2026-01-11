@@ -27,7 +27,7 @@ export const FullScreenViewer = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="absolute right-4 top-4 z-10 size-12 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
+          className="absolute top-4 right-4 z-10 size-12 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
           onClick={puzzleActions.exitFullscreenImageMode}
           data-testid={FullscreenTestIds.close}
         >
@@ -40,7 +40,7 @@ export const FullScreenViewer = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
+              className="absolute top-1/2 left-4 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
               onClick={puzzleActions.goToPreviousImage}
               data-testid={FullscreenTestIds.prev}
             >
@@ -50,7 +50,7 @@ export const FullScreenViewer = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-4 top-1/2 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
+              className="absolute top-1/2 right-4 z-10 size-12 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 hover:text-white"
               onClick={puzzleActions.goToNextImage}
               data-testid={FullscreenTestIds.next}
             >

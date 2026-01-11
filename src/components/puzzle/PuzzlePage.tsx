@@ -35,7 +35,7 @@ export const PuzzlePage = ({ showStatsPlaceholder }: PuzzlePageProps) => {
   }, [fireConfetti, isCorrect])
 
   return (
-    <main className="min-h-screen bg-background" data-testid={PuzzleTestIds.page}>
+    <main className="bg-background min-h-screen" data-testid={PuzzleTestIds.page}>
       <PuzzleHeader puzzle={puzzle} scheduledDate={scheduledDate} />
 
       <div className="container mx-auto max-w-7xl px-4 py-8">
@@ -59,8 +59,8 @@ export const PuzzlePage = ({ showStatsPlaceholder }: PuzzlePageProps) => {
                 {statsSummary && <StatsPanel summary={statsSummary} />}
                 {!statsSummary && showStatsPlaceholder && (
                   <Card className="p-4">
-                    <h3 className="mb-2 font-serif text-lg font-semibold text-foreground">Your Statistics</h3>
-                    <p className="text-sm text-muted-foreground">Stats are only tracked for the daily puzzle.</p>
+                    <h3 className="text-foreground mb-2 font-serif text-lg font-semibold">Your Statistics</h3>
+                    <p className="text-muted-foreground text-sm">Stats are only tracked for the daily puzzle.</p>
                   </Card>
                 )}
               </>

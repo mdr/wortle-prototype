@@ -26,53 +26,53 @@ export const StatsPanel = ({ summary }: StatsPanelProps) => {
 
   return (
     <Card className="p-4">
-      <h3 className="mb-3 font-serif text-lg font-semibold text-foreground">Your Statistics</h3>
+      <h3 className="text-foreground mb-3 font-serif text-lg font-semibold">Your Statistics</h3>
       <div className="grid grid-cols-2 gap-3">
-        <div className="rounded-lg bg-muted p-3">
+        <div className="bg-muted rounded-lg p-3">
           <div className="mb-1 flex items-center gap-2">
-            <TrendingUp className="size-4 text-primary" />
-            <span className="text-xs text-foreground/70">Total</span>
+            <TrendingUp className="text-primary size-4" />
+            <span className="text-foreground/70 text-xs">Total</span>
           </div>
-          <p className="text-2xl font-bold text-foreground">
-            {summary.played} <span className="text-sm font-normal text-foreground/70">quizzes played</span>
+          <p className="text-foreground text-2xl font-bold">
+            {summary.played} <span className="text-foreground/70 text-sm font-normal">quizzes played</span>
           </p>
         </div>
-        <div className="rounded-lg bg-muted p-3">
+        <div className="bg-muted rounded-lg p-3">
           <div className="mb-1 flex items-center gap-2">
-            <Award className="size-4 text-primary" />
-            <span className="text-xs text-foreground/70">Accuracy</span>
+            <Award className="text-primary size-4" />
+            <span className="text-foreground/70 text-xs">Accuracy</span>
           </div>
-          <p className="text-2xl font-bold text-foreground">
-            {accuracy}% <span className="text-sm font-normal text-foreground/70">correct</span>
+          <p className="text-foreground text-2xl font-bold">
+            {accuracy}% <span className="text-foreground/70 text-sm font-normal">correct</span>
           </p>
         </div>
-        <div className="rounded-lg bg-muted p-3">
+        <div className="bg-muted rounded-lg p-3">
           <div className="mb-1 flex items-center gap-2">
             <Flame className="size-4 text-orange-500" />
-            <span className="text-xs text-foreground/70">Streak</span>
+            <span className="text-foreground/70 text-xs">Streak</span>
           </div>
-          <p className="text-2xl font-bold text-foreground">
-            {summary.currentStreak} <span className="text-sm font-normal text-foreground/70">in a row</span>
+          <p className="text-foreground text-2xl font-bold">
+            {summary.currentStreak} <span className="text-foreground/70 text-sm font-normal">in a row</span>
           </p>
         </div>
-        <div className="rounded-lg bg-muted p-3">
+        <div className="bg-muted rounded-lg p-3">
           <div className="mb-1 flex items-center gap-2">
             <Award className="size-4 text-amber-500" />
-            <span className="text-xs text-foreground/70">Max Streak</span>
+            <span className="text-foreground/70 text-xs">Max Streak</span>
           </div>
-          <p className="text-2xl font-bold text-foreground">
-            {summary.maxStreak} <span className="text-sm font-normal text-foreground/70">in a row</span>
+          <p className="text-foreground text-2xl font-bold">
+            {summary.maxStreak} <span className="text-foreground/70 text-sm font-normal">in a row</span>
           </p>
         </div>
       </div>
 
       <div className="mt-4 space-y-3 border-t pt-4">
-        <div className="flex items-center justify-between rounded-lg bg-muted p-3">
+        <div className="bg-muted flex items-center justify-between rounded-lg p-3">
           <div className="flex items-center gap-2">
-            <ClockIcon className="size-4 text-foreground" />
-            <span className="text-sm font-medium text-foreground">Next Wortle</span>
+            <ClockIcon className="text-foreground size-4" />
+            <span className="text-foreground text-sm font-medium">Next Wortle</span>
           </div>
-          <span className="text-sm font-bold text-foreground">{getTimeToNextWortle(clock)}</span>
+          <span className="text-foreground text-sm font-bold">{getTimeToNextWortle(clock)}</span>
         </div>
 
         <Button onClick={() => {}} variant="outline" className="w-full bg-transparent" size="sm">

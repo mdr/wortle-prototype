@@ -21,15 +21,15 @@ export const HistoryItem = ({ record }: HistoryItemProps) => {
 
   return (
     <Link to="/archive/$date" params={{ date: record.date }} data-testid={HistoryTestIds.historyItem}>
-      <div className="flex items-center justify-between rounded-lg bg-muted p-3 transition-colors hover:bg-muted/80">
+      <div className="bg-muted hover:bg-muted/80 flex items-center justify-between rounded-lg p-3 transition-colors">
         <div className="flex items-center gap-3">
           {isPassed ? <CheckCircle className="size-5 text-green-500" /> : <XCircle className="size-5 text-red-500" />}
           <div>
-            <p className="font-medium text-foreground">{speciesName}</p>
-            <p className="text-xs text-foreground/70">{formatDate(record.date)}</p>
+            <p className="text-foreground font-medium">{speciesName}</p>
+            <p className="text-foreground/70 text-xs">{formatDate(record.date)}</p>
           </div>
         </div>
-        <div className="text-sm text-foreground/70">
+        <div className="text-foreground/70 text-sm">
           {guessCount} {guessCount === 1 ? "guess" : "guesses"}
         </div>
       </div>

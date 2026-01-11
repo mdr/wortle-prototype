@@ -45,20 +45,20 @@ export const AnswerResult = () => {
   const renderIcon = () => {
     if (isCorrect) {
       return (
-        <div className="flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
+        <div className="bg-primary text-primary-foreground flex size-12 items-center justify-center rounded-full">
           <Check className="size-6" />
         </div>
       )
     }
     if (didNotAttempt) {
       return (
-        <div className="flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
+        <div className="bg-muted text-muted-foreground flex size-12 items-center justify-center rounded-full">
           <Info className="size-6" />
         </div>
       )
     }
     return (
-      <div className="flex size-12 items-center justify-center rounded-full bg-destructive text-destructive-foreground">
+      <div className="bg-destructive text-destructive-foreground flex size-12 items-center justify-center rounded-full">
         <X className="size-6" />
       </div>
     )
@@ -72,8 +72,8 @@ export const AnswerResult = () => {
       <div className="mb-4 flex items-center gap-3">
         {renderIcon()}
         <div>
-          <h2 className="font-serif text-2xl font-bold text-foreground">{getHeading()}</h2>
-          <p className="text-sm text-foreground/70">{getSubheading()}</p>
+          <h2 className="text-foreground font-serif text-2xl font-bold">{getHeading()}</h2>
+          <p className="text-foreground/70 text-sm">{getSubheading()}</p>
         </div>
       </div>
 
@@ -81,7 +81,7 @@ export const AnswerResult = () => {
         <div className="space-y-2">
           {attempts.length > 0 && (!isCorrect || attempts.length > 1) && (
             <div>
-              <p className="mb-1 text-sm font-medium text-foreground/70">
+              <p className="text-foreground/70 mb-1 text-sm font-medium">
                 Your {attempts.length === 1 ? "attempt" : "attempts"}:
               </p>
               <div className="space-y-2">
@@ -91,7 +91,7 @@ export const AnswerResult = () => {
                   const hint = getHintText(attempt)
                   return (
                     <div key={attempt.speciesId} className="flex items-stretch gap-2">
-                      <div className="flex w-6 items-center justify-center text-sm text-muted-foreground">
+                      <div className="text-muted-foreground flex w-6 items-center justify-center text-sm">
                         #{index + 1}
                       </div>
                       <div
@@ -100,12 +100,12 @@ export const AnswerResult = () => {
                         }`}
                       >
                         <div>
-                          <p className="font-medium text-foreground">{species.commonNames[0]}</p>
-                          <p className="text-sm italic text-muted-foreground">{species.scientificName}</p>
+                          <p className="text-foreground font-medium">{species.commonNames[0]}</p>
+                          <p className="text-muted-foreground text-sm italic">{species.scientificName}</p>
                         </div>
                         <div className="flex flex-col items-end text-right">
-                          {hint && <p className="text-sm font-medium text-muted-foreground">{hint}</p>}
-                          <p className="mt-auto text-sm text-muted-foreground">{species.family}</p>
+                          {hint && <p className="text-muted-foreground text-sm font-medium">{hint}</p>}
+                          <p className="text-muted-foreground mt-auto text-sm">{species.family}</p>
                         </div>
                       </div>
                     </div>
@@ -116,33 +116,33 @@ export const AnswerResult = () => {
           )}
 
           {(!isCorrect || attempts.length !== 1) && (
-            <p className="text-sm font-medium text-foreground/70">
+            <p className="text-foreground/70 text-sm font-medium">
               {isCorrect ? "You correctly identified it as:" : "The answer was:"}
             </p>
           )}
 
           <div className="flex items-stretch gap-2">
             {isCorrect && attempts.length > 1 && (
-              <div className="flex w-6 items-center justify-center text-sm text-muted-foreground">
+              <div className="text-muted-foreground flex w-6 items-center justify-center text-sm">
                 #{attempts.length}
               </div>
             )}
-            <div className="flex-1 rounded-lg border border-border bg-background p-4">
+            <div className="border-border bg-background flex-1 rounded-lg border p-4">
               <div className="flex items-end justify-between">
                 <div>
-                  <p className="text-2xl font-semibold text-foreground">{correctSpecies.commonNames[0]}</p>
-                  <p className="text-sm italic text-muted-foreground">{correctSpecies.scientificName}</p>
+                  <p className="text-foreground text-2xl font-semibold">{correctSpecies.commonNames[0]}</p>
+                  <p className="text-muted-foreground text-sm italic">{correctSpecies.scientificName}</p>
                 </div>
-                <p className="text-sm text-muted-foreground">{correctSpecies.family}</p>
+                <p className="text-muted-foreground text-sm">{correctSpecies.family}</p>
               </div>
             </div>
           </div>
         </div>
 
         {correctSpecies.idTips.length > 0 && (
-          <div className="rounded-lg bg-accent/10 p-4">
-            <h3 className="mb-2 font-serif text-lg font-semibold text-foreground">Identification Tips</h3>
-            <ul className="list-inside list-disc space-y-2 text-sm text-foreground">
+          <div className="bg-accent/10 rounded-lg p-4">
+            <h3 className="text-foreground mb-2 font-serif text-lg font-semibold">Identification Tips</h3>
+            <ul className="text-foreground list-inside list-disc space-y-2 text-sm">
               {correctSpecies.idTips.map((tip, index) => (
                 <li key={index}>
                   <TipWithGlossary tip={tip} />
@@ -154,7 +154,7 @@ export const AnswerResult = () => {
 
         {correctSpecies.links.length > 0 && (
           <div className="space-y-2">
-            <p className="text-sm font-medium text-foreground">Learn more:</p>
+            <p className="text-foreground text-sm font-medium">Learn more:</p>
             <div className="flex flex-wrap gap-2">
               {correctSpecies.links.map((link, index) => (
                 <span key={link.name} className="flex items-center gap-2">
@@ -163,7 +163,7 @@ export const AnswerResult = () => {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-primary underline-offset-4 hover:underline"
+                    className="text-primary text-sm underline-offset-4 hover:underline"
                   >
                     {link.name}
                   </a>

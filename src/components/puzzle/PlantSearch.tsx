@@ -47,19 +47,19 @@ export const PlantSearch = () => {
   if (selectedSpecies) {
     return (
       <div className="space-y-2">
-        <div className="flex items-end justify-between rounded-lg border border-border bg-muted p-3">
+        <div className="border-border bg-muted flex items-end justify-between rounded-lg border p-3">
           <div>
-            <p className="font-medium text-foreground" data-testid={PuzzleTestIds.selectedPlantName}>
+            <p className="text-foreground font-medium" data-testid={PuzzleTestIds.selectedPlantName}>
               {selectedSpecies.commonNames[0]}
             </p>
-            <p className="text-xs italic text-foreground/70">{selectedSpecies.scientificName}</p>
+            <p className="text-foreground/70 text-xs italic">{selectedSpecies.scientificName}</p>
           </div>
-          <p className="text-xs text-foreground/70">{selectedSpecies.family}</p>
+          <p className="text-foreground/70 text-xs">{selectedSpecies.family}</p>
         </div>
         <button
           type="button"
           onClick={handleClear}
-          className="text-sm text-primary underline-offset-4 hover:underline"
+          className="text-primary text-sm underline-offset-4 hover:underline"
           data-testid={PuzzleTestIds.chooseDifferentPlant}
         >
           Choose a different plant
@@ -70,7 +70,7 @@ export const PlantSearch = () => {
 
   return (
     <div ref={containerRef}>
-      <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-foreground">
+      <label htmlFor={inputId} className="text-foreground mb-2 block text-sm font-medium">
         Enter plant name
       </label>
       <Command className="rounded-lg border shadow-md" shouldFilter={false}>
@@ -104,7 +104,7 @@ export const PlantSearch = () => {
               >
                 <div className="flex flex-1 flex-col">
                   <span className="font-medium">{species.commonNames[0]}</span>
-                  <span className="text-xs italic text-muted-foreground group-data-[selected=true]:text-primary-foreground/70">
+                  <span className="text-muted-foreground group-data-[selected=true]:text-primary-foreground/70 text-xs italic">
                     {species.scientificName}
                   </span>
                 </div>

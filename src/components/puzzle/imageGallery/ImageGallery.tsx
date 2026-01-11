@@ -25,7 +25,7 @@ export const ImageGallery = () => {
   return (
     <>
       <div className="space-y-4" data-testid={GalleryTestIds.gallery}>
-        <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-muted">
+        <div className="bg-muted relative aspect-[4/3] overflow-hidden rounded-lg">
           <TransformWrapper
             key={imageGalleryIndex}
             initialScale={1}
@@ -74,7 +74,7 @@ export const ImageGallery = () => {
             variant="secondary"
             size="icon"
             onClick={puzzleActions.enterFullscreenImageMode}
-            className="absolute right-2 top-2 size-12 rounded-full shadow-lg"
+            className="absolute top-2 right-2 size-12 rounded-full shadow-lg"
             data-testid={GalleryTestIds.fullscreen}
           >
             <Maximize2 className="size-6" />
@@ -86,7 +86,7 @@ export const ImageGallery = () => {
               <Button
                 variant="secondary"
                 size="icon"
-                className="absolute bottom-2 right-2 size-12 rounded-full shadow-lg opacity-70 hover:opacity-100"
+                className="absolute right-2 bottom-2 size-12 rounded-full opacity-70 shadow-lg hover:opacity-100"
               >
                 <Copyright className="size-6" />
                 <span className="sr-only">Photo attribution</span>
@@ -118,7 +118,7 @@ export const ImageGallery = () => {
           </Popover>
         </div>
 
-        <p className="text-center text-sm text-muted-foreground" data-testid={GalleryTestIds.caption}>
+        <p className="text-muted-foreground text-center text-sm" data-testid={GalleryTestIds.caption}>
           {images[imageGalleryIndex].caption}
         </p>
 
@@ -130,7 +130,7 @@ export const ImageGallery = () => {
                 className={`relative aspect-square w-full overflow-hidden rounded-md border transition-all ${
                   index === imageGalleryIndex
                     ? "border-muted-foreground/30"
-                    : "border-transparent opacity-60 hover:opacity-100 hover:border-muted-foreground/30"
+                    : "hover:border-muted-foreground/30 border-transparent opacity-60 hover:opacity-100"
                 }`}
                 data-testid={GalleryTestIds.thumbnail}
               >
@@ -144,7 +144,7 @@ export const ImageGallery = () => {
                 />
               </button>
               <div
-                className={`mt-1 h-0 w-0 border-x-[6px] border-b-[8px] border-x-transparent border-b-primary transition-opacity ${
+                className={`border-b-primary mt-1 h-0 w-0 border-x-[6px] border-b-[8px] border-x-transparent transition-opacity ${
                   index === imageGalleryIndex ? "opacity-100" : "opacity-0"
                 }`}
               />

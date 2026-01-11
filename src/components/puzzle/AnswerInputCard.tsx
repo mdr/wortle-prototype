@@ -35,12 +35,12 @@ export const AnswerInputCard = () => {
     <div ref={scope}>
       <Card className="p-6">
         <div className="mb-2 flex items-center justify-between">
-          <h2 className="font-serif text-2xl font-bold text-foreground">Can you identify this plant?</h2>
-          <span className="text-sm text-muted-foreground" data-testid={PuzzleTestIds.attemptCounter}>
+          <h2 className="text-foreground font-serif text-2xl font-bold">Can you identify this plant?</h2>
+          <span className="text-muted-foreground text-sm" data-testid={PuzzleTestIds.attemptCounter}>
             Attempt {attempts.length + 1} of {MAX_ATTEMPTS}
           </span>
         </div>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Study the photographs and enter the common or scientific name of the plant you think this is.
         </p>
 
@@ -53,12 +53,12 @@ export const AnswerInputCard = () => {
             </Button>
           )}
 
-          {incorrectFeedbackText && <p className="text-sm font-medium text-destructive">{incorrectFeedbackText}</p>}
+          {incorrectFeedbackText && <p className="text-destructive text-sm font-medium">{incorrectFeedbackText}</p>}
 
           <button
             type="button"
             onClick={() => puzzleActions.giveUp()}
-            className="w-full text-sm text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground w-full text-sm"
             data-testid={PuzzleTestIds.giveUp}
           >
             Give up and show answer

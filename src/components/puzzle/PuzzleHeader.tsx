@@ -18,22 +18,22 @@ export const PuzzleHeader = ({ puzzle, scheduledDate }: PuzzleHeaderProps) => {
   const displayDate = scheduledDate ?? findFirstDateForPuzzle(puzzle.id)
 
   return (
-    <header className="min-w-[334px] border-b border-border bg-card">
+    <header className="border-border bg-card min-w-[334px] border-b">
       <div className="container mx-auto max-w-7xl px-4">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex flex-shrink-0 items-center gap-3" data-testid={PuzzleTestIds.homeLink}>
             <img src={assetUrl("/logo.png")} alt="" className="size-12 min-[520px]:size-20" />
             <div>
-              <h1 className="font-serif text-xl font-bold text-foreground min-[520px]:text-2xl">Wortle</h1>
-              <p className="hidden text-sm text-muted-foreground min-[520px]:block">Daily Wild Plant Quiz</p>
+              <h1 className="text-foreground font-serif text-xl font-bold min-[520px]:text-2xl">Wortle</h1>
+              <p className="text-muted-foreground hidden text-sm min-[520px]:block">Daily Wild Plant Quiz</p>
             </div>
           </Link>
           <div className="flex flex-shrink-0 items-center gap-4">
             <div className="text-right">
               {displayDate && (
-                <p className="whitespace-nowrap text-sm font-medium text-foreground">{formatDate(displayDate)}</p>
+                <p className="text-foreground text-sm font-medium whitespace-nowrap">{formatDate(displayDate)}</p>
               )}
-              <p className="text-xs text-muted-foreground">Puzzle #{puzzle.id}</p>
+              <p className="text-muted-foreground text-xs">Puzzle #{puzzle.id}</p>
             </div>
             <HeaderNav />
           </div>
