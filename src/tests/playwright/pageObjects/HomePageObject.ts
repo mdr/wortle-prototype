@@ -1,7 +1,9 @@
 import { PageObject } from "./PageObject"
 import { expect } from "../fixtures"
 import { PuzzlePageObject } from "./PuzzlePageObject"
+import { HistoryPageObject } from "./HistoryPageObject"
 import { HomeTestIds } from "@/components/home/HomeTestIds"
+import { SharedTestIds } from "@/components/shared/SharedTestIds"
 
 export class HomePageObject extends PageObject {
   verifyIsShown = (): Promise<this> =>
@@ -23,5 +25,11 @@ export class HomePageObject extends PageObject {
     this.step("clickDailyPuzzle", async () => {
       await this.get(HomeTestIds.dailyPuzzleLink).click()
       return new PuzzlePageObject(this.mountResult).verifyIsShown()
+    })
+
+  goToHistory = (): Promise<HistoryPageObject> =>
+    this.step("goToHistory", async () => {
+      await this.get(SharedTestIds.headerHistoryLink).click()
+      return new HistoryPageObject(this.mountResult).verifyIsShown()
     })
 }

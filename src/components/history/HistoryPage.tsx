@@ -29,10 +29,10 @@ const HistoryItem = ({ record }: HistoryItemProps) => {
           {isPassed ? <CheckCircle className="size-5 text-green-500" /> : <XCircle className="size-5 text-red-500" />}
           <div>
             <p className="font-medium text-foreground">{speciesName}</p>
-            <p className="text-xs text-muted-foreground">{formatDate(record.date)}</p>
+            <p className="text-xs text-foreground/70">{formatDate(record.date)}</p>
           </div>
         </div>
-        <div className="text-sm text-muted-foreground">
+        <div className="text-sm text-foreground/70">
           {guessCount} {guessCount === 1 ? "guess" : "guesses"}
         </div>
       </div>
@@ -65,7 +65,7 @@ export const HistoryPage = ({ storage }: HistoryPageProps) => {
 
         <div className="space-y-6">
           <Card className="p-4">
-            <h3 className="mb-3 font-serif text-lg font-semibold text-foreground">Statistics</h3>
+            <h2 className="mb-3 font-serif text-lg font-semibold text-foreground">Statistics</h2>
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-lg bg-muted p-3">
                 <div className="mb-1 flex items-center gap-2">
@@ -107,7 +107,7 @@ export const HistoryPage = ({ storage }: HistoryPageProps) => {
           </Card>
 
           <Card className="p-4">
-            <h3 className="mb-3 font-serif text-lg font-semibold text-foreground">Recent Puzzles</h3>
+            <h2 className="mb-3 font-serif text-lg font-semibold text-foreground">Recent Puzzles</h2>
             {sortedHistory.length === 0 ? (
               <div className="py-8 text-center" data-testid={HistoryTestIds.emptyState}>
                 <Calendar className="mx-auto mb-4 size-12 text-muted-foreground" />

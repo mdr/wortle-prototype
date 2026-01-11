@@ -6,6 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/shadcn/DropdownMenu"
+import { SharedTestIds } from "./SharedTestIds"
 
 const iconButtonClass =
   "flex size-12 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -40,7 +41,7 @@ export const HeaderNav = () => (
 
     {/* Desktop: Both icons visible */}
     <div className="hidden items-center gap-2 min-[520px]:flex">
-      <Link to="/history" className={iconButtonClass}>
+      <Link to="/history" className={iconButtonClass} data-testid={SharedTestIds.headerHistoryLink}>
         <History className="size-6" />
         <span className="sr-only">History</span>
       </Link>
