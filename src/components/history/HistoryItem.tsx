@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router"
 
 import { getSpecies } from "@/lib/plants"
 import { findPuzzle } from "@/lib/puzzles"
-import { getResultMedal } from "@/lib/resultMedal"
+import { getResultDescription, getResultMedal } from "@/lib/resultMedal"
 import { type DailyPuzzleRecord, DailyResult } from "@/lib/StatsStorage"
 import { formatDate } from "@/utils/dateUtils"
 
@@ -23,7 +23,10 @@ export const HistoryItem = ({ record }: HistoryItemProps) => {
     <Link to="/archive/$date" params={{ date: record.date }} data-testid={HistoryTestIds.item}>
       <div className="bg-muted hover:bg-muted/80 flex items-center justify-between rounded-lg p-3 transition-colors">
         <div className="flex items-center gap-3">
-          <span className="text-2xl">{getResultMedal(guessCount, isPassed)}</span>
+          <span className="text-2xl" aria-hidden="true">
+            {getResultMedal(guessCount, isPassed)}
+          </span>
+          <span className="sr-only">{getResultDescription(guessCount, isPassed)}:</span>
           <div>
             <p className="text-foreground font-medium">{speciesName}</p>
             <p className="text-foreground/70 text-xs">{formatDate(record.date)}</p>
