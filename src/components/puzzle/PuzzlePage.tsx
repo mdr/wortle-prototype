@@ -1,3 +1,4 @@
+import { useUmami } from "@danielgtmn/umami-react"
 import { useEffect, useRef } from "react"
 
 import { AnswerInputCard } from "@/components/puzzle/AnswerInputCard"
@@ -26,6 +27,8 @@ export const PuzzlePage = ({ showStatsPlaceholder }: PuzzlePageProps) => {
   const showAttemptHistory = usePuzzleState(selectShowAttemptHistory)
   const { fireConfetti, panelRef: answerPanelRef } = useCorrectAnswerConfetti()
   const wasCorrectRef = useRef(isCorrect)
+  const wasResolvedRef = useRef(isResolved)
+  const { track } = useUmami()
 
   useEffect(() => {
     if (isCorrect && !wasCorrectRef.current) {
@@ -33,6 +36,20 @@ export const PuzzlePage = ({ showStatsPlaceholder }: PuzzlePageProps) => {
     }
     wasCorrectRef.current = isCorrect
   }, [fireConfetti, isCorrect])
+
+  useEffect(() => {
+    if (isResolved && !wasResolvedRef.current) {
+      track("puzzleCompleted", {
+        puzzleId: puzzle.id,
+        attempts: attempts.length,
+        correct: isCorrect,
+        guess1: attempts[0]?.speciesId,
+        guess2: attempts[1]?.speciesId,
+        guess3: attempts[2]?.speciesId,
+      })
+    }
+    wasResolvedRef.current = isResolved
+  }, [isResolved, track, puzzle.id, attempts, isCorrect])
 
   return (
     <main className="bg-background min-h-screen" data-testid={PuzzleTestIds.page}>
