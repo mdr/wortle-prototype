@@ -1,3 +1,3 @@
 export const ErrorTestIds = {
-  page: "error-page",
+  page: "Error.page",
 } as const

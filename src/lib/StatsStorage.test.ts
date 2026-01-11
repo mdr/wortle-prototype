@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest"
 
 import { Iso8601Date } from "@/utils/brandedTypes"
 
-import { deriveDailySummary } from "./dailyStatsSummary"
+import { calculateDailyStatsSummary } from "./dailyStatsSummary"
 import { PuzzleId } from "./Puzzle"
 import { SpeciesId } from "./Species"
 import { DailyResult, StatsSnapshot, StatsStorage } from "./StatsStorage"
@@ -54,9 +54,9 @@ describe("StatsStorage", () => {
   })
 })
 
-describe("deriveDailySummary", () => {
+describe("calculateDailyStatsSummary", () => {
   it("returns empty summary when history is empty", () => {
-    const summary = deriveDailySummary([])
+    const summary = calculateDailyStatsSummary([])
     expect(summary).toEqual({
       played: 0,
       wins: 0,
@@ -82,7 +82,7 @@ describe("deriveDailySummary", () => {
       },
     ]
 
-    const summary = deriveDailySummary(history)
+    const summary = calculateDailyStatsSummary(history)
     expect(summary.played).toBe(2)
     expect(summary.wins).toBe(2)
     expect(summary.currentStreak).toBe(2)
@@ -105,7 +105,7 @@ describe("deriveDailySummary", () => {
       },
     ]
 
-    const summary = deriveDailySummary(history)
+    const summary = calculateDailyStatsSummary(history)
     expect(summary.currentStreak).toBe(0)
     expect(summary.maxStreak).toBe(1)
   })

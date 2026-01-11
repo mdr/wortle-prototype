@@ -34,7 +34,7 @@ export const AttemptHistory = ({ attempts }: AttemptHistoryProps) => (
             <div className="text-muted-foreground flex w-6 items-center justify-center text-sm">#{index + 1}</div>
             <div
               className={`flex flex-1 items-stretch justify-between rounded-md border p-3 ${getAttemptStyles(attempt)}`}
-              data-testid={AttemptHistoryTestIds.attemptItem}
+              data-testid={AttemptHistoryTestIds.item}
             >
               <div>
                 <p className="text-foreground font-medium">{species.commonNames[0]}</p>

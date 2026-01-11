@@ -1,3 +1,3 @@
 export const NotFoundTestIds = {
-  page: "not-found-page",
+  page: "NotFound.page",
 } as const

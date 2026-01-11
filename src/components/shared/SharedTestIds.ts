@@ -1,3 +1,3 @@
 export const SharedTestIds = {
-  headerHistoryLink: "header-history-link",
+  headerHistoryLink: "Shared.headerHistoryLink",
 } as const

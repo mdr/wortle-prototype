@@ -37,7 +37,7 @@ export class PuzzlePageObject extends PageObject {
   verifyAttemptHistory = (count: number): Promise<void> =>
     this.step(`verifyAttemptHistory(${count})`, async () => {
       await expect(this.get(AttemptHistoryTestIds.container)).toBeVisible()
-      await expect(this.get(AttemptHistoryTestIds.attemptItem)).toHaveCount(count)
+      await expect(this.get(AttemptHistoryTestIds.item)).toHaveCount(count)
     })
 
   verifyAttemptCounter = (current: number, max: number): Promise<void> =>

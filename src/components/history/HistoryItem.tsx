@@ -20,7 +20,7 @@ export const HistoryItem = ({ record }: HistoryItemProps) => {
   const guessCount = record.guessedSpeciesIds.length
 
   return (
-    <Link to="/archive/$date" params={{ date: record.date }} data-testid={HistoryTestIds.historyItem}>
+    <Link to="/archive/$date" params={{ date: record.date }} data-testid={HistoryTestIds.item}>
       <div className="bg-muted hover:bg-muted/80 flex items-center justify-between rounded-lg p-3 transition-colors">
         <div className="flex items-center gap-3">
           {isPassed ? <CheckCircle className="size-5 text-green-500" /> : <XCircle className="size-5 text-red-500" />}

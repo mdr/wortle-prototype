@@ -21,7 +21,7 @@ const getIsoDateWithOffset = (isoDate: Iso8601Date, days: number): Iso8601Date =
   return Iso8601Date(`${year}-${month}-${day}`)
 }
 
-export const deriveDailySummary = (history: DailyPuzzleRecord[]): DailyStatsSummary => {
+export const calculateDailyStatsSummary = (history: DailyPuzzleRecord[]): DailyStatsSummary => {
   const emptySummary: DailyStatsSummary = {
     played: 0,
     wins: 0,

@@ -1,5 +1,5 @@
 export const HomeTestIds = {
-  page: "home-page",
-  dailyPuzzleLink: "daily-puzzle-link",
-  puzzleLink: "puzzle-link",
+  page: "Home.page",
+  dailyPuzzleLink: "Home.dailyPuzzleLink",
+  puzzleLink: "Home.puzzleLink",
 } as const

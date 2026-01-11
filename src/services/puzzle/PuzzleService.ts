@@ -2,7 +2,7 @@ import { produce } from "immer"
 import { assert } from "tsafe"
 
 import { AttemptFeedback, createAttemptFeedback } from "@/lib/AttemptFeedback"
-import { DailyStatsSummary, deriveDailySummary } from "@/lib/dailyStatsSummary"
+import { calculateDailyStatsSummary, DailyStatsSummary } from "@/lib/dailyStatsSummary"
 import { findSpecies } from "@/lib/plants"
 import { Puzzle } from "@/lib/Puzzle"
 import { Species, SpeciesId } from "@/lib/Species"
@@ -85,7 +85,7 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
     const didNotAttempt = options.mode === PuzzleMode.ARCHIVE && completedRecord === undefined
     const statsSummary =
       options.mode === PuzzleMode.DAILY && options.statsStorage
-        ? deriveDailySummary(options.statsStorage.load().history)
+        ? calculateDailyStatsSummary(options.statsStorage.load().history)
         : undefined
     super({
       ...state,
@@ -195,7 +195,7 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
           })
         }),
       )
-      this.setState({ statsSummary: deriveDailySummary(nextStats.history) })
+      this.setState({ statsSummary: calculateDailyStatsSummary(nextStats.history) })
     }
   }
 }

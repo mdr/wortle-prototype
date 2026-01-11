@@ -1,16 +1,16 @@
 export const GalleryTestIds = {
-  gallery: "image-gallery",
-  caption: "gallery-caption",
-  prev: "gallery-prev",
-  next: "gallery-next",
-  thumbnail: "gallery-thumbnail",
-  fullscreen: "gallery-fullscreen",
+  gallery: "Gallery.gallery",
+  caption: "Gallery.caption",
+  prev: "Gallery.prev",
+  next: "Gallery.next",
+  thumbnail: "Gallery.thumbnail",
+  fullscreen: "Gallery.fullscreen",
 } as const
 
 export const FullscreenTestIds = {
-  viewer: "fullscreen-viewer",
-  caption: "fullscreen-caption",
-  prev: "fullscreen-prev",
-  next: "fullscreen-next",
-  close: "fullscreen-close",
+  viewer: "Fullscreen.viewer",
+  caption: "Fullscreen.caption",
+  prev: "Fullscreen.prev",
+  next: "Fullscreen.next",
+  close: "Fullscreen.close",
 } as const

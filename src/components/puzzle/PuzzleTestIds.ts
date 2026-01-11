@@ -1,23 +1,23 @@
 export const PuzzleTestIds = {
-  page: "puzzle-page",
-  homeLink: "puzzle-home-link",
-  searchInput: "plant-search-input",
-  plantOption: "plant-option",
-  chooseDifferentPlant: "choose-different-plant",
-  selectedPlantName: "selected-plant-name",
-  submitAnswer: "submit-answer",
-  giveUp: "give-up",
-  attemptCounter: "attempt-counter",
+  page: "Puzzle.page",
+  homeLink: "Puzzle.homeLink",
+  searchInput: "Puzzle.searchInput",
+  plantOption: "Puzzle.plantOption",
+  chooseDifferentPlant: "Puzzle.chooseDifferentPlant",
+  selectedPlantName: "Puzzle.selectedPlantName",
+  submitAnswer: "Puzzle.submitAnswer",
+  giveUp: "Puzzle.giveUp",
+  attemptCounter: "Puzzle.attemptCounter",
 } as const
 
 export const AnswerTestIds = {
-  correct: "answer-correct",
-  incorrect: "answer-incorrect",
-  gaveUp: "answer-gave-up",
+  correct: "Answer.correct",
+  incorrect: "Answer.incorrect",
+  gaveUp: "Answer.gaveUp",
 } as const
 
 export const AttemptHistoryTestIds = {
-  container: "attempt-history",
-  attemptItem: "attempt-item",
-  hint: "attempt-hint",
+  container: "AttemptHistory.container",
+  item: "AttemptHistory.item",
+  hint: "AttemptHistory.hint",
 } as const

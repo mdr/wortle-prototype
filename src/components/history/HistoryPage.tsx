@@ -4,7 +4,7 @@ import { useMemo } from "react"
 
 import { Button } from "@/components/shadcn/Button"
 import { Card } from "@/components/shadcn/Card"
-import { deriveDailySummary } from "@/lib/dailyStatsSummary"
+import { calculateDailyStatsSummary } from "@/lib/dailyStatsSummary"
 import { type StatsStorage } from "@/lib/StatsStorage"
 import { assetUrl } from "@/utils/utils"
 
@@ -17,7 +17,7 @@ interface HistoryPageProps {
 
 export const HistoryPage = ({ storage }: HistoryPageProps) => {
   const stats = useMemo(() => storage.load(), [storage])
-  const summary = useMemo(() => deriveDailySummary(stats.history), [stats.history])
+  const summary = useMemo(() => calculateDailyStatsSummary(stats.history), [stats.history])
   const sortedHistory = useMemo(() => [...stats.history].sort((a, b) => b.date.localeCompare(a.date)), [stats.history])
   const accuracy = Math.round(summary.winRate * 100)
 
