@@ -24,7 +24,7 @@ describe("StatsStorage", () => {
           date: Iso8601Date("2026-06-08"),
           puzzleId: PuzzleId(40),
           result: DailyResult.PASS,
-          guessedSpeciesIds: [SpeciesId(10), SpeciesId(12)],
+          guessedSpeciesIds: [SpeciesId("2cd4p9h.1e3"), SpeciesId("2cd4p9h.8nb")],
         },
       ],
     }
@@ -43,7 +43,7 @@ describe("StatsStorage", () => {
           date: Iso8601Date("2026-06-08"),
           puzzleId: PuzzleId(40),
           result: DailyResult.PASS,
-          guessedSpeciesIds: [SpeciesId(10), SpeciesId(12)],
+          guessedSpeciesIds: [SpeciesId("2cd4p9h.1e3"), SpeciesId("2cd4p9h.8nb")],
         },
       ],
     })
@@ -72,13 +72,13 @@ describe("calculateDailyStatsSummary", () => {
         date: Iso8601Date("2026-06-08"),
         puzzleId: PuzzleId(40),
         result: DailyResult.PASS,
-        guessedSpeciesIds: [SpeciesId(10), SpeciesId(12)],
+        guessedSpeciesIds: [SpeciesId("2cd4p9h.1e3"), SpeciesId("2cd4p9h.8nb")],
       },
       {
         date: Iso8601Date("2026-06-09"),
         puzzleId: PuzzleId(41),
         result: DailyResult.PASS,
-        guessedSpeciesIds: [SpeciesId(12)],
+        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
       },
     ]
 
@@ -95,13 +95,13 @@ describe("calculateDailyStatsSummary", () => {
         date: Iso8601Date("2026-06-08"),
         puzzleId: PuzzleId(40),
         result: DailyResult.PASS,
-        guessedSpeciesIds: [SpeciesId(10), SpeciesId(12)],
+        guessedSpeciesIds: [SpeciesId("2cd4p9h.1e3"), SpeciesId("2cd4p9h.8nb")],
       },
       {
         date: Iso8601Date("2026-06-10"),
         puzzleId: PuzzleId(42),
         result: DailyResult.FAIL,
-        guessedSpeciesIds: [SpeciesId(12), SpeciesId(15), SpeciesId(18)],
+        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb"), SpeciesId("2cd4p9h.yhw"), SpeciesId("2cd4p9h.21r")],
       },
     ]
 

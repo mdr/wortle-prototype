@@ -8,7 +8,7 @@ import { SpeciesId } from "./Species"
 const allPuzzles: Puzzle[] = [
   {
     id: PuzzleId(40),
-    speciesId: SpeciesId(14), // Daisy
+    speciesId: SpeciesId("2cd4p9h.xbs"), // Daisy
     observationDate: Iso8601Date("2025-12-19"),
     location: {
       description: "North Yorkshire, England",
@@ -27,7 +27,7 @@ const allPuzzles: Puzzle[] = [
   },
   {
     id: PuzzleId(41),
-    speciesId: SpeciesId(12), // Herb-Robert
+    speciesId: SpeciesId("2cd4p9h.8nb"), // Herb-Robert
     observationDate: Iso8601Date("2023-07-20"),
     location: {
       description: "North Yorkshire, England",
@@ -45,7 +45,7 @@ const allPuzzles: Puzzle[] = [
   },
   {
     id: PuzzleId(42),
-    speciesId: SpeciesId(11), // Bird's-eye Primrose
+    speciesId: SpeciesId("2cd4p9h.94n"), // Bird's-eye Primrose
     observationDate: Iso8601Date("2024-05-18"),
     location: {
       description: "North Yorkshire, England",
@@ -64,7 +64,7 @@ const allPuzzles: Puzzle[] = [
   },
   {
     id: PuzzleId(43),
-    speciesId: SpeciesId(1), // Devil's-bit Scabious
+    speciesId: SpeciesId("2cd4p9h.23w"), // Devil's-bit Scabious
     observationDate: Iso8601Date("2025-08-13"),
     location: {
       description: "Northumberland, England",
@@ -84,7 +84,7 @@ const allPuzzles: Puzzle[] = [
   },
   {
     id: PuzzleId(44),
-    speciesId: SpeciesId(2), // Tansy
+    speciesId: SpeciesId("2cd4p9h.9b1"), // Tansy
     observationDate: Iso8601Date("2023-08-03"),
     location: {
       description: "North Yorkshire, England",

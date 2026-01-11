@@ -2,7 +2,7 @@ import { Brand } from "effect"
 
 import { Url } from "@/utils/brandedTypes"
 
-export type SpeciesId = number & Brand.Brand<"SpeciesId">
+export type SpeciesId = string & Brand.Brand<"SpeciesId">
 export const SpeciesId = Brand.nominal<SpeciesId>()
 
 export interface SpeciesLink {

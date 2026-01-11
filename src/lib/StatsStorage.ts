@@ -26,7 +26,7 @@ const dailyPuzzleRecordSchema: z.ZodType<DailyPuzzleRecord> = z
     date: z.string().transform(Iso8601Date),
     puzzleId: z.number().int().transform(PuzzleId),
     result: z.enum([DailyResult.PASS, DailyResult.FAIL]),
-    guessedSpeciesIds: z.array(z.number().int().transform(SpeciesId)),
+    guessedSpeciesIds: z.array(z.string().transform(SpeciesId)),
   })
   .readonly()
 
@@ -38,7 +38,7 @@ export const statsSnapshotSchema: z.ZodType<StatsSnapshot> = z
 
 assert<Equals<StatsSnapshot, z.infer<typeof statsSnapshotSchema>>>()
 
-const STORAGE_KEY = "wortle:temp:1:stats"
+const STORAGE_KEY = "wortle:temp:2:stats"
 
 const defaultStats: StatsSnapshot = {
   history: [],

@@ -37,7 +37,7 @@ describe("PuzzleService", () => {
             date: scheduledDate,
             puzzleId,
             result: DailyResult.PASS,
-            guessedSpeciesIds: [SpeciesId(12), SpeciesId(14)],
+            guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb"), SpeciesId("2cd4p9h.xbs")],
           },
         ],
       })
@@ -60,7 +60,7 @@ describe("PuzzleService", () => {
             date: scheduledDate,
             puzzleId,
             result: DailyResult.FAIL,
-            guessedSpeciesIds: [SpeciesId(12)],
+            guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
           },
         ],
       })
@@ -80,7 +80,7 @@ describe("PuzzleService", () => {
             date: scheduledDate,
             puzzleId,
             result: DailyResult.FAIL,
-            guessedSpeciesIds: [SpeciesId(12), SpeciesId(2), SpeciesId(3)],
+            guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb"), SpeciesId("2cd4p9h.9b1"), SpeciesId("2cd4p9h.xyv")],
           },
         ],
       })
@@ -100,7 +100,7 @@ describe("PuzzleService", () => {
             date: scheduledDate,
             puzzleId,
             result: DailyResult.PASS,
-            guessedSpeciesIds: [SpeciesId(14)],
+            guessedSpeciesIds: [SpeciesId("2cd4p9h.xbs")],
           },
         ],
       })
@@ -116,11 +116,11 @@ describe("PuzzleService", () => {
     it("updates selected species and clears incorrect feedback", () => {
       const service = makePuzzleService()
 
-      service.submitGuess(SpeciesId(12))
+      service.submitGuess(SpeciesId("2cd4p9h.8nb"))
       expect(service.state.incorrectFeedbackText).toBeDefined()
 
-      service.selectSpecies(SpeciesId(12))
-      expect(service.state.selectedSpecies?.id).toBe(SpeciesId(12))
+      service.selectSpecies(SpeciesId("2cd4p9h.8nb"))
+      expect(service.state.selectedSpecies?.id).toBe(SpeciesId("2cd4p9h.8nb"))
       expect(service.state.incorrectFeedbackText).toBeUndefined()
     })
   })
@@ -129,8 +129,8 @@ describe("PuzzleService", () => {
     it("clears selected species and incorrect feedback", () => {
       const service = makePuzzleService()
 
-      service.selectSpecies(SpeciesId(12))
-      service.submitGuess(SpeciesId(12))
+      service.selectSpecies(SpeciesId("2cd4p9h.8nb"))
+      service.submitGuess(SpeciesId("2cd4p9h.8nb"))
 
       service.chooseDifferentPlant()
       expect(service.state.selectedSpecies).toBeUndefined()
@@ -155,7 +155,7 @@ describe("PuzzleService", () => {
     it("records an incorrect attempt and returns false", () => {
       const service = makePuzzleService()
 
-      const result = service.submitGuess(SpeciesId(12))
+      const result = service.submitGuess(SpeciesId("2cd4p9h.8nb"))
 
       expect(result).toBe(false)
       expect(service.state.attempts).toHaveLength(1)
@@ -169,7 +169,7 @@ describe("PuzzleService", () => {
       const statsStorage = new StatsStorage(createMemoryStorage())
       const service = makePuzzleService({ mode: PuzzleMode.DAILY, statsStorage })
 
-      service.submitGuess(SpeciesId(12))
+      service.submitGuess(SpeciesId("2cd4p9h.8nb"))
       service.giveUp()
 
       expect(service.state.gaveUp).toBe(true)
@@ -180,7 +180,7 @@ describe("PuzzleService", () => {
           date: scheduledDate,
           puzzleId,
           result: DailyResult.FAIL,
-          guessedSpeciesIds: [SpeciesId(12)],
+          guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
         },
       ])
     })
