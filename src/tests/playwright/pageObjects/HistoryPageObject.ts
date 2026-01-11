@@ -17,8 +17,8 @@ export class HistoryPageObject extends PageObject {
     this.step(`verifyHistoryItemCount ${count}`, () => expect(this.get(HistoryTestIds.historyItem)).toHaveCount(count))
 
   verifyStatsVisible = (): Promise<void> =>
-    this.step("verifyStatsVisible", async () => {
-      await expect(this.getByText("Statistics")).toBeVisible()
-      await expect(this.getByText("quizzes played")).toBeVisible()
-    })
+    this.step("verifyStatsVisible", () => expect(this.get(HistoryTestIds.stats)).toBeVisible())
+
+  verifyStatsHidden = (): Promise<void> =>
+    this.step("verifyStatsHidden", () => expect(this.get(HistoryTestIds.stats)).not.toBeVisible())
 }

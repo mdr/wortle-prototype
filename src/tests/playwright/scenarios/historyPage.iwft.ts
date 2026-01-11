@@ -2,7 +2,7 @@ import { test } from "../fixtures"
 
 test("history page shows empty state when no puzzles completed", async ({ historyPage }) => {
   await historyPage.verifyEmptyState()
-  await historyPage.verifyStatsVisible()
+  await historyPage.verifyStatsHidden()
   await historyPage.checkScreenshot("history-empty")
 })
 

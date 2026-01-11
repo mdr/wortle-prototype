@@ -34,7 +34,7 @@ export const AnswerInputCard = () => {
   return (
     <div ref={scope}>
       <Card className="p-6">
-        <div className="mb-2 flex items-center justify-between">
+        <div className="mb-2 flex flex-col gap-1 min-[440px]:flex-row min-[440px]:items-center min-[440px]:justify-between">
           <h2 className="text-foreground font-serif text-2xl font-bold">Can you identify this plant?</h2>
           <span className="text-muted-foreground text-sm" data-testid={PuzzleTestIds.attemptCounter}>
             Attempt {attempts.length + 1} of {MAX_ATTEMPTS}
