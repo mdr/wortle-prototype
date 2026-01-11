@@ -4,6 +4,7 @@ import { useMemo } from "react"
 import { ErrorFallback } from "@/components/ErrorFallback"
 import { NotFoundPage } from "@/components/NotFoundPage"
 import { PuzzlePage } from "@/components/puzzle/PuzzlePage"
+import { useStatsStorage } from "@/lib/GlobalDependencies"
 import { findSpecies } from "@/lib/plants"
 import { Puzzle } from "@/lib/Puzzle"
 import { findPuzzle } from "@/lib/puzzles"
@@ -52,8 +53,11 @@ const findCompletionRecord = (storage: StatsStorage, date: Iso8601Date): DailyPu
 
 const ArchivePuzzlePage = () => {
   const { puzzle, correctSpecies, scheduledDate } = Route.useLoaderData()
-  const storage = useMemo(() => new StatsStorage(window.localStorage), [])
-  const completionRecord = useMemo(() => findCompletionRecord(storage, scheduledDate), [storage, scheduledDate])
+  const statsStorage = useStatsStorage()
+  const completionRecord = useMemo(
+    () => findCompletionRecord(statsStorage, scheduledDate),
+    [statsStorage, scheduledDate],
+  )
 
   if (!puzzle || !correctSpecies) {
     return <NotFoundPage message="No puzzle was scheduled for this date." />

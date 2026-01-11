@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router"
 
 import { HistoryPage } from "@/components/history/HistoryPage"
-import { StatsStorage } from "@/lib/StatsStorage"
+import { useStatsStorage } from "@/lib/GlobalDependencies"
 
 const HistoryRouteComponent = () => {
-  const storage = new StatsStorage(window.localStorage)
-  return <HistoryPage storage={storage} />
+  const statsStorage = useStatsStorage()
+  return <HistoryPage storage={statsStorage} />
 }
 
 export const Route = createFileRoute("/history")({

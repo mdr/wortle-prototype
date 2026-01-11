@@ -4,6 +4,7 @@ import { StrictMode } from "react"
 import { defaultClock } from "@/lib/Clock"
 import { type GlobalDependencies } from "@/lib/GlobalDependencies"
 import { GlobalDependenciesProvider } from "@/lib/GlobalDependenciesProvider"
+import { StatsStorage } from "@/lib/StatsStorage"
 import { routeTree } from "@/routeTree.gen"
 
 const defaultRouter = createRouter({
@@ -20,6 +21,7 @@ declare module "@tanstack/react-router" {
 
 const defaultDependencies: GlobalDependencies = {
   clock: defaultClock,
+  statsStorage: new StatsStorage(window.localStorage),
 }
 
 export interface AppProps {
