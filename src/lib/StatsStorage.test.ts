@@ -1,10 +1,9 @@
 import { describe, expect, it } from "vitest"
 
+import { TestPuzzles, TestSpeciesIds } from "@/tests/playwright/testConstants.testUtils"
 import { Iso8601Date } from "@/utils/brandedTypes"
 
 import { calculateDailyStatsSummary } from "./dailyStatsSummary"
-import { PuzzleId } from "./Puzzle"
-import { SpeciesId } from "./Species"
 import { DailyResult, StatsSnapshot, StatsStorage } from "./StatsStorage"
 import { createMemoryStorage } from "./storage.testUtils"
 
@@ -22,9 +21,9 @@ describe("StatsStorage", () => {
       history: [
         {
           date: Iso8601Date("2026-06-08"),
-          puzzleId: PuzzleId(40),
+          puzzleId: TestPuzzles.daisy.id,
           result: DailyResult.PASS,
-          guessedSpeciesIds: [SpeciesId("2cd4p9h.1e3"), SpeciesId("2cd4p9h.8nb")],
+          guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil, TestPuzzles.herbRobert.speciesId],
         },
       ],
     }
@@ -41,9 +40,9 @@ describe("StatsStorage", () => {
       history: [
         {
           date: Iso8601Date("2026-06-08"),
-          puzzleId: PuzzleId(40),
+          puzzleId: TestPuzzles.daisy.id,
           result: DailyResult.PASS,
-          guessedSpeciesIds: [SpeciesId("2cd4p9h.1e3"), SpeciesId("2cd4p9h.8nb")],
+          guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil, TestPuzzles.herbRobert.speciesId],
         },
       ],
     })
@@ -70,15 +69,15 @@ describe("calculateDailyStatsSummary", () => {
     const history = [
       {
         date: Iso8601Date("2026-06-08"),
-        puzzleId: PuzzleId(40),
+        puzzleId: TestPuzzles.daisy.id,
         result: DailyResult.PASS,
-        guessedSpeciesIds: [SpeciesId("2cd4p9h.1e3"), SpeciesId("2cd4p9h.8nb")],
+        guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil, TestPuzzles.herbRobert.speciesId],
       },
       {
         date: Iso8601Date("2026-06-09"),
-        puzzleId: PuzzleId(41),
+        puzzleId: TestPuzzles.herbRobert.id,
         result: DailyResult.PASS,
-        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+        guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId],
       },
     ]
 
@@ -93,15 +92,15 @@ describe("calculateDailyStatsSummary", () => {
     const history = [
       {
         date: Iso8601Date("2026-06-08"),
-        puzzleId: PuzzleId(40),
+        puzzleId: TestPuzzles.daisy.id,
         result: DailyResult.PASS,
-        guessedSpeciesIds: [SpeciesId("2cd4p9h.1e3"), SpeciesId("2cd4p9h.8nb")],
+        guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil, TestPuzzles.herbRobert.speciesId],
       },
       {
         date: Iso8601Date("2026-06-10"),
-        puzzleId: PuzzleId(42),
+        puzzleId: TestPuzzles.birdsEyePrimrose.id,
         result: DailyResult.FAIL,
-        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb"), SpeciesId("2cd4p9h.yhw"), SpeciesId("2cd4p9h.21r")],
+        guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId, TestSpeciesIds.feverfew, TestSpeciesIds.alexanders],
       },
     ]
 

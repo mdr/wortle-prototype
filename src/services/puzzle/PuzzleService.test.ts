@@ -1,17 +1,18 @@
 import { describe, expect, it } from "vitest"
 
 import { getSpecies } from "@/lib/plants"
-import { Puzzle, PuzzleId } from "@/lib/Puzzle"
+import { Puzzle } from "@/lib/Puzzle"
 import { getPuzzle } from "@/lib/puzzles"
-import { Species, SpeciesId } from "@/lib/Species"
+import { Species } from "@/lib/Species"
 import { DailyResult, StatsStorage } from "@/lib/StatsStorage"
 import { createMemoryStorage } from "@/lib/storage.testUtils"
+import { TestPuzzles, TestSpeciesIds } from "@/tests/playwright/testConstants.testUtils"
 import { Iso8601Date } from "@/utils/brandedTypes"
 
 import { MAX_ATTEMPTS, PuzzleMode, PuzzleService } from "./PuzzleService"
 
 const scheduledDate = Iso8601Date("2026-06-08")
-const puzzleId = PuzzleId(40)
+const puzzleId = TestPuzzles.daisy.id
 const getPuzzleData = (): { puzzle: Puzzle; correctSpecies: Species } => {
   const puzzle = getPuzzle(puzzleId)
   const correctSpecies = getSpecies(puzzle.speciesId)
@@ -38,7 +39,7 @@ describe("PuzzleService", () => {
             date: scheduledDate,
             puzzleId,
             result: DailyResult.PASS,
-            guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb"), SpeciesId("2cd4p9h.xbs")],
+            guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId, TestPuzzles.daisy.speciesId],
           },
         ],
       })
@@ -61,7 +62,7 @@ describe("PuzzleService", () => {
             date: scheduledDate,
             puzzleId,
             result: DailyResult.FAIL,
-            guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+            guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId],
           },
         ],
       })
@@ -81,7 +82,11 @@ describe("PuzzleService", () => {
             date: scheduledDate,
             puzzleId,
             result: DailyResult.FAIL,
-            guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb"), SpeciesId("2cd4p9h.9b1"), SpeciesId("2cd4p9h.xyv")],
+            guessedSpeciesIds: [
+              TestPuzzles.herbRobert.speciesId,
+              TestPuzzles.tansy.speciesId,
+              TestSpeciesIds.fieldScabious,
+            ],
           },
         ],
       })
@@ -101,7 +106,7 @@ describe("PuzzleService", () => {
             date: scheduledDate,
             puzzleId,
             result: DailyResult.PASS,
-            guessedSpeciesIds: [SpeciesId("2cd4p9h.xbs")],
+            guessedSpeciesIds: [TestPuzzles.daisy.speciesId],
           },
         ],
       })
@@ -117,11 +122,11 @@ describe("PuzzleService", () => {
     it("updates selected species and clears incorrect feedback", () => {
       const service = makePuzzleService()
 
-      service.submitGuess(SpeciesId("2cd4p9h.8nb"))
+      service.submitGuess(TestPuzzles.herbRobert.speciesId)
       expect(service.state.incorrectFeedbackText).toBeDefined()
 
-      service.selectSpecies(SpeciesId("2cd4p9h.8nb"))
-      expect(service.state.selectedSpecies?.id).toBe(SpeciesId("2cd4p9h.8nb"))
+      service.selectSpecies(TestPuzzles.herbRobert.speciesId)
+      expect(service.state.selectedSpecies?.id).toBe(TestPuzzles.herbRobert.speciesId)
       expect(service.state.incorrectFeedbackText).toBeUndefined()
     })
   })
@@ -130,8 +135,8 @@ describe("PuzzleService", () => {
     it("clears selected species and incorrect feedback", () => {
       const service = makePuzzleService()
 
-      service.selectSpecies(SpeciesId("2cd4p9h.8nb"))
-      service.submitGuess(SpeciesId("2cd4p9h.8nb"))
+      service.selectSpecies(TestPuzzles.herbRobert.speciesId)
+      service.submitGuess(TestPuzzles.herbRobert.speciesId)
 
       service.chooseDifferentPlant()
       expect(service.state.selectedSpecies).toBeUndefined()
@@ -156,7 +161,7 @@ describe("PuzzleService", () => {
     it("records an incorrect attempt and returns false", () => {
       const service = makePuzzleService()
 
-      const result = service.submitGuess(SpeciesId("2cd4p9h.8nb"))
+      const result = service.submitGuess(TestPuzzles.herbRobert.speciesId)
 
       expect(result).toBe(false)
       expect(service.state.attempts).toHaveLength(1)
@@ -170,7 +175,7 @@ describe("PuzzleService", () => {
       const statsStorage = new StatsStorage(createMemoryStorage())
       const service = makePuzzleService({ mode: PuzzleMode.DAILY, statsStorage })
 
-      service.submitGuess(SpeciesId("2cd4p9h.8nb"))
+      service.submitGuess(TestPuzzles.herbRobert.speciesId)
       service.giveUp()
 
       expect(service.state.gaveUp).toBe(true)
@@ -181,7 +186,7 @@ describe("PuzzleService", () => {
           date: scheduledDate,
           puzzleId,
           result: DailyResult.FAIL,
-          guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+          guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId],
         },
       ])
     })
@@ -259,11 +264,11 @@ describe("PuzzleService", () => {
       const statsStorage = new StatsStorage(createMemoryStorage())
       const service = makePuzzleService({ mode: PuzzleMode.DAILY, statsStorage })
 
-      service.submitGuess(SpeciesId("2cd4p9h.8nb"))
+      service.submitGuess(TestPuzzles.herbRobert.speciesId)
 
       expect(statsStorage.load().dailyInProgress).toEqual({
         date: scheduledDate,
-        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+        guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId],
       })
     })
 
@@ -271,7 +276,7 @@ describe("PuzzleService", () => {
       const statsStorage = new StatsStorage(createMemoryStorage())
       const service = makePuzzleService({ mode: PuzzleMode.REVIEW, statsStorage })
 
-      service.submitGuess(SpeciesId("2cd4p9h.8nb"))
+      service.submitGuess(TestPuzzles.herbRobert.speciesId)
 
       expect(statsStorage.load().dailyInProgress).toBeUndefined()
     })
@@ -280,21 +285,21 @@ describe("PuzzleService", () => {
       const statsStorage = new StatsStorage(createMemoryStorage())
       statsStorage.saveDailyInProgress({
         date: scheduledDate,
-        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb"), SpeciesId("2cd4p9h.9b1")],
+        guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId, TestPuzzles.tansy.speciesId],
       })
 
       const service = makePuzzleService({ mode: PuzzleMode.DAILY, statsStorage })
 
       expect(service.state.attempts).toHaveLength(2)
-      expect(service.state.attempts[0]?.speciesId).toBe(SpeciesId("2cd4p9h.8nb"))
-      expect(service.state.attempts[1]?.speciesId).toBe(SpeciesId("2cd4p9h.9b1"))
+      expect(service.state.attempts[0]?.speciesId).toBe(TestPuzzles.herbRobert.speciesId)
+      expect(service.state.attempts[1]?.speciesId).toBe(TestPuzzles.tansy.speciesId)
     })
 
     it("clears in-progress when puzzle is completed", () => {
       const statsStorage = new StatsStorage(createMemoryStorage())
       statsStorage.saveDailyInProgress({
         date: scheduledDate,
-        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+        guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId],
       })
       const { correctSpecies } = getPuzzleData()
       const service = makePuzzleService({ mode: PuzzleMode.DAILY, statsStorage })
@@ -308,7 +313,7 @@ describe("PuzzleService", () => {
       const statsStorage = new StatsStorage(createMemoryStorage())
       statsStorage.saveDailyInProgress({
         date: Iso8601Date("2026-06-07"),
-        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+        guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId],
       })
 
       const service = makePuzzleService({ mode: PuzzleMode.DAILY, statsStorage })
@@ -321,7 +326,7 @@ describe("PuzzleService", () => {
       const statsStorage = new StatsStorage(createMemoryStorage())
       statsStorage.saveDailyInProgress({
         date: scheduledDate,
-        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+        guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId],
       })
 
       const service = makePuzzleService({ mode: PuzzleMode.REVIEW, statsStorage })
@@ -333,14 +338,14 @@ describe("PuzzleService", () => {
       const statsStorage = new StatsStorage(createMemoryStorage())
       statsStorage.saveDailyInProgress({
         date: scheduledDate,
-        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+        guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId],
       })
 
       makePuzzleService({ mode: PuzzleMode.REVIEW, statsStorage })
 
       expect(statsStorage.load().dailyInProgress).toEqual({
         date: scheduledDate,
-        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+        guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId],
       })
     })
   })
