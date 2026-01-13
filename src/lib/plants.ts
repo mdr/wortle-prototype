@@ -46,7 +46,7 @@ const allPlants: Species[] = [
     scientificName: "Tanacetum parthenium",
     family: "Asteraceae",
     commonNames: ["Feverfew"],
-    links: [],
+    links: [{ name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.yhw") }],
     idTips: [],
   },
   {
@@ -54,7 +54,7 @@ const allPlants: Species[] = [
     scientificName: "Knautia arvensis",
     family: "Caprifoliaceae",
     commonNames: ["Field Scabious"],
-    links: [],
+    links: [{ name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.xyv") }],
     idTips: [],
   },
   {
@@ -62,7 +62,7 @@ const allPlants: Species[] = [
     scientificName: "Scabiosa columbaria",
     family: "Caprifoliaceae",
     commonNames: ["Small Scabious"],
-    links: [],
+    links: [{ name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.fpk") }],
     idTips: [],
   },
   {
@@ -86,7 +86,7 @@ const allPlants: Species[] = [
     scientificName: "Cichorium intybus",
     family: "Asteraceae",
     commonNames: ["Chicory"],
-    links: [],
+    links: [{ name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.xgb") }],
     idTips: [],
   },
   {
@@ -94,7 +94,7 @@ const allPlants: Species[] = [
     scientificName: "Jasione montana",
     family: "Campanulaceae",
     commonNames: ["Sheep's-bit"],
-    links: [],
+    links: [{ name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.vk1") }],
     idTips: [],
   },
   {
@@ -153,7 +153,7 @@ const allPlants: Species[] = [
     scientificName: "Geranium lucidum",
     family: "Geraniaceae",
     commonNames: ["Shining Crane's-bill"],
-    links: [],
+    links: [{ name: "Plant Atlas", url: Url("https://plantatlas2020.org/atlas/2cd4p9h.xxr") }],
     idTips: [],
   },
   {

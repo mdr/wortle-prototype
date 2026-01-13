@@ -1,10 +1,11 @@
 import { test } from "../fixtures"
+import { TestPuzzles } from "../testConstants.testUtils"
 
 test("can navigate to puzzle and answer correctly on first try", async ({ homePage }) => {
   const puzzlePage = await homePage.clickPuzzle(0)
   await puzzlePage.checkScreenshot("puzzle-page")
   await puzzlePage.verifyAttemptCounter(1, 3)
-  await puzzlePage.searchForPlant("Daisy")
+  await puzzlePage.searchForPlant(TestPuzzles.daisy.correctAnswer)
   await puzzlePage.selectFirstPlantOption()
   await puzzlePage.submitAnswer()
   await puzzlePage.verifyCorrectAnswer()
@@ -14,7 +15,7 @@ test("can answer correctly after wrong guesses", async ({ homePage }) => {
   const puzzlePage = await homePage.clickPuzzle(0)
 
   // First wrong guess
-  await puzzlePage.searchForPlant("Tansy")
+  await puzzlePage.searchForPlant(TestPuzzles.tansy.correctAnswer)
   await puzzlePage.selectFirstPlantOption()
   await puzzlePage.submitAnswer()
   await puzzlePage.verifyAttemptHistory(1)
@@ -28,7 +29,7 @@ test("can answer correctly after wrong guesses", async ({ homePage }) => {
   await puzzlePage.verifyAttemptCounter(3, 3)
 
   // Correct guess
-  await puzzlePage.searchForPlant("Daisy")
+  await puzzlePage.searchForPlant(TestPuzzles.daisy.correctAnswer)
   await puzzlePage.selectFirstPlantOption()
   await puzzlePage.submitAnswer()
   await puzzlePage.verifyCorrectAnswer()
@@ -38,7 +39,7 @@ test("fails after 3 wrong guesses", async ({ homePage }) => {
   const puzzlePage = await homePage.clickPuzzle(0)
 
   // Make 3 wrong guesses
-  await puzzlePage.searchForPlant("Tansy")
+  await puzzlePage.searchForPlant(TestPuzzles.tansy.correctAnswer)
   await puzzlePage.selectFirstPlantOption()
   await puzzlePage.submitAnswer()
 
@@ -61,18 +62,18 @@ test("can give up on puzzle", async ({ homePage }) => {
 
 test("can choose a different plant", async ({ homePage }) => {
   const puzzlePage = await homePage.clickPuzzle(0)
-  await puzzlePage.searchForPlant("Daisy")
+  await puzzlePage.searchForPlant(TestPuzzles.daisy.correctAnswer)
   await puzzlePage.selectFirstPlantOption()
   await puzzlePage.chooseDifferentPlant()
   await puzzlePage.verifySearchInputVisible()
-  await puzzlePage.searchForPlant("Tansy")
+  await puzzlePage.searchForPlant(TestPuzzles.tansy.correctAnswer)
   await puzzlePage.selectFirstPlantOption()
-  await puzzlePage.verifySelectedPlantName("Tansy")
+  await puzzlePage.verifySelectedPlantName(TestPuzzles.tansy.correctAnswer)
 })
 
 test("daily puzzle stays completed after leaving and returning", async ({ homePage }) => {
   const dailyPuzzle = await homePage.clickDailyPuzzle()
-  await dailyPuzzle.searchForPlant("Devil's-bit Scabious")
+  await dailyPuzzle.searchForPlant(TestPuzzles.devilsBitScabious.correctAnswer)
   await dailyPuzzle.selectFirstPlantOption()
   await dailyPuzzle.submitAnswer()
   await dailyPuzzle.verifyCorrectAnswer()

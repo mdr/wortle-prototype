@@ -1,4 +1,5 @@
 import { test } from "../fixtures"
+import { TestPuzzles } from "../testConstants.testUtils"
 
 test("history page shows empty state when no puzzles completed", async ({ historyPage }) => {
   await historyPage.verifyEmptyState()
@@ -8,7 +9,7 @@ test("history page shows empty state when no puzzles completed", async ({ histor
 
 test("history page shows completed puzzle", async ({ homePage }) => {
   const puzzlePage = await homePage.clickDailyPuzzle()
-  await puzzlePage.searchForPlant("Devil's-bit Scabious")
+  await puzzlePage.searchForPlant(TestPuzzles.devilsBitScabious.correctAnswer)
   await puzzlePage.selectFirstPlantOption()
   await puzzlePage.submitAnswer()
   await puzzlePage.verifyCorrectAnswer()

@@ -12,6 +12,7 @@ Run `task check` to verify work before finishing (runs tsc, lint, format, and te
 - Prefer single expression body form for arrow functions with one-liner returns (e.g., `const fn = (x: string) => x.trim()` over `const fn = (x: string) => { return x.trim() }`).
 - Prefer string enums with all caps (e.g. `enum Status { READY = "READY" }`).
 - Use comments sparingly. Never comment the obvious (e.g. `@param userId - The user ID`). Only add comments to explain something that cannot be made clear from the code alone.
+- Name test utility files with a `.testUtils.ts` suffix to flag them as non-production code.
 
 ## Task Commands
 
