@@ -1,15 +1,29 @@
 import { Link } from "@tanstack/react-router"
+import { useState } from "react"
 
 import { Button } from "@/components/shadcn/Button"
 import { Card } from "@/components/shadcn/Card"
 import { HeaderNav } from "@/components/shared/HeaderNav"
+import { useClock } from "@/lib/GlobalDependencies"
 import { getAllPuzzleIds } from "@/lib/puzzles"
+import { getAllScheduledDates } from "@/lib/schedule"
+import { Iso8601Date } from "@/utils/brandedTypes"
+import { formatDate } from "@/utils/dateUtils"
 import { assetUrl } from "@/utils/utils"
 
 import { HomeTestIds } from "./HomeTestIds"
 
 export const HomePage = () => {
   const puzzleIds = getAllPuzzleIds()
+  const clock = useClock()
+  const scheduledDates = getAllScheduledDates()
+  const [currentDate, setCurrentDate] = useState(clock.todayIso())
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newDate = Iso8601Date(e.target.value)
+    clock.setDate?.(newDate)
+    setCurrentDate(newDate)
+  }
 
   return (
     <main className="bg-background min-h-screen" data-testid={HomeTestIds.page}>
@@ -36,10 +50,27 @@ export const HomePage = () => {
             <p className="text-muted-foreground">
               Jump into today's puzzle. Your result counts toward your daily stats.
             </p>
-            <div className="pt-4">
+            <div className="flex items-center gap-4 pt-4">
               <Link to="/daily" data-testid={HomeTestIds.dailyPuzzleLink}>
                 <Button size="lg">Play today's puzzle</Button>
               </Link>
+              <div className="flex items-center gap-2">
+                <label htmlFor="date-select" className="text-muted-foreground text-sm">
+                  Date:
+                </label>
+                <select
+                  id="date-select"
+                  value={currentDate}
+                  onChange={handleDateChange}
+                  className="border-input bg-background text-foreground rounded-md border px-3 py-2 text-sm"
+                >
+                  {scheduledDates.map((date) => (
+                    <option key={date} value={date}>
+                      {formatDate(date)}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </Card>
 
