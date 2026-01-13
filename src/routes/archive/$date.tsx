@@ -69,6 +69,7 @@ const ArchivePuzzlePage = () => {
       correctSpecies={correctSpecies}
       scheduledDate={scheduledDate}
       mode={PuzzleMode.ARCHIVE}
+      statsStorage={statsStorage}
       completionRecord={completionRecord}
     >
       <PuzzlePage />

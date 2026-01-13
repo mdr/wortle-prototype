@@ -35,7 +35,7 @@ export interface PuzzleServiceActions {
 
 interface PuzzleServiceOptions {
   mode: PuzzleMode
-  statsStorage?: StatsStorage
+  statsStorage: StatsStorage
   completionRecord?: DailyPuzzleRecord
 }
 
@@ -65,27 +65,36 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
     private readonly options: PuzzleServiceOptions,
   ) {
     const { statsStorage, completionRecord: providedCompletionRecord } = options
-    const hasDailyStats = options.mode === PuzzleMode.DAILY && statsStorage !== undefined
-    const history = hasDailyStats ? statsStorage.load().history : []
+    const hasDailyStats = options.mode === PuzzleMode.DAILY
+    const statsSnapshot = hasDailyStats ? statsStorage.load() : undefined
+    const history = statsSnapshot?.history ?? []
+
+    // Handle in-progress state for daily mode
+    const dailyInProgress = statsSnapshot?.dailyInProgress
+    if (dailyInProgress && state.scheduledDate && dailyInProgress.date !== state.scheduledDate) {
+      statsStorage.clearDailyInProgress()
+    }
+    const matchingInProgress =
+      dailyInProgress && state.scheduledDate === dailyInProgress.date ? dailyInProgress : undefined
+
     const completedRecord =
       options.mode === PuzzleMode.ARCHIVE
         ? providedCompletionRecord
         : hasDailyStats && state.scheduledDate
           ? history.find((record) => record.date === state.scheduledDate && record.puzzleId === state.puzzle.id)
           : undefined
-    const attempts = completedRecord
-      ? completedRecord.guessedSpeciesIds.map((speciesId) => {
-          const species = getSpecies(speciesId)
-          return createAttemptFeedback(species, state.correctSpecies)
-        })
-      : []
+
+    const guessedSpeciesIds = completedRecord?.guessedSpeciesIds ?? matchingInProgress?.guessedSpeciesIds ?? []
+    const attempts = guessedSpeciesIds.map((speciesId) => {
+      const species = getSpecies(speciesId)
+      return createAttemptFeedback(species, state.correctSpecies)
+    })
+
     const gaveUp =
       completedRecord !== undefined && completedRecord.result === DailyResult.FAIL && attempts.length < MAX_ATTEMPTS
     const didNotAttempt = options.mode === PuzzleMode.ARCHIVE && completedRecord === undefined
     const statsSummary =
-      options.mode === PuzzleMode.DAILY && options.statsStorage
-        ? calculateDailyStatsSummary(options.statsStorage.load().history)
-        : undefined
+      options.mode === PuzzleMode.DAILY ? calculateDailyStatsSummary(options.statsStorage.load().history) : undefined
     super({
       ...state,
       attempts,
@@ -161,6 +170,8 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
     })
     if (completion) {
       this.updateStats(completion.result, completion.guessedSpeciesIds)
+    } else {
+      this.saveDailyInProgress(nextAttempts.map((attempt) => attempt.speciesId))
     }
     return feedback.isCorrect
   }
@@ -172,6 +183,18 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
       guessedSpeciesIds: this.state.attempts.map((attempt) => attempt.speciesId),
     }
     this.updateStats(completion.result, completion.guessedSpeciesIds)
+  }
+
+  private readonly saveDailyInProgress = (guessedSpeciesIds: SpeciesId[]): void => {
+    if (this.options.mode === PuzzleMode.DAILY) {
+      const { statsStorage } = this.options
+      const scheduledDate = this.state.scheduledDate
+      assert(scheduledDate, "PuzzleService requires a scheduled date in daily mode.")
+      statsStorage.saveDailyInProgress({
+        date: scheduledDate,
+        guessedSpeciesIds,
+      })
+    }
   }
 
   private readonly updateStats = (result: DailyResult, guessedSpeciesIds: SpeciesId[]): void => {
@@ -190,6 +213,7 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
             result,
             guessedSpeciesIds,
           })
+          draft.dailyInProgress = undefined
         }),
       )
       this.setState({ statsSummary: calculateDailyStatsSummary(nextStats.history) })

@@ -20,9 +20,10 @@ const getPuzzleData = (): { puzzle: Puzzle; correctSpecies: Species } => {
 
 const makePuzzleService = (options: Partial<{ mode: PuzzleMode; statsStorage: StatsStorage }> = {}): PuzzleService => {
   const { puzzle, correctSpecies } = getPuzzleData()
+  const statsStorage = options.statsStorage ?? new StatsStorage(createMemoryStorage())
   return new PuzzleService(
     { puzzle, correctSpecies, scheduledDate },
-    { mode: options.mode ?? PuzzleMode.REVIEW, statsStorage: options.statsStorage },
+    { mode: options.mode ?? PuzzleMode.REVIEW, statsStorage },
   )
 }
 
@@ -250,6 +251,97 @@ describe("PuzzleService", () => {
       service.exitFullscreenImageMode()
 
       expect(service.state.isFullscreenImageMode).toBe(false)
+    })
+  })
+
+  describe("dailyInProgress", () => {
+    it("saves in-progress after incorrect guess in daily mode", () => {
+      const statsStorage = new StatsStorage(createMemoryStorage())
+      const service = makePuzzleService({ mode: PuzzleMode.DAILY, statsStorage })
+
+      service.submitGuess(SpeciesId("2cd4p9h.8nb"))
+
+      expect(statsStorage.load().dailyInProgress).toEqual({
+        date: scheduledDate,
+        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+      })
+    })
+
+    it("does not save in-progress in review mode", () => {
+      const statsStorage = new StatsStorage(createMemoryStorage())
+      const service = makePuzzleService({ mode: PuzzleMode.REVIEW, statsStorage })
+
+      service.submitGuess(SpeciesId("2cd4p9h.8nb"))
+
+      expect(statsStorage.load().dailyInProgress).toBeUndefined()
+    })
+
+    it("restores in-progress attempts on daily puzzle hydration", () => {
+      const statsStorage = new StatsStorage(createMemoryStorage())
+      statsStorage.saveDailyInProgress({
+        date: scheduledDate,
+        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb"), SpeciesId("2cd4p9h.9b1")],
+      })
+
+      const service = makePuzzleService({ mode: PuzzleMode.DAILY, statsStorage })
+
+      expect(service.state.attempts).toHaveLength(2)
+      expect(service.state.attempts[0]?.speciesId).toBe(SpeciesId("2cd4p9h.8nb"))
+      expect(service.state.attempts[1]?.speciesId).toBe(SpeciesId("2cd4p9h.9b1"))
+    })
+
+    it("clears in-progress when puzzle is completed", () => {
+      const statsStorage = new StatsStorage(createMemoryStorage())
+      statsStorage.saveDailyInProgress({
+        date: scheduledDate,
+        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+      })
+      const { correctSpecies } = getPuzzleData()
+      const service = makePuzzleService({ mode: PuzzleMode.DAILY, statsStorage })
+
+      service.submitGuess(correctSpecies.id)
+
+      expect(statsStorage.load().dailyInProgress).toBeUndefined()
+    })
+
+    it("clears stale in-progress when date changes", () => {
+      const statsStorage = new StatsStorage(createMemoryStorage())
+      statsStorage.saveDailyInProgress({
+        date: Iso8601Date("2026-06-07"),
+        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+      })
+
+      const service = makePuzzleService({ mode: PuzzleMode.DAILY, statsStorage })
+
+      expect(statsStorage.load().dailyInProgress).toBeUndefined()
+      expect(service.state.attempts).toHaveLength(0)
+    })
+
+    it("does not restore in-progress for review mode", () => {
+      const statsStorage = new StatsStorage(createMemoryStorage())
+      statsStorage.saveDailyInProgress({
+        date: scheduledDate,
+        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+      })
+
+      const service = makePuzzleService({ mode: PuzzleMode.REVIEW, statsStorage })
+
+      expect(service.state.attempts).toHaveLength(0)
+    })
+
+    it("viewing a review puzzle does not clear daily in-progress", () => {
+      const statsStorage = new StatsStorage(createMemoryStorage())
+      statsStorage.saveDailyInProgress({
+        date: scheduledDate,
+        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+      })
+
+      makePuzzleService({ mode: PuzzleMode.REVIEW, statsStorage })
+
+      expect(statsStorage.load().dailyInProgress).toEqual({
+        date: scheduledDate,
+        guessedSpeciesIds: [SpeciesId("2cd4p9h.8nb")],
+      })
     })
   })
 })

@@ -13,7 +13,7 @@ interface PuzzleServiceProviderProps {
   correctSpecies: Species
   scheduledDate?: Iso8601Date
   mode: PuzzleMode
-  statsStorage?: StatsStorage
+  statsStorage: StatsStorage
   completionRecord?: DailyPuzzleRecord
   children: ReactNode
 }

@@ -18,8 +18,14 @@ export interface DailyPuzzleRecord {
   readonly guessedSpeciesIds: SpeciesId[]
 }
 
+export interface DailyInProgressRecord {
+  readonly date: Iso8601Date
+  readonly guessedSpeciesIds: SpeciesId[]
+}
+
 export interface StatsSnapshot {
   readonly history: DailyPuzzleRecord[]
+  readonly dailyInProgress?: DailyInProgressRecord
 }
 
 const dailyPuzzleRecordSchema: z.ZodType<DailyPuzzleRecord> = z
@@ -31,9 +37,17 @@ const dailyPuzzleRecordSchema: z.ZodType<DailyPuzzleRecord> = z
   })
   .readonly()
 
+const dailyInProgressRecordSchema: z.ZodType<DailyInProgressRecord> = z
+  .strictObject({
+    date: z.string().transform(Iso8601Date),
+    guessedSpeciesIds: z.array(z.string().transform(SpeciesId)),
+  })
+  .readonly()
+
 export const statsSnapshotSchema: z.ZodType<StatsSnapshot> = z
   .strictObject({
     history: z.array(dailyPuzzleRecordSchema),
+    dailyInProgress: dailyInProgressRecordSchema.optional(),
   })
   .readonly()
 
@@ -82,6 +96,14 @@ export class StatsStorage {
     const next = updater(this.load())
     this.save(next)
     return next
+  }
+
+  saveDailyInProgress = (record: DailyInProgressRecord): void => {
+    this.update((current) => ({ ...current, dailyInProgress: record }))
+  }
+
+  clearDailyInProgress = (): void => {
+    this.update((current) => ({ ...current, dailyInProgress: undefined }))
   }
 
   clear = (): void => {
