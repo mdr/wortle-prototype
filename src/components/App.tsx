@@ -6,6 +6,7 @@ import { defaultClock } from "@/lib/Clock"
 import { type GlobalDependencies } from "@/lib/GlobalDependencies"
 import { GlobalDependenciesProvider } from "@/lib/GlobalDependenciesProvider"
 import { StatsStorage } from "@/lib/StatsStorage"
+import { useInstallTestHooks } from "@/lib/TestHooks"
 import { routeTree } from "@/routeTree.gen"
 
 const defaultRouter = createRouter({
@@ -30,13 +31,16 @@ export interface AppProps {
   dependencies?: GlobalDependencies
 }
 
-export const App = ({ router = defaultRouter, dependencies = defaultDependencies }: AppProps) => (
-  <StrictMode>
-    {import.meta.env.PROD && (
-      <UmamiAnalytics url="https://cloud.umami.is" websiteId="e9196c98-109f-4188-b531-40b430369c15" />
-    )}
-    <GlobalDependenciesProvider dependencies={dependencies}>
-      <RouterProvider router={router} />
-    </GlobalDependenciesProvider>
-  </StrictMode>
-)
+export const App = ({ router = defaultRouter, dependencies = defaultDependencies }: AppProps) => {
+  useInstallTestHooks(dependencies.clock)
+  return (
+    <StrictMode>
+      {import.meta.env.PROD && (
+        <UmamiAnalytics url="https://cloud.umami.is" websiteId="e9196c98-109f-4188-b531-40b430369c15" />
+      )}
+      <GlobalDependenciesProvider dependencies={dependencies}>
+        <RouterProvider router={router} />
+      </GlobalDependenciesProvider>
+    </StrictMode>
+  )
+}
