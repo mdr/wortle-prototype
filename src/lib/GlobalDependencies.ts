@@ -1,7 +1,7 @@
 import { createOptionalContext, useService } from "@/utils/providerish/serviceHooks"
 
-import { type Clock } from "./Clock"
-import { type StatsStorage } from "./StatsStorage"
+import { type Clock, defaultClock } from "./Clock"
+import { StatsStorage } from "./StatsStorage"
 
 export interface GlobalDependencies {
   clock: Clock
@@ -15,3 +15,8 @@ export const useGlobalDependencies = (): GlobalDependencies => useService(Global
 export const useClock = (): Clock => useGlobalDependencies().clock
 
 export const useStatsStorage = (): StatsStorage => useGlobalDependencies().statsStorage
+
+export const defaultGlobalDependencies: GlobalDependencies = {
+  clock: defaultClock,
+  statsStorage: new StatsStorage(window.localStorage),
+}

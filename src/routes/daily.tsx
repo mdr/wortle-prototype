@@ -3,7 +3,6 @@ import { createFileRoute, notFound } from "@tanstack/react-router"
 import { ErrorFallback } from "@/components/ErrorFallback"
 import { NotFoundPage } from "@/components/NotFoundPage"
 import { PuzzlePage } from "@/components/puzzle/PuzzlePage"
-import { defaultClock } from "@/lib/Clock"
 import { useStatsStorage } from "@/lib/GlobalDependencies"
 import { findSpecies } from "@/lib/plants"
 import { Puzzle } from "@/lib/Puzzle"
@@ -21,8 +20,8 @@ interface DailyPuzzleData {
 }
 
 export const Route = createFileRoute("/daily")({
-  loader: (): DailyPuzzleData => {
-    const scheduledDate = defaultClock.todayIso()
+  loader: ({ context }): DailyPuzzleData => {
+    const scheduledDate = context.clock.todayIso()
     const puzzleId = findPuzzleForDate(scheduledDate)
 
     if (!puzzleId) {
