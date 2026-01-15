@@ -26,6 +26,9 @@
             trivy
             gitleaks
             gh
+            rclone
+            jq
+            _1password-cli
             pulumi
             pulumiPackages.pulumi-nodejs
           ];
