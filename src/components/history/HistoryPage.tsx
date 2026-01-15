@@ -90,7 +90,7 @@ export const HistoryPage = ({ storage }: HistoryPageProps) => {
                 </Link>
               </div>
             ) : (
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {sortedHistory.map((record) => (
                   <HistoryItem key={record.date} record={record} />
                 ))}
