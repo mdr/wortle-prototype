@@ -1,8 +1,9 @@
-import { useEffect } from "react"
+import { ReactNode, useEffect } from "react"
 
 import { type Iso8601Date } from "@/utils/brandedTypes"
 
 import { type Clock } from "./Clock"
+import { useGlobalDependencies } from "./GlobalDependencies"
 
 export class TestHooks {
   constructor(private readonly clock: Clock) {}
@@ -15,11 +16,17 @@ export class TestHooks {
   }
 }
 
-export const useInstallTestHooks = (clock: Clock) => {
+const useInstallTestHooks = () => {
+  const { clock } = useGlobalDependencies()
   useEffect(() => {
     window.testHooks = new TestHooks(clock)
     return () => {
       delete window.testHooks
     }
   }, [clock])
+}
+
+export const TestHooksProvider = ({ children }: { children: ReactNode }) => {
+  useInstallTestHooks()
+  return children
 }
