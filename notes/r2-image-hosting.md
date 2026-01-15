@@ -52,14 +52,14 @@ Credentials are injected from 1Password via `.env.wrangler`.
 # Upload originals
 for file in public/images/*/*; do
   key="${file#public/images/}"
-  nix develop -c op run --account=my.1password.com --env-file=.env.wrangler -- wrangler r2 object put "wortle-originals/$key" --file="$file" --remote
+  nix develop -c op run --account=my.1password.com --env-file=.env.wrangler -- pnpm dlx wrangler r2 object put "wortle-originals/$key" --file="$file" --remote
 done
 
 # Upload optimized
 for f in dist/optimized-images/*/*; do
   rel="${f#dist/optimized-images/}"
   key="puzzles/$rel"
-  nix develop -c op run --account=my.1password.com --env-file=.env.wrangler -- wrangler r2 object put "wortle-images/$key" --file="$f" --remote
+  nix develop -c op run --account=my.1password.com --env-file=.env.wrangler -- pnpm dlx wrangler r2 object put "wortle-images/$key" --file="$f" --remote
 done
 ```
 
