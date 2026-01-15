@@ -28,6 +28,7 @@
             gh
             rclone
             jq
+            wrangler
             _1password-cli
             pulumi
             pulumiPackages.pulumi-nodejs

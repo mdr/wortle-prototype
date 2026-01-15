@@ -13,6 +13,7 @@ yarn-error.log*
 # env files
 .env*
 !.env.rclone
+!.env.wrangler
 
 # typescript
 *.tsbuildinfo

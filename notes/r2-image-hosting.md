@@ -46,24 +46,26 @@ Reads from `public/images/`, outputs to `dist/optimized-images/`.
 
 ### Upload to R2
 
-Requires `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` env vars.
+Credentials are injected from 1Password via `.env.wrangler`.
 
 ```bash
 # Upload originals
 for file in public/images/*/*; do
   key="${file#public/images/}"
-  nix develop -c pnpm dlx wrangler r2 object put "wortle-originals/$key" --file="$file" --remote
+  nix develop -c op run --account=my.1password.com --env-file=.env.wrangler -- wrangler r2 object put "wortle-originals/$key" --file="$file" --remote
 done
 
 # Upload optimized
 for f in dist/optimized-images/*/*; do
   rel="${f#dist/optimized-images/}"
   key="puzzles/$rel"
-  nix develop -c pnpm dlx wrangler r2 object put "wortle-images/$key" --file="$f" --remote
+  nix develop -c op run --account=my.1password.com --env-file=.env.wrangler -- wrangler r2 object put "wortle-images/$key" --file="$f" --remote
 done
 ```
 
 ## API Token
+
+Stored in 1Password: `Wortle` vault → `Cloudflare API token - Wortle images`
 
 Wrangler requires a **Cloudflare API Token** (not an R2 API Token) with:
 
