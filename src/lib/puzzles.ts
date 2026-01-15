@@ -1,6 +1,7 @@
 import { assert } from "tsafe"
 
 import { Degrees, Iso8601Date } from "@/utils/brandedTypes"
+import { Option } from "@/utils/types/Option"
 
 import { ImageKey, type Puzzle, PuzzleId } from "./Puzzle"
 import { SpeciesId } from "./Species"
@@ -103,7 +104,7 @@ const allPuzzles: Puzzle[] = [
   },
 ]
 
-export const findPuzzle = (id: PuzzleId): Puzzle | undefined => allPuzzles.find((p) => p.id === id)
+export const findPuzzle = (id: PuzzleId): Option<Puzzle> => allPuzzles.find((p) => p.id === id)
 
 export const getPuzzle = (id: PuzzleId): Puzzle => {
   const puzzle = findPuzzle(id)

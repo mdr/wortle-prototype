@@ -1,4 +1,5 @@
 import { Iso8601Date } from "@/utils/brandedTypes"
+import { Option } from "@/utils/types/Option"
 
 import { DailyPuzzleRecord, DailyResult } from "./StatsStorage"
 
@@ -49,7 +50,7 @@ export const calculateDailyStatsSummary = (history: DailyPuzzleRecord[]): DailyS
 
   let maxStreak = 0
   let runningStreak = 0
-  let previousDate: Iso8601Date | undefined
+  let previousDate: Option<Iso8601Date>
 
   sortedDates.forEach((date) => {
     const record = recordsByDate.get(date)
@@ -69,7 +70,7 @@ export const calculateDailyStatsSummary = (history: DailyPuzzleRecord[]): DailyS
   let currentStreak = 0
   const latestDate = sortedDates[sortedDates.length - 1]
   if (latestDate) {
-    let cursor: Iso8601Date | undefined = latestDate
+    let cursor: Option<Iso8601Date> = latestDate
     while (cursor) {
       const record = recordsByDate.get(cursor)
       if (!record || record.result !== DailyResult.PASS) {

@@ -1,4 +1,5 @@
 import { Iso8601Date } from "@/utils/brandedTypes"
+import { Option } from "@/utils/types/Option"
 
 import { PuzzleId } from "./Puzzle"
 
@@ -8,11 +9,11 @@ export interface ScheduleEntry {
 }
 
 export interface Schedule {
-  findPuzzleForDate: (date: Iso8601Date) => PuzzleId | undefined
-  findFirstDateForPuzzle: (puzzleId: PuzzleId) => Iso8601Date | undefined
+  findPuzzleForDate: (date: Iso8601Date) => Option<PuzzleId>
+  findFirstDateForPuzzle: (puzzleId: PuzzleId) => Option<Iso8601Date>
   getDatesForPuzzle: (puzzleId: PuzzleId) => Iso8601Date[]
   getAllScheduledDates: () => Iso8601Date[]
-  findFirstScheduledDate: () => Iso8601Date | undefined
+  findFirstScheduledDate: () => Option<Iso8601Date>
 }
 
 export class DefaultSchedule implements Schedule {
@@ -22,10 +23,10 @@ export class DefaultSchedule implements Schedule {
     this.entries = entries
   }
 
-  findPuzzleForDate = (date: Iso8601Date): PuzzleId | undefined =>
+  findPuzzleForDate = (date: Iso8601Date): Option<PuzzleId> =>
     this.entries.find((entry) => entry.date === date)?.puzzleId
 
-  findFirstDateForPuzzle = (puzzleId: PuzzleId): Iso8601Date | undefined =>
+  findFirstDateForPuzzle = (puzzleId: PuzzleId): Option<Iso8601Date> =>
     this.entries.find((entry) => entry.puzzleId === puzzleId)?.date
 
   getDatesForPuzzle = (puzzleId: PuzzleId): Iso8601Date[] =>
@@ -33,8 +34,8 @@ export class DefaultSchedule implements Schedule {
 
   getAllScheduledDates = (): Iso8601Date[] => this.entries.map((entry) => entry.date)
 
-  findFirstScheduledDate = (): Iso8601Date | undefined =>
-    this.entries.reduce<Iso8601Date | undefined>(
+  findFirstScheduledDate = (): Option<Iso8601Date> =>
+    this.entries.reduce<Option<Iso8601Date>>(
       (earliest, entry) => (!earliest || entry.date < earliest ? entry.date : earliest),
       undefined,
     )

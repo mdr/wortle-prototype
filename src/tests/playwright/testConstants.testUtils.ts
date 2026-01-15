@@ -4,12 +4,13 @@ import { getPuzzle } from "@/lib/puzzles"
 import { defaultSchedule } from "@/lib/schedule"
 import { SpeciesId } from "@/lib/Species"
 import { Iso8601Date } from "@/utils/brandedTypes"
+import { Option } from "@/utils/types/Option"
 
 export interface TestPuzzle {
   id: PuzzleId
   speciesId: SpeciesId
   correctAnswer: string
-  scheduledDate: Iso8601Date | undefined
+  scheduledDate: Option<Iso8601Date>
 }
 
 const createTestPuzzle = (puzzleId: PuzzleId): TestPuzzle => {
