@@ -43,6 +43,7 @@ export interface PuzzleServiceState {
   puzzle: Puzzle
   correctSpecies: Species
   scheduledDate?: Iso8601Date
+  mode: PuzzleMode
   attempts: AttemptFeedback[]
   gaveUp: boolean
   didNotAttempt: boolean
@@ -97,6 +98,7 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
       options.mode === PuzzleMode.DAILY ? calculateDailyStatsSummary(options.statsStorage.load().history) : undefined
     super({
       ...state,
+      mode: options.mode,
       attempts,
       gaveUp: gaveUp || didNotAttempt,
       didNotAttempt,

@@ -20,7 +20,7 @@ export interface PuzzlePageProps {
 }
 
 export const PuzzlePage = ({ showStatsPlaceholder }: PuzzlePageProps) => {
-  const { puzzle, scheduledDate, attempts, statsSummary } = usePuzzleState()
+  const { puzzle, scheduledDate, mode, attempts, statsSummary } = usePuzzleState()
 
   const isCorrect = usePuzzleState(selectIsCorrect)
   const isResolved = usePuzzleState(selectIsResolved)
@@ -41,6 +41,7 @@ export const PuzzlePage = ({ showStatsPlaceholder }: PuzzlePageProps) => {
     if (isResolved && !wasResolvedRef.current) {
       track("puzzleCompleted", {
         puzzleId: puzzle.id,
+        mode,
         attempts: attempts.length,
         correct: isCorrect,
         guess1: attempts[0]?.speciesId,
@@ -49,7 +50,7 @@ export const PuzzlePage = ({ showStatsPlaceholder }: PuzzlePageProps) => {
       })
     }
     wasResolvedRef.current = isResolved
-  }, [isResolved, track, puzzle.id, attempts, isCorrect])
+  }, [isResolved, track, puzzle.id, mode, attempts, isCorrect])
 
   return (
     <main className="bg-background min-h-screen" data-testid={PuzzleTestIds.page}>
