@@ -7,7 +7,6 @@ import { useStatsStorage } from "@/lib/GlobalDependencies"
 import { findSpecies } from "@/lib/plants"
 import { Puzzle } from "@/lib/Puzzle"
 import { findPuzzle } from "@/lib/puzzles"
-import { findPuzzleForDate } from "@/lib/schedule"
 import { Species } from "@/lib/Species"
 import { PuzzleMode } from "@/services/puzzle/PuzzleService"
 import { PuzzleServiceProvider } from "@/services/puzzle/PuzzleServiceProvider"
@@ -22,7 +21,7 @@ interface DailyPuzzleData {
 export const Route = createFileRoute("/daily")({
   loader: ({ context }): DailyPuzzleData => {
     const scheduledDate = context.clock.todayIso()
-    const puzzleId = findPuzzleForDate(scheduledDate)
+    const puzzleId = context.schedule.findPuzzleForDate(scheduledDate)
 
     if (!puzzleId) {
       return { scheduledDate }

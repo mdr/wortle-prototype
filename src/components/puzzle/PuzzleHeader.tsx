@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router"
 
 import { HeaderNav } from "@/components/shared/HeaderNav"
+import { useSchedule } from "@/lib/GlobalDependencies"
 import { Puzzle } from "@/lib/Puzzle"
-import { findFirstDateForPuzzle } from "@/lib/schedule"
 import { Iso8601Date } from "@/utils/brandedTypes"
 import { formatDate } from "@/utils/dateUtils"
 import { assetUrl } from "@/utils/utils"
@@ -15,7 +15,8 @@ interface PuzzleHeaderProps {
 }
 
 export const PuzzleHeader = ({ puzzle, scheduledDate }: PuzzleHeaderProps) => {
-  const displayDate = scheduledDate ?? findFirstDateForPuzzle(puzzle.id)
+  const schedule = useSchedule()
+  const displayDate = scheduledDate ?? schedule.findFirstDateForPuzzle(puzzle.id)
 
   return (
     <header className="border-border bg-card min-w-[334px] border-b">

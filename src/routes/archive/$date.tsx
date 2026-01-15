@@ -8,7 +8,6 @@ import { useStatsStorage } from "@/lib/GlobalDependencies"
 import { findSpecies } from "@/lib/plants"
 import { Puzzle } from "@/lib/Puzzle"
 import { findPuzzle } from "@/lib/puzzles"
-import { findPuzzleForDate } from "@/lib/schedule"
 import { Species } from "@/lib/Species"
 import { DailyPuzzleRecord, StatsStorage } from "@/lib/StatsStorage"
 import { PuzzleMode } from "@/services/puzzle/PuzzleService"
@@ -22,9 +21,9 @@ interface ArchivePuzzleData {
 }
 
 export const Route = createFileRoute("/archive/$date")({
-  loader: ({ params }): ArchivePuzzleData => {
+  loader: ({ params, context }): ArchivePuzzleData => {
     const scheduledDate = Iso8601Date(params.date)
-    const puzzleId = findPuzzleForDate(scheduledDate)
+    const puzzleId = context.schedule.findPuzzleForDate(scheduledDate)
 
     if (!puzzleId) {
       return { scheduledDate }

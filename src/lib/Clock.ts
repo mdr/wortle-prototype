@@ -1,4 +1,3 @@
-import { findFirstScheduledDate } from "@/lib/schedule"
 import { Iso8601Date } from "@/utils/brandedTypes"
 import { toDateFromIso8601Date, toIso8601Date } from "@/utils/dateUtils"
 
@@ -27,9 +26,4 @@ export class FixedClock implements Clock {
   }
 }
 
-const getDefaultClockDate = (): Date => {
-  const firstScheduledDate = findFirstScheduledDate()
-  return firstScheduledDate ? toDateFromIso8601Date(firstScheduledDate) : new Date()
-}
-
-export const defaultClock: Clock = new FixedClock(getDefaultClockDate())
+export const defaultClock: Clock = new FixedClock(toDateFromIso8601Date(Iso8601Date("2026-06-08")))

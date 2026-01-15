@@ -1,7 +1,7 @@
 import { getSpecies } from "@/lib/plants"
 import { PuzzleId } from "@/lib/Puzzle"
 import { getPuzzle } from "@/lib/puzzles"
-import { findFirstDateForPuzzle } from "@/lib/schedule"
+import { defaultSchedule } from "@/lib/schedule"
 import { SpeciesId } from "@/lib/Species"
 import { Iso8601Date } from "@/utils/brandedTypes"
 
@@ -15,7 +15,7 @@ export interface TestPuzzle {
 const createTestPuzzle = (puzzleId: PuzzleId): TestPuzzle => {
   const puzzle = getPuzzle(puzzleId)
   const species = getSpecies(puzzle.speciesId)
-  const scheduledDate = findFirstDateForPuzzle(puzzleId)
+  const scheduledDate = defaultSchedule.findFirstDateForPuzzle(puzzleId)
   return {
     id: puzzleId,
     speciesId: puzzle.speciesId,

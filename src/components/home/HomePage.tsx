@@ -4,9 +4,8 @@ import { useState } from "react"
 import { Button } from "@/components/shadcn/Button"
 import { Card } from "@/components/shadcn/Card"
 import { HeaderNav } from "@/components/shared/HeaderNav"
-import { useClock } from "@/lib/GlobalDependencies"
+import { useClock, useSchedule } from "@/lib/GlobalDependencies"
 import { getAllPuzzleIds } from "@/lib/puzzles"
-import { getAllScheduledDates } from "@/lib/schedule"
 import { Iso8601Date } from "@/utils/brandedTypes"
 import { formatDate } from "@/utils/dateUtils"
 import { assetUrl } from "@/utils/utils"
@@ -16,7 +15,8 @@ import { HomeTestIds } from "./HomeTestIds"
 export const HomePage = () => {
   const puzzleIds = getAllPuzzleIds()
   const clock = useClock()
-  const scheduledDates = getAllScheduledDates()
+  const schedule = useSchedule()
+  const scheduledDates = schedule.getAllScheduledDates()
   const [currentDate, setCurrentDate] = useState(clock.todayIso())
 
   const handleDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
