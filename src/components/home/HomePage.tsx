@@ -3,6 +3,7 @@ import { useState } from "react"
 
 import { Button } from "@/components/shadcn/Button"
 import { Card } from "@/components/shadcn/Card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/shadcn/Select"
 import { HeaderNav } from "@/components/shared/HeaderNav"
 import { useClock, useSchedule } from "@/lib/GlobalDependencies"
 import { getAllPuzzleIds } from "@/lib/puzzles"
@@ -19,8 +20,8 @@ export const HomePage = () => {
   const scheduledDates = schedule.getAllScheduledDates()
   const [currentDate, setCurrentDate] = useState(clock.todayIso())
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newDate = Iso8601Date(e.target.value)
+  const handleDateChange = (value: string) => {
+    const newDate = Iso8601Date(value)
     clock.setDate?.(newDate)
     setCurrentDate(newDate)
   }
@@ -50,26 +51,24 @@ export const HomePage = () => {
             <p className="text-muted-foreground">
               Jump into today's puzzle. Your result counts toward your daily stats.
             </p>
-            <div className="flex items-center gap-4 pt-4">
+            <div className="flex flex-wrap items-center gap-4 pt-4">
               <Link to="/daily" data-testid={HomeTestIds.dailyPuzzleLink}>
                 <Button size="lg">Play today's puzzle</Button>
               </Link>
               <div className="flex items-center gap-2">
-                <label htmlFor="date-select" className="text-muted-foreground text-sm">
-                  Date:
-                </label>
-                <select
-                  id="date-select"
-                  value={currentDate}
-                  onChange={handleDateChange}
-                  className="border-input bg-background text-foreground rounded-md border px-3 py-2 text-sm"
-                >
-                  {scheduledDates.map((date) => (
-                    <option key={date} value={date}>
-                      {formatDate(date)}
-                    </option>
-                  ))}
-                </select>
+                <span className="text-muted-foreground text-sm">Date:</span>
+                <Select value={currentDate} onValueChange={handleDateChange}>
+                  <SelectTrigger className="w-auto" aria-label="Select date">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {scheduledDates.map((date) => (
+                      <SelectItem key={date} value={date}>
+                        {formatDate(date)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </Card>
