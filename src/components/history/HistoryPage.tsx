@@ -6,17 +6,14 @@ import { Button } from "@/components/shadcn/Button"
 import { Card } from "@/components/shadcn/Card"
 import { StatsSummaryGrid } from "@/components/stats/StatsSummaryGrid"
 import { calculateDailyStatsSummary } from "@/lib/dailyStatsSummary"
-import { type StatsStorage } from "@/lib/StatsStorage"
+import { useStatsStorage } from "@/lib/GlobalDependencies"
 import { assetUrl } from "@/utils/utils"
 
 import { HistoryItem } from "./HistoryItem"
 import { HistoryTestIds } from "./HistoryTestIds"
 
-interface HistoryPageProps {
-  storage: StatsStorage
-}
-
-export const HistoryPage = ({ storage }: HistoryPageProps) => {
+export const HistoryPage = () => {
+  const storage = useStatsStorage()
   const stats = useMemo(() => storage.load(), [storage])
   const summary = useMemo(() => calculateDailyStatsSummary(stats.history), [stats.history])
   const sortedHistory = useMemo(() => [...stats.history].sort((a, b) => b.date.localeCompare(a.date)), [stats.history])
