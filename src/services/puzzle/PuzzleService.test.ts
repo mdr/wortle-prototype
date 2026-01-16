@@ -33,15 +33,11 @@ describe("PuzzleService", () => {
     it("hydrates completed daily puzzles from stats", () => {
       const storage = createMemoryStorage()
       const statsStorage = new StatsStorage(storage)
-      statsStorage.save({
-        history: [
-          {
-            date: scheduledDate,
-            puzzleId,
-            result: DailyResult.PASS,
-            guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId, TestPuzzles.daisy.speciesId],
-          },
-        ],
+      statsStorage.recordDailyCompletion({
+        date: scheduledDate,
+        puzzleId,
+        result: DailyResult.PASS,
+        guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId, TestPuzzles.daisy.speciesId],
       })
 
       const service = makePuzzleService({ mode: PuzzleMode.DAILY, statsStorage })
@@ -56,15 +52,11 @@ describe("PuzzleService", () => {
     it("marks gave up when daily stats show a failure before max attempts", () => {
       const storage = createMemoryStorage()
       const statsStorage = new StatsStorage(storage)
-      statsStorage.save({
-        history: [
-          {
-            date: scheduledDate,
-            puzzleId,
-            result: DailyResult.FAIL,
-            guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId],
-          },
-        ],
+      statsStorage.recordDailyCompletion({
+        date: scheduledDate,
+        puzzleId,
+        result: DailyResult.FAIL,
+        guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId],
       })
 
       const service = makePuzzleService({ mode: PuzzleMode.DAILY, statsStorage })
@@ -76,18 +68,14 @@ describe("PuzzleService", () => {
     it("does not mark gave up when daily failure uses all attempts", () => {
       const storage = createMemoryStorage()
       const statsStorage = new StatsStorage(storage)
-      statsStorage.save({
-        history: [
-          {
-            date: scheduledDate,
-            puzzleId,
-            result: DailyResult.FAIL,
-            guessedSpeciesIds: [
-              TestPuzzles.herbRobert.speciesId,
-              TestPuzzles.tansy.speciesId,
-              TestSpeciesIds.fieldScabious,
-            ],
-          },
+      statsStorage.recordDailyCompletion({
+        date: scheduledDate,
+        puzzleId,
+        result: DailyResult.FAIL,
+        guessedSpeciesIds: [
+          TestPuzzles.herbRobert.speciesId,
+          TestPuzzles.tansy.speciesId,
+          TestSpeciesIds.fieldScabious,
         ],
       })
 
@@ -100,15 +88,11 @@ describe("PuzzleService", () => {
     it("ignores stats hydration for review mode", () => {
       const storage = createMemoryStorage()
       const statsStorage = new StatsStorage(storage)
-      statsStorage.save({
-        history: [
-          {
-            date: scheduledDate,
-            puzzleId,
-            result: DailyResult.PASS,
-            guessedSpeciesIds: [TestPuzzles.daisy.speciesId],
-          },
-        ],
+      statsStorage.recordDailyCompletion({
+        date: scheduledDate,
+        puzzleId,
+        result: DailyResult.PASS,
+        guessedSpeciesIds: [TestPuzzles.daisy.speciesId],
       })
 
       const service = makePuzzleService({ mode: PuzzleMode.REVIEW, statsStorage })

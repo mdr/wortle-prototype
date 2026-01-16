@@ -55,6 +55,9 @@ assert<Equals<StatsSnapshot, z.infer<typeof statsSnapshotSchema>>>()
 
 const STORAGE_KEY = "wortle:temp:2:stats"
 
+const upsertRecord = (history: DailyPuzzleRecord[], record: DailyPuzzleRecord): DailyPuzzleRecord[] =>
+  [...history.filter((r) => r.date !== record.date), record].sort((a, b) => a.date.localeCompare(b.date))
+
 const defaultStats: StatsSnapshot = {
   history: [],
 }
@@ -88,11 +91,11 @@ export class StatsStorage {
     }
   }
 
-  save = (stats: StatsSnapshot): void => {
+  private readonly save = (stats: StatsSnapshot): void => {
     this.storage.setItem(STORAGE_KEY, JSON.stringify(stats))
   }
 
-  update = (updater: (current: StatsSnapshot) => StatsSnapshot): StatsSnapshot => {
+  private readonly update = (updater: (current: StatsSnapshot) => StatsSnapshot): StatsSnapshot => {
     const next = updater(this.load())
     this.save(next)
     return next
@@ -105,6 +108,12 @@ export class StatsStorage {
   clearDailyInProgress = (): void => {
     this.update((current) => ({ ...current, dailyInProgress: undefined }))
   }
+
+  recordDailyCompletion = (record: DailyPuzzleRecord): StatsSnapshot =>
+    this.update((current) => ({
+      history: upsertRecord(current.history, record),
+      dailyInProgress: undefined,
+    }))
 
   clear = (): void => {
     this.storage.removeItem(STORAGE_KEY)

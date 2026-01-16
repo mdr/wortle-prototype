@@ -1,4 +1,3 @@
-import { produce } from "immer"
 import { assert } from "tsafe"
 
 import { AttemptFeedback, createAttemptFeedback } from "@/lib/AttemptFeedback"
@@ -205,19 +204,12 @@ export class PuzzleService extends AbstractService<PuzzleServiceState> implement
       assert(statsStorage, "PuzzleService requires stats storage in daily mode.")
       const scheduledDate = this.state.scheduledDate
       assert(scheduledDate, "PuzzleService requires a scheduled date in daily mode.")
-      const puzzleId = this.state.puzzle.id
-      const nextStats = statsStorage.update((current) =>
-        produce(current, (draft) => {
-          draft.history = draft.history.filter((record) => record.date !== scheduledDate)
-          draft.history.push({
-            date: scheduledDate,
-            puzzleId,
-            result,
-            guessedSpeciesIds,
-          })
-          draft.dailyInProgress = undefined
-        }),
-      )
+      const nextStats = statsStorage.recordDailyCompletion({
+        date: scheduledDate,
+        puzzleId: this.state.puzzle.id,
+        result,
+        guessedSpeciesIds,
+      })
       this.setState({ statsSummary: calculateDailyStatsSummary(nextStats.history) })
     }
   }
