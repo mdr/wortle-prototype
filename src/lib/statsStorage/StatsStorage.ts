@@ -1,10 +1,10 @@
 import { assert, Equals } from "tsafe"
 import { z } from "zod"
 
-import { logger } from "@/lib/Logger"
 import { PuzzleId } from "@/lib/Puzzle"
-import { SpeciesId } from "@/lib/Species"
+import { SpeciesId } from "@/lib/species/Species"
 import { Iso8601Date } from "@/utils/brandedTypes"
+import { logger } from "@/utils/Logger"
 
 export enum DailyResult {
   PASS = "PASS",

@@ -1,6 +1,6 @@
 import { Award, Flame, TrendingUp } from "lucide-react"
 
-import { type DailyStatsSummary } from "@/lib/dailyStatsSummary"
+import { type DailyStatsSummary } from "@/lib/statsStorage/dailyStatsSummary"
 
 interface StatsSummaryGridProps {
   summary: DailyStatsSummary

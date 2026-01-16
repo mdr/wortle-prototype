@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router"
 
+import { useSchedule } from "@/components/app/GlobalDependenciesProvider"
 import { HeaderNav } from "@/components/shared/HeaderNav"
-import { useSchedule } from "@/lib/GlobalDependencies"
 import { Puzzle } from "@/lib/Puzzle"
 import { Iso8601Date } from "@/utils/brandedTypes"
 import { formatDate } from "@/utils/dateUtils"

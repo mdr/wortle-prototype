@@ -1,4 +1,4 @@
-import { App } from "@/components/App"
+import { App } from "@/components/app/App"
 
 interface TestAppProps {
   initialPath?: string

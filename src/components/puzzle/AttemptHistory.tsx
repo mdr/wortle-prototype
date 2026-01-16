@@ -1,6 +1,6 @@
 import { Card } from "@/components/shadcn/Card"
 import { AttemptFeedback } from "@/lib/AttemptFeedback"
-import { getSpecies } from "@/lib/plants"
+import { getSpecies } from "@/lib/species/plants"
 
 import { AttemptHistoryTestIds } from "./PuzzleTestIds"
 

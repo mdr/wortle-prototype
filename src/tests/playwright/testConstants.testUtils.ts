@@ -1,8 +1,8 @@
-import { getSpecies } from "@/lib/plants"
 import { PuzzleId } from "@/lib/Puzzle"
 import { getPuzzle } from "@/lib/puzzles"
 import { defaultSchedule } from "@/lib/schedule"
-import { SpeciesId } from "@/lib/Species"
+import { getSpecies } from "@/lib/species/plants"
+import { SpeciesId } from "@/lib/species/Species"
 import { Iso8601Date } from "@/utils/brandedTypes"
 import { Option } from "@/utils/types/Option"
 

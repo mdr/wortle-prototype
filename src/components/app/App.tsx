@@ -2,10 +2,10 @@ import UmamiAnalytics from "@danielgtmn/umami-react"
 import { RouterProvider } from "@tanstack/react-router"
 import { StrictMode, useMemo } from "react"
 
-import { defaultGlobalDependencies } from "@/lib/GlobalDependencies"
-import { GlobalDependenciesProvider } from "@/lib/GlobalDependenciesProvider"
 import { createAppRouter } from "@/lib/router"
-import { TestHooksProvider } from "@/lib/TestHooks"
+
+import { defaultGlobalDependencies, GlobalDependenciesProvider } from "./GlobalDependenciesProvider"
+import { TestHooksProvider } from "./TestHooksProvider"
 
 export interface AppProps {
   initialPath?: string

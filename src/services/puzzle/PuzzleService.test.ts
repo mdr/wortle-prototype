@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest"
 
-import { getSpecies } from "@/lib/plants"
 import { Puzzle } from "@/lib/Puzzle"
 import { getPuzzle } from "@/lib/puzzles"
-import { Species } from "@/lib/Species"
-import { DailyResult, StatsStorage } from "@/lib/StatsStorage"
-import { createMemoryStorage } from "@/lib/storage.testUtils"
+import { getSpecies } from "@/lib/species/plants"
+import { Species } from "@/lib/species/Species"
+import { DailyResult, StatsStorage } from "@/lib/statsStorage/StatsStorage"
+import { createMemoryStorage } from "@/lib/statsStorage/storage.testUtils"
 import { TestPuzzles, TestSpeciesIds } from "@/tests/playwright/testConstants.testUtils"
 import { Iso8601Date } from "@/utils/brandedTypes"
 

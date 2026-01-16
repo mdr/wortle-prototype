@@ -1,8 +1,8 @@
 import { ReactNode, useMemo } from "react"
 
 import { Puzzle } from "@/lib/Puzzle"
-import { Species } from "@/lib/Species"
-import { DailyPuzzleRecord, StatsStorage } from "@/lib/StatsStorage"
+import { Species } from "@/lib/species/Species"
+import { DailyPuzzleRecord, StatsStorage } from "@/lib/statsStorage/StatsStorage"
 import { Iso8601Date } from "@/utils/brandedTypes"
 
 import { PuzzleMode, PuzzleService } from "./PuzzleService"

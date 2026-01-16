@@ -4,7 +4,7 @@ import { useEffect } from "react"
 
 import { Button } from "@/components/shadcn/Button"
 import { Card } from "@/components/shadcn/Card"
-import { logger } from "@/lib/Logger"
+import { logger } from "@/utils/Logger"
 import { assetUrl } from "@/utils/utils"
 
 import { ErrorTestIds } from "./ErrorTestIds"

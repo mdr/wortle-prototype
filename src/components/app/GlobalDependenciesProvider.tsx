@@ -1,8 +1,9 @@
-import { createOptionalContext, useService } from "@/utils/providerish/serviceHooks"
+import { type ReactNode } from "react"
 
-import { type Clock, defaultClock } from "./Clock"
-import { defaultSchedule, type Schedule } from "./schedule"
-import { StatsStorage } from "./StatsStorage"
+import { defaultSchedule, type Schedule } from "@/lib/schedule"
+import { StatsStorage } from "@/lib/statsStorage/StatsStorage"
+import { type Clock, defaultClock } from "@/utils/Clock"
+import { createOptionalContext, useService } from "@/utils/providerish/serviceHooks"
 
 export interface GlobalDependencies {
   clock: Clock
@@ -25,3 +26,12 @@ export const defaultGlobalDependencies: GlobalDependencies = {
   schedule: defaultSchedule,
   statsStorage: new StatsStorage(window.localStorage),
 }
+
+interface GlobalDependenciesProviderProps {
+  dependencies: GlobalDependencies
+  children: ReactNode
+}
+
+export const GlobalDependenciesProvider = ({ dependencies, children }: GlobalDependenciesProviderProps) => (
+  <GlobalDependenciesContext.Provider value={dependencies}>{children}</GlobalDependenciesContext.Provider>
+)

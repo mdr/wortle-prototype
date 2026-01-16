@@ -12,7 +12,12 @@ const getOrdinal = (n: number): string => {
   return `${n}th`
 }
 
-export const getResultDescription = (attemptCount: number, isCorrect: boolean): string => {
+interface ResultDescriptionArgs {
+  attemptCount: number
+  isCorrect: boolean
+}
+
+export const getResultDescription = ({ attemptCount, isCorrect }: ResultDescriptionArgs): string => {
   if (!isCorrect) return "Incorrect"
   return `Correct on ${getOrdinal(attemptCount)} try`
 }

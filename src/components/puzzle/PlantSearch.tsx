@@ -9,8 +9,8 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/shadcn/Command"
-import { getAllSpecies } from "@/lib/plants"
-import { Species } from "@/lib/Species"
+import { getAllSpecies } from "@/lib/species/plants"
+import { Species } from "@/lib/species/Species"
 import { usePuzzleServiceActions, usePuzzleState } from "@/services/puzzle/puzzleServiceHooks"
 
 import { PuzzleTestIds } from "./PuzzleTestIds"

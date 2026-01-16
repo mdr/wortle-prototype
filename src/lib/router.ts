@@ -1,9 +1,9 @@
 import { createMemoryHistory, createRouter } from "@tanstack/react-router"
 
-import { type Clock } from "@/lib/Clock"
-import { type GlobalDependencies } from "@/lib/GlobalDependencies"
+import { type GlobalDependencies } from "@/components/app/GlobalDependenciesProvider"
 import { type Schedule } from "@/lib/schedule"
 import { routeTree } from "@/routeTree.gen"
+import { type Clock } from "@/utils/Clock"
 
 export interface RouterContext {
   clock: Clock

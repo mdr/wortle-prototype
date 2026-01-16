@@ -1,9 +1,9 @@
 import { ReactNode, useEffect } from "react"
 
 import { type Iso8601Date } from "@/utils/brandedTypes"
+import { type Clock } from "@/utils/Clock"
 
-import { type Clock } from "./Clock"
-import { useGlobalDependencies } from "./GlobalDependencies"
+import { useGlobalDependencies } from "./GlobalDependenciesProvider"
 
 export class TestHooks {
   constructor(private readonly clock: Clock) {}

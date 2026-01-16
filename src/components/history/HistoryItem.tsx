@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router"
 
-import { getSpecies } from "@/lib/plants"
 import { findPuzzle } from "@/lib/puzzles"
 import { getResultDescription, getResultMedal } from "@/lib/resultMedal"
-import { type DailyPuzzleRecord, DailyResult } from "@/lib/StatsStorage"
+import { getSpecies } from "@/lib/species/plants"
+import { type DailyPuzzleRecord, DailyResult } from "@/lib/statsStorage/StatsStorage"
 import { formatDate } from "@/utils/dateUtils"
 
 import { HistoryTestIds } from "./HistoryTestIds"
@@ -26,7 +26,7 @@ export const HistoryItem = ({ record }: HistoryItemProps) => {
           <span className="text-2xl" aria-hidden="true">
             {getResultMedal(guessCount, isPassed)}
           </span>
-          <span className="sr-only">{getResultDescription(guessCount, isPassed)}:</span>
+          <span className="sr-only">{getResultDescription({ attemptCount: guessCount, isCorrect: isPassed })}:</span>
           <div>
             <p className="text-foreground font-medium">{speciesName}</p>
             <p className="text-foreground/70 text-xs">{formatDate(record.date)}</p>

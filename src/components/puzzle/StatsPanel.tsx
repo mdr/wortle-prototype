@@ -1,13 +1,13 @@
 import { Link } from "@tanstack/react-router"
 import { Clock as ClockIcon, History } from "lucide-react"
 
+import { useClock } from "@/components/app/GlobalDependenciesProvider"
 import { ShareResultButton } from "@/components/puzzle/ShareResultButton"
 import { Button } from "@/components/shadcn/Button"
 import { Card } from "@/components/shadcn/Card"
-import { StatsSummaryGrid } from "@/components/stats/StatsSummaryGrid"
-import { type Clock } from "@/lib/Clock"
-import { type DailyStatsSummary } from "@/lib/dailyStatsSummary"
-import { useClock } from "@/lib/GlobalDependencies"
+import { StatsSummaryGrid } from "@/components/shared/StatsSummaryGrid"
+import { type DailyStatsSummary } from "@/lib/statsStorage/dailyStatsSummary"
+import { type Clock } from "@/utils/Clock"
 import { formatDuration } from "@/utils/dateUtils"
 
 interface StatsPanelProps {

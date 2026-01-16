@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/react"
 import ReactDOM from "react-dom/client"
 import { assert } from "tsafe"
 
-import { App } from "@/components/App"
+import { App } from "@/components/app/App"
 
 if (import.meta.env.PROD) {
   Sentry.init({

@@ -1,12 +1,11 @@
 import { assert } from "tsafe"
 
 import { AttemptFeedback, createAttemptFeedback } from "@/lib/AttemptFeedback"
-import { calculateDailyStatsSummary, DailyStatsSummary } from "@/lib/dailyStatsSummary"
-import { getSpecies } from "@/lib/plants"
 import { Puzzle } from "@/lib/Puzzle"
-import { Species, SpeciesId } from "@/lib/Species"
-import { DailyPuzzleRecord, DailyResult } from "@/lib/StatsStorage"
-import { StatsStorage } from "@/lib/StatsStorage"
+import { getSpecies } from "@/lib/species/plants"
+import { Species, SpeciesId } from "@/lib/species/Species"
+import { calculateDailyStatsSummary, DailyStatsSummary } from "@/lib/statsStorage/dailyStatsSummary"
+import { DailyPuzzleRecord, DailyResult, StatsStorage } from "@/lib/statsStorage/StatsStorage"
 import { Iso8601Date } from "@/utils/brandedTypes"
 import { AbstractService } from "@/utils/providerish/AbstractService"
 

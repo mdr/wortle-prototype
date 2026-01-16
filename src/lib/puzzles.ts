@@ -4,7 +4,7 @@ import { Degrees, Iso8601Date } from "@/utils/brandedTypes"
 import { Option } from "@/utils/types/Option"
 
 import { ImageKey, type Puzzle, PuzzleId } from "./Puzzle"
-import { SpeciesId } from "./Species"
+import { SpeciesId } from "./species/Species"
 
 const allPuzzles: Puzzle[] = [
   {

@@ -1,4 +1,4 @@
-import { type TestHooks } from "@/lib/TestHooks"
+import { type TestHooks } from "@/components/app/TestHooksProvider"
 
 declare global {
   interface Window {
