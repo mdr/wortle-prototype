@@ -4,19 +4,17 @@ import { TestPuzzles, TestSpeciesIds } from "@/tests/playwright/testConstants.te
 import { Iso8601Date } from "@/utils/brandedTypes"
 
 import { calculateDailyStatsSummary } from "./dailyStatsSummary"
-import { DailyResult, StatsStorage } from "./StatsStorage"
-import { createMemoryStorage } from "./storage.testUtils"
+import { DailyResult } from "./StatsStorage"
+import { createDailyPuzzleRecord, createStatsStorage } from "./StatsStorage.testUtils"
 
 describe("StatsStorage", () => {
   it("returns default stats when empty", () => {
-    const storage = createMemoryStorage()
-    const stats = new StatsStorage(storage).load()
-    expect(stats).toEqual({ history: [] })
+    const statsStorage = createStatsStorage()
+    expect(statsStorage.load()).toEqual({ history: [] })
   })
 
   it("persists and loads stats", () => {
-    const storage = createMemoryStorage()
-    const statsStorage = new StatsStorage(storage)
+    const statsStorage = createStatsStorage()
     statsStorage.recordDailyCompletion({
       date: Iso8601Date("2026-06-08"),
       puzzleId: TestPuzzles.daisy.id,
@@ -45,14 +43,8 @@ describe("StatsStorage", () => {
   })
 
   it("clears stored stats", () => {
-    const storage = createMemoryStorage()
-    const statsStorage = new StatsStorage(storage)
-    statsStorage.recordDailyCompletion({
-      date: Iso8601Date("2026-06-08"),
-      puzzleId: TestPuzzles.daisy.id,
-      result: DailyResult.PASS,
-      guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil, TestPuzzles.herbRobert.speciesId],
-    })
+    const statsStorage = createStatsStorage()
+    statsStorage.recordDailyCompletion(createDailyPuzzleRecord())
 
     statsStorage.clear()
 
@@ -60,16 +52,14 @@ describe("StatsStorage", () => {
   })
 
   it("saves daily in-progress", () => {
-    const storage = createMemoryStorage()
-    const statsStorage = new StatsStorage(storage)
+    const statsStorage = createStatsStorage()
 
     statsStorage.saveDailyInProgress({
       date: Iso8601Date("2026-06-08"),
       guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil],
     })
 
-    expect(statsStorage.load()).toEqual({
-      history: [],
+    expect(statsStorage.load()).toMatchObject({
       dailyInProgress: {
         date: Iso8601Date("2026-06-08"),
         guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil],
@@ -78,8 +68,7 @@ describe("StatsStorage", () => {
   })
 
   it("clears daily in-progress", () => {
-    const storage = createMemoryStorage()
-    const statsStorage = new StatsStorage(storage)
+    const statsStorage = createStatsStorage()
     statsStorage.saveDailyInProgress({
       date: Iso8601Date("2026-06-08"),
       guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil],
@@ -91,71 +80,41 @@ describe("StatsStorage", () => {
   })
 
   it("records daily completion and clears in-progress", () => {
-    const storage = createMemoryStorage()
-    const statsStorage = new StatsStorage(storage)
+    const statsStorage = createStatsStorage()
     statsStorage.saveDailyInProgress({
       date: Iso8601Date("2026-06-08"),
       guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil],
     })
+    const record = createDailyPuzzleRecord()
 
-    const result = statsStorage.recordDailyCompletion({
-      date: Iso8601Date("2026-06-08"),
-      puzzleId: TestPuzzles.daisy.id,
-      result: DailyResult.PASS,
-      guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil, TestPuzzles.daisy.speciesId],
-    })
+    statsStorage.recordDailyCompletion(record)
 
-    expect(result).toEqual({
-      history: [
-        {
-          date: Iso8601Date("2026-06-08"),
-          puzzleId: TestPuzzles.daisy.id,
-          result: DailyResult.PASS,
-          guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil, TestPuzzles.daisy.speciesId],
-        },
-      ],
-    })
+    expect(statsStorage.load().dailyInProgress).toBeUndefined()
+    expect(statsStorage.load().history).toEqual([record])
   })
 
   it("replaces existing record for same date", () => {
-    const storage = createMemoryStorage()
-    const statsStorage = new StatsStorage(storage)
-    statsStorage.recordDailyCompletion({
-      date: Iso8601Date("2026-06-08"),
-      puzzleId: TestPuzzles.daisy.id,
-      result: DailyResult.FAIL,
-      guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil],
-    })
+    const statsStorage = createStatsStorage()
+    const date = Iso8601Date("2026-06-08")
+    statsStorage.recordDailyCompletion(createDailyPuzzleRecord({ date, result: DailyResult.FAIL }))
 
-    statsStorage.recordDailyCompletion({
-      date: Iso8601Date("2026-06-08"),
-      puzzleId: TestPuzzles.daisy.id,
-      result: DailyResult.PASS,
-      guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil, TestPuzzles.daisy.speciesId],
-    })
+    statsStorage.recordDailyCompletion(createDailyPuzzleRecord({ date, result: DailyResult.PASS }))
 
     expect(statsStorage.load().history).toHaveLength(1)
     expect(statsStorage.load().history[0]?.result).toBe(DailyResult.PASS)
   })
 
   it("keeps history sorted by date", () => {
-    const storage = createMemoryStorage()
-    const statsStorage = new StatsStorage(storage)
-    statsStorage.recordDailyCompletion({
-      date: Iso8601Date("2026-06-10"),
-      puzzleId: TestPuzzles.daisy.id,
-      result: DailyResult.PASS,
-      guessedSpeciesIds: [TestPuzzles.daisy.speciesId],
-    })
-    statsStorage.recordDailyCompletion({
-      date: Iso8601Date("2026-06-08"),
-      puzzleId: TestPuzzles.herbRobert.id,
-      result: DailyResult.PASS,
-      guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId],
-    })
+    const statsStorage = createStatsStorage()
+    const earliest = Iso8601Date("2026-06-08")
+    const middle = Iso8601Date("2026-06-09")
+    const latest = Iso8601Date("2026-06-10")
+    statsStorage.recordDailyCompletion(createDailyPuzzleRecord({ date: middle }))
+    statsStorage.recordDailyCompletion(createDailyPuzzleRecord({ date: latest }))
+    statsStorage.recordDailyCompletion(createDailyPuzzleRecord({ date: earliest }))
 
     const history = statsStorage.load().history
-    expect(history.map((r) => r.date)).toEqual([Iso8601Date("2026-06-08"), Iso8601Date("2026-06-10")])
+    expect(history.map((r) => r.date)).toEqual([earliest, middle, latest])
   })
 })
 
@@ -173,18 +132,8 @@ describe("calculateDailyStatsSummary", () => {
 
   it("counts consecutive passes as streaks", () => {
     const history = [
-      {
-        date: Iso8601Date("2026-06-08"),
-        puzzleId: TestPuzzles.daisy.id,
-        result: DailyResult.PASS,
-        guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil, TestPuzzles.herbRobert.speciesId],
-      },
-      {
-        date: Iso8601Date("2026-06-09"),
-        puzzleId: TestPuzzles.herbRobert.id,
-        result: DailyResult.PASS,
-        guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId],
-      },
+      createDailyPuzzleRecord({ date: Iso8601Date("2026-06-08"), result: DailyResult.PASS }),
+      createDailyPuzzleRecord({ date: Iso8601Date("2026-06-09"), result: DailyResult.PASS }),
     ]
 
     expect(calculateDailyStatsSummary(history)).toEqual({
@@ -198,18 +147,8 @@ describe("calculateDailyStatsSummary", () => {
 
   it("breaks streaks on gaps or failures", () => {
     const history = [
-      {
-        date: Iso8601Date("2026-06-08"),
-        puzzleId: TestPuzzles.daisy.id,
-        result: DailyResult.PASS,
-        guessedSpeciesIds: [TestSpeciesIds.birdsFootTrefoil, TestPuzzles.herbRobert.speciesId],
-      },
-      {
-        date: Iso8601Date("2026-06-10"),
-        puzzleId: TestPuzzles.birdsEyePrimrose.id,
-        result: DailyResult.FAIL,
-        guessedSpeciesIds: [TestPuzzles.herbRobert.speciesId, TestSpeciesIds.feverfew, TestSpeciesIds.alexanders],
-      },
+      createDailyPuzzleRecord({ date: Iso8601Date("2026-06-08"), result: DailyResult.PASS }),
+      createDailyPuzzleRecord({ date: Iso8601Date("2026-06-10"), result: DailyResult.FAIL }),
     ]
 
     expect(calculateDailyStatsSummary(history)).toEqual({

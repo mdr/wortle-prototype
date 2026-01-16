@@ -13,6 +13,8 @@ Run `task check` to verify work before finishing (runs tsc, lint, format, and te
 - Prefer string enums with all caps (e.g. `enum Status { READY = "READY" }`).
 - Use comments sparingly. Never comment the obvious (e.g. `@param userId - The user ID`). Only add comments to explain something that cannot be made clear from the code alone.
 - Name test utility files with a `.testUtils.ts` suffix to flag them as non-production code.
+- In tests, check full objects with `expect(obj).toEqual({...})` rather than individual properties.
+- In tests, only specify values important for that test case; use test factory defaults for everything else.
 
 ## Task Commands
 
